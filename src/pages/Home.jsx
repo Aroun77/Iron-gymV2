@@ -1,8 +1,9 @@
+import backImg from "../assets/back.png";
 function Home() {
   return (
     <div
       className="relative min-h-screen bg-cover bg-center bg-fixed"
-      style={{ backgroundImage: "url('/assets/back.png')" }}
+      style={{ backgroundImage: `url(${backImg})` }}
     >
       {/* Overlay sombre */}
       <div className="absolute inset-0 bg-black bg-opacity-60"></div>
