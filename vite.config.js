@@ -1,10 +1,10 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
-import WindiCSS from 'vite-plugin-windicss'
+import UnoCSS from 'unocss/vite'
 
 export default defineConfig({
   plugins: [
     react(),
-    WindiCSS()
+    UnoCSS(),
   ],
 })

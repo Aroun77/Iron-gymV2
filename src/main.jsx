@@ -2,7 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 import './index.css'
 import App from './App.jsx'
-import 'virtual:windi.css'
+import 'virtual:uno.css' // Import UnoCSS styles
 
 
 ReactDOM.createRoot(document.getElementById('root')).render(
