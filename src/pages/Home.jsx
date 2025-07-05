@@ -1,15 +1,17 @@
-import backImg from "../assets/back.png";
 function Home() {
   return (
     <div
-      className="relative min-h-screen bg-cover bg-center bg-fixed"
-      style={{ backgroundImage: `url(${backImg})` }}
+      className="relative h-screen w-full bg-gradient-to-br from-black to-[#D2A813] animate-gradientBackground bg-[length:200%_200%]"
+      style={{
+        animation: 'gradientBackground 10s ease infinite',
+        backgroundImage: 'linear-gradient(135deg, #000000, #D2A813)',
+      }}
     >
       {/* Overlay sombre */}
       <div className="absolute inset-0 bg-black bg-opacity-60"></div>
 
-      {/* Contenu avec animation */}
-      <div className="relative z-10 p-8 text-left animate-fade-in-up">
+      {/* Contenu */}
+      <div className="relative z-10 p-8 max-w-4xl mx-auto h-full flex flex-col justify-center">
         <h1 className="text-4xl font-bold mb-4 text-white drop-shadow-md">
           VOTRE CLUB AUX VALEURS UNIQUE
         </h1>
@@ -22,7 +24,7 @@ function Home() {
             JE M'INSCRIS
           </button>
           <button className="bg-transparent border border-yellow-400 text-yellow-400 font-semibold px-6 py-2 rounded-full hover:bg-yellow-400 hover:text-gray-900 transition">
-            JE RESERVE MA SEANCE D'ESSAI
+            JE RÉSERVE MA SÉANCE D'ESSAI
           </button>
         </div>
       </div>

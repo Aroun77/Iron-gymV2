@@ -1,5 +1,91 @@
+html,
+body,
+#root {
+  height: 100%;
+  margin: 0;
+  background-color: transparent; /* ou #000 */
+  color: white;
+
+
+  
+} 
 
 :root {
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   
 }
+
+.animate-fade-in-top {
+  animation: fade-in-top 0.5s ease forwards;
+}
+
+
+.animate-slide-in-right {
+  animation: slide-in-right 0.3s ease forwards;
+}
+
+@keyframes fade-in-top {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slide-in-right {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+ 
+@keyframes gradientBackground {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+@keyframes fade-in-top {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes gradientBG {
+  0%, 100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+.animate-gradient {
+  background-size: 300% 300%;
+  animation: gradientBG 10s ease infinite;
+}
+.animate-fade-in-top {
+  animation: fade-in-top 0.5s ease forwards;
+}
+
+
+.animate-slide-in-right {
+  animation: slide-in-right 0.3s ease forwards;
+}
+

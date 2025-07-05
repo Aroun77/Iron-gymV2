@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import {
   Instagram,
-  Facebook,
   Twitter,
   Menu,
   X,
@@ -11,14 +10,19 @@ import {
 } from "lucide-react";
 import logo from "../assets/logo.png";
 
+// TikTok icon
+const TikTok = (props) => (
+  <svg fill="currentColor" viewBox="0 0 256 256" xmlns="http://www.w3.org/2000/svg" {...props}>
+    <path d="M168 32a40 40 0 0 0 40 40h24v40h-24a80 80 0 1 1-80-80z" />
+  </svg>
+);
+
+// Dark mode hook
 function useDarkMode() {
-  const [isDark, setIsDark] = useState(() => {
-    return (
-      localStorage.getItem("theme") === "dark" ||
-      (!("theme" in localStorage) &&
-        window.matchMedia("(prefers-color-scheme: dark)").matches)
-    );
-  });
+  const [isDark, setIsDark] = useState(() =>
+    localStorage.getItem("theme") === "dark" ||
+    (!("theme" in localStorage) && window.matchMedia("(prefers-color-scheme: dark)").matches)
+  );
 
   useEffect(() => {
     if (isDark) {
@@ -40,9 +44,9 @@ export default function Navbar() {
   const [isDark, setIsDark] = useDarkMode();
 
   useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 20);
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+    const onScroll = () => setScrolled(window.scrollY > 20);
+    window.addEventListener("scroll", onScroll);
+    return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
   const navLinks = [
@@ -53,57 +57,56 @@ export default function Navbar() {
   ];
 
   return (
-    <div className="sticky top-0 z-50 w-full font-sans">
-      {/* Bandeau promotionnel */}
-      <div className="bg-[#111] text-yellow-400 text-sm py-1 px-4 text-center tracking-wide">
+    <div className="sticky top-0 z-50 w-full">
+      {/* Mini-bar */}
+      <div className="bg-black/80 text-yellow-400 text-sm py-1 px-4 text-center">
         🎯 Séance d’essai offerte – Venez découvrir notre salle !
       </div>
 
-      {/* NAVBAR */}
+      {/* NAVBAR principale */}
       <nav
-        className={`transition-all duration-500 mx-3 my-2 px-6 rounded-[2rem] flex justify-between items-center border border-white/10 shadow-2xl backdrop-blur-md ${
-          scrolled
-            ? "bg-[#0a0a0a]/95 py-2 scale-[0.98]"
-            : "bg-[#0a0a0a]/80 py-3"
-        } animate-fade-in-top`}
-      >
+  className={`mx-3 my-2 px-6 flex justify-between items-center rounded-[2rem] border border-white/10 shadow-2xl backdrop-blur-md bg-gradient-to-br from-black via-[#1a1a1a] to-[#D2A813] animate-gradient transition-all duration-500 ${
+    scrolled ? 'py-2 scale-[0.98]' : 'py-3'
+  }`}
+>
+
         {/* LOGO */}
         <Link to="/" className="flex items-center gap-2">
           <img
             src={logo}
             alt="Iron Gym"
-            className="h-10 w-auto transition-transform duration-300 hover:scale-110"
+            className="h-10 transition-transform duration-300 hover:scale-110"
           />
         </Link>
 
-        {/* MENU PC */}
-        <div className="hidden md:flex items-center gap-5">
+        {/* MENU DESKTOP */}
+        <div className="hidden md:flex items-center gap-6">
           {navLinks.map(({ path, label }) => (
             <Link
               key={path}
               to={path}
-              className={`px-4 py-2 rounded-full text-sm transition-all duration-300 no-underline ${
+              className={`relative px-3 py-1.5 text-sm rounded-full no-underline transition-all duration-300 transform hover:-translate-y-[2px] ${
                 location.pathname === path
-                  ? "bg-yellow-400 text-black font-semibold shadow-md"
-                  : "bg-gray-700/70 dark:bg-gray-600/60 text-white hover:bg-yellow-400 hover:text-black hover:shadow-lg"
+                  ? "bg-yellow-400 text-black font-semibold shadow"
+                  : "text-white hover:text-yellow-400"
               }`}
             >
               {label}
             </Link>
           ))}
 
-          {/* RÉSEAUX */}
+          {/* ICONES */}
           <div className="w-px h-5 bg-white/30 mx-3" />
-          <div className="flex gap-3">
-            {[Instagram, Facebook, Twitter].map((Icon, i) => (
+          <div className="flex gap-3 text-white">
+            {[Instagram, TikTok, Twitter].map((Icon, idx) => (
               <a
-                key={i}
+                key={idx}
                 href={
-                  ["https://instagram.com", "https://facebook.com", "https://twitter.com"][i]
+                  ["https://instagram.com", "https://tiktok.com", "https://twitter.com"][idx]
                 }
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-white hover:text-yellow-400 transition-transform duration-300 hover:scale-110 hover:drop-shadow"
+                className="hover:text-yellow-400 hover:scale-110 transition-transform"
               >
                 <Icon className="w-5 h-5" />
               </a>
@@ -143,7 +146,7 @@ export default function Navbar() {
       {/* MOBILE DRAWER */}
       {menuOpen && (
         <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm animate-fade-in">
-          <div className="absolute top-2 right-2 w-4/5 max-w-xs bg-[#111] text-white p-6 rounded-xl shadow-2xl animate-slide-in-right">
+          <div className="absolute top-2 right-2 w-4/5 max-w-xs bg-[#1a1a1a] text-white p-6 rounded-xl shadow-2xl animate-slide-in-right">
             <button
               onClick={() => setMenuOpen(false)}
               className="absolute top-3 right-3 text-white hover:text-yellow-400"
@@ -169,15 +172,15 @@ export default function Navbar() {
             </nav>
 
             <div className="flex justify-center gap-4 mt-6">
-              {[Instagram, Facebook, Twitter].map((Icon, idx) => (
+              {[Instagram, TikTok, Twitter].map((Icon, idx) => (
                 <a
                   key={idx}
                   href={
-                    ["https://instagram.com", "https://facebook.com", "https://twitter.com"][idx]
+                    ["https://instagram.com", "https://tiktok.com", "https://twitter.com"][idx]
                   }
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-white hover:text-yellow-400 hover:scale-110 transition-transform"
+                  className="hover:text-yellow-400 hover:scale-110 transition-transform"
                 >
                   <Icon className="w-5 h-5" />
                 </a>
