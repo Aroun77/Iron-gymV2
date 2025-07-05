@@ -1,17 +1,11 @@
 function Home() {
   return (
-    <div
-      className="relative h-screen w-full bg-gradient-to-br from-black to-[#D2A813] animate-gradientBackground bg-[length:200%_200%]"
-      style={{
-        animation: 'gradientBackground 10s ease infinite',
-        backgroundImage: 'linear-gradient(135deg, #000000, #D2A813)',
-      }}
-    >
+    <div className="relative h-screen w-full">
       {/* Overlay sombre */}
-      <div className="absolute inset-0 bg-black bg-opacity-60"></div>
+      <div className="absolute inset-0 bg-opacity-60"></div>
 
       {/* Contenu */}
-      <div className="relative z-10 p-8 max-w-4xl mx-auto h-full flex flex-col justify-center">
+      <div className="relative z-10 p-8 pl-12 pt-20 max-w-4xl h-full flex flex-col justify-start">
         <h1 className="text-4xl font-bold mb-4 text-white drop-shadow-md">
           VOTRE CLUB AUX VALEURS UNIQUE
         </h1>
