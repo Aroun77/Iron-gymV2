@@ -127,7 +127,7 @@ export default function Navbar() {
           <Link
             key={child.path}
             to={child.path}
-            className="block px-4 py-2 text-sm rounded hover:bg-yellow-400 hover:text-black transition"
+            className="block px-4 py-2 text-sm text-white rounded transition hover:text-yellow-400"
           >
             {child.label}
           </Link>
@@ -136,6 +136,7 @@ export default function Navbar() {
     )}
   </AnimatePresence>
 )}
+
 
     </div>
   ))}
