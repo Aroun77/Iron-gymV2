@@ -114,28 +114,29 @@ export default function Navbar() {
 
       {/* SOUS-MENU DESKTOP ANIMÉ */}
       {children && (
-        <AnimatePresence>
-          {children?.length > 0 && hoveredMenu === path && (
-            <motion.div
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: 10 }}
-              transition={{ duration: 0.2 }}
-              className="absolute left-0 mt-2 bg-white dark:bg-zinc-900 text-black dark:text-white rounded-xl shadow-xl py-2 px-3 z-50"
-            >
-              {children.map((child) => (
-                <Link
-                  key={child.path}
-                  to={child.path}
-                  className="block px-4 py-2 text-sm rounded hover:bg-yellow-400 hover:text-black transition"
-                >
-                  {child.label}
-                </Link>
-              ))}
-            </motion.div>
-          )}
-        </AnimatePresence>
-      )}
+  <AnimatePresence>
+    {children?.length > 0 && hoveredMenu === path && (
+      <motion.div
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        exit={{ opacity: 0, y: 10 }}
+        transition={{ duration: 0.2 }}
+        className="absolute left-0 mt-2 z-50 backdrop-blur-md bg-white/10 dark:bg-white/10 border border-white/20 text-white rounded-xl shadow-xl py-2 px-3"
+      >
+        {children.map((child) => (
+          <Link
+            key={child.path}
+            to={child.path}
+            className="block px-4 py-2 text-sm rounded hover:bg-yellow-400 hover:text-black transition"
+          >
+            {child.label}
+          </Link>
+        ))}
+      </motion.div>
+    )}
+  </AnimatePresence>
+)}
+
     </div>
   ))}
 
@@ -207,7 +208,7 @@ export default function Navbar() {
             onClick={() => setMenuOpen(false)}
             className="text-white hover:text-yellow-400"
           >
-<X className="w-5 h-5" />
+          <X className="w-5 h-5" />
           </button>
         </div>
 
