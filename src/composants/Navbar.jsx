@@ -58,14 +58,20 @@ export default function Navbar() {
   }, []);
 
   const navLinks = [
-    { path: "/", label: "Accueil" },
-    { path: "/products", label: "Produits", children: [
+  { path: "/", label: "Accueil" },
+  {
+    path: "/products",
+    label: "Produits",
+    children: [
       { path: "/products/proteines", label: "Protéines" },
       { path: "/products/accessoires", label: "Accessoires" },
-    ] },
-    { path: "/abonnement", label: "Abonnement" },
-    { path: "/login", label: "Connexion" },
-  ];
+    ],
+  },
+  { path: "/abonnement", label: "Abonnement" },
+  { path: "/machines", label: "Machines" }, // ✅ Ajouté ici
+  { path: "/login", label: "Connexion" },
+];
+
 
   return (
     <div className="sticky top-0 z-50 w-full">

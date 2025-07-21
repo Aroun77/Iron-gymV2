@@ -4,6 +4,8 @@ import Login from "./pages/login";
 import Navbar from "./composants/Navbar";
 import Products from "./pages/Products";
 import Abonnement from "./pages/Abonnement";
+import Machine from "./pages/Machines";
+
 
 
 function App() {
@@ -14,7 +16,8 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/products" element={<Products />} />
         <Route path="/login" element={<Login />} />
-        <Route path="Abonnement" element={<Abonnement/>}/>
+        <Route path="/abonnement" element={<Abonnement />} />
+        <Route path="/machines" element={<Machine />} />
       </Routes>
     </Router>
   );
