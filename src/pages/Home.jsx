@@ -1,3 +1,5 @@
+import ScrollFloat from "../composants/ScrollFloat";
+
 function Home() {
   return (
     <div className="relative h-screen w-full overflow-hidden">
@@ -25,6 +27,8 @@ function Home() {
         <p className="text-lg mb-6 text-white drop-shadow-sm">
           Iron GYM - Là où la force prend vie.💪
         </p>
+
+
 
         <div className="flex justify-start gap-4">
           <button className="bg-yellow-400 text-gray-900 font-semibold px-6 py-2 rounded-full shadow-md hover:bg-yellow-300 transition">
@@ -58,7 +62,18 @@ function Home() {
     SCROLL
   </span>
 </a>
-
+      {/* 🌀 Scroll flottant */}
+    <ScrollFloat
+  animationDuration={1}
+  ease="back.inOut(2)"
+  scrollStart="center bottom+=50%"
+  scrollEnd="bottom bottom-=40%"
+  stagger={0.03}
+  containerClassName="my-5 overflow-hidden"
+  textClassName="inline-block text-4xl sm:text-5xl md:text-6xl leading-normal"
+>
+  React Bits
+</ScrollFloat>
 
     </div>
   );
