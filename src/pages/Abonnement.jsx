@@ -5,48 +5,53 @@ function Abonnement() {
 
   const plans = [
     {
-      name: "ESSENTIEL",
-      price: "7€99",
-      per: "/semaine",
-      description: "Soit 31,96€/4 semaines",
+      name: "STANDARD",
+      price: "38€",
+      per: "/mois",
+      description: "Soit 456€/ 1 an",
       features: [
         "xxxxxxxxxxxxxxxxxxx",
         "xxxxxxxxxxxxxxxxxxxx",
         "xxxxxxxxxxxxxxxxxxxx",
       ],
+      link: "https://member.resamania.com/irongym/",
     },
     {
-      name: "ORIGINAL",
-      price: "9€99",
-      per: "/semaine",
-      description: "Soit 39,96€/4 semaines",
+      name: "POLICE/POMPIER",
+      price: "34€",
+      per: "/mois",
+      description: "Soit 408€/1 an",
       features: [
         "xxxxxxxxxxxxxxxxxxx",
         "xxxxxxxxxxxxxxxxxxxx",
         "xxxxxxxxxxxxxxxxxxxx",
         "xxxxxxxxxxxxxxxxxxx",
       ],
+      link: "https://member.resamania.com/irongym/",
     },
     {
-      name: "ULTRA",
-      price: "10€99",
-      per: "/semaine",
-      description: "Soit 43,96€/4 semaines",
+      name: "ETUDIANT",
+      price: "32€",
+      per: "/mois",
+      description: "Soit 384€/1 an",
       features: [
         "xxxxxxxxxxxxxxxxxxx",
         "xxxxxxxxxxxxxxxxxxxx",
         "xxxxxxxxxxxxxxxxxxxx",
         "xxxxxxxxxxxxxxxxxxx",
       ],
+      link: "https://member.resamania.com/irongym/", 
     },
   ];
 
   return (
     <div className="min-h-screen py-12 px-4 sm:px-6 lg:px-8 relative">
+      {/* Titre */}
       <div className="text-center mb-12">
         <h1 className="text-4xl font-bold text-yellow-400">Abonnement</h1>
       </div>
 
+      {/* Cartes d'abonnement */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
         {plans.map((plan) => (
           <div
@@ -86,10 +91,11 @@ function Abonnement() {
         ))}
       </div>
 
-      {/* Pop-up Paiement */}
+      {/* Pop-up Confirmation */}
       {selectedPlan && (
         <div className="fixed inset-0 z-50 bg-black/60 flex items-center justify-center">
-          <div className="bg-white rounded-2xl shadow-2xl p-8 max-w-md w-full text-center relative">
+          <div className="bg-white rounded-2xl shadow-2xl p-8 max-w-md w-full text-center relative animate-fade-in">
+            {/* Bouton fermer */}
             <button
               onClick={() => setSelectedPlan(null)}
               className="absolute top-3 right-3 text-black hover:text-red-600 text-2xl"
@@ -106,10 +112,11 @@ function Abonnement() {
               <span className="text-base font-medium"> {selectedPlan.per}</span>
             </p>
 
+            {/* Bouton de confirmation */}
             <button
               onClick={() => {
-                alert("Paiement validé !");
-                setSelectedPlan(null);
+                window.open(selectedPlan.link, "_blank") // Redirection vers le lien externe
+                setSelectedPlan(null)
               }}
               className="bg-yellow-400 text-black px-6 py-3 rounded-xl font-semibold hover:bg-yellow-300 transition"
             >

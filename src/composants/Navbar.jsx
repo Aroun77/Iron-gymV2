@@ -5,6 +5,7 @@ import {
   Twitter,
   Sun,
   Moon,
+  Facebook,
 } from "lucide-react";
 import logo from "../assets/logo.png";
 import { motion, AnimatePresence } from "framer-motion";
@@ -69,16 +70,16 @@ export default function Navbar() {
   },
   { path: "/abonnement", label: "Abonnement" },
   { path: "/machines", label: "Machines" }, // ✅ Ajouté ici
-  { path: "/login", label: "Connexion" },
+  // { path: "/login", label: "Connexion" },
 ];
 
 
   return (
     <div className="sticky top-0 z-50 w-full">
       {/* Mini-bar avec gradient */}
-      <div className="bg-gradient-to-br from-black via-[#1a1a1a] to-[#D2A813] text-yellow-400 text-xs py-1.5 px-4 text-center font-medium tracking-wide shadow rounded-full w-fit mx-auto">
+      {/*<div className="bg-gradient-to-br from-black via-[#1a1a1a] to-[#D2A813] text-yellow-400 text-xs py-1.5 px-4 text-center font-medium tracking-wide shadow rounded-full w-fit mx-auto">
         🎯 Séance d’essai offerte – Venez découvrir notre salle !
-      </div>
+      </div>*/}
 
       {/* NAVBAR principale avec glassmorphisme */}
       <nav
@@ -150,10 +151,12 @@ export default function Navbar() {
   {/* ICÔNES SOCIAUX */}
   <div className="w-px h-5 bg-white/30 mx-3" />
   <div className="flex gap-3 text-white">
-    {[Instagram, TikTok, Twitter].map((Icon, idx) => (
+    {[Instagram, TikTok, Facebook].map((Icon, idx) => (
       <a
         key={idx}
-        href={["https://instagram.com", "https://tiktok.com", "https://twitter.com"][idx]}
+        href={["https://www.instagram.com/irongymofficiel?igsh=ODBkbTdnbzlsZGcz&utm_source=qr", 
+          "https://www.tiktok.com/@irongymofficiel?_t=ZN-8yq7tPsz022&_r=1",
+           "https://www.facebook.com/share/1aGGtuBjer/?mibextid=wwXIfr"][idx]}
         target="_blank"
         rel="noopener noreferrer"
         className="hover:text-yellow-400 hover:scale-110 transition-transform"
@@ -275,10 +278,12 @@ export default function Navbar() {
         </nav>
 
         <div className="flex justify-center gap-4 mt-6">
-          {[Instagram, TikTok, Twitter].map((Icon, idx) => (
+          {[Instagram, TikTok, Facebook].map((Icon, idx) => (
             <a
               key={idx}
-              href={["https://instagram.com", "https://tiktok.com", "https://twitter.com"][idx]}
+              href={["https://www.instagram.com/irongymofficiel?igsh=ODBkbTdnbzlsZGcz&utm_source=qr",
+                 "https://www.tiktok.com/@irongymofficiel?_t=ZN-8yq7tPsz022&_r=1", 
+                "https://www.facebook.com/share/1aGGtuBjer/?mibextid=wwXIfr"][idx]}
               target="_blank"
               rel="noopener noreferrer"
               className="hover:text-yellow-400 hover:scale-110 transition-transform"
