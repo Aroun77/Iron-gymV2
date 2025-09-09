@@ -1,14 +1,19 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 
 function Abonnement() {
   const [selectedPlan, setSelectedPlan] = useState(null);
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [dragStart, setDragStart] = useState(0);
+  const [dragEnd, setDragEnd] = useState(0);
 
   const plans = [
     {
       name: "STANDARD",
       price: "38€",
       per: "/mois",
-      description: "Soit 456€/ 1 an",
+      description: "Soit 456€/1 an",
       features: [
         "xxxxxxxxxxxxxxxxxxx",
         "xxxxxxxxxxxxxxxxxxxx",
@@ -40,62 +45,120 @@ function Abonnement() {
         "xxxxxxxxxxxxxxxxxxxx",
         "xxxxxxxxxxxxxxxxxxx",
       ],
-      link: "https://member.resamania.com/irongym/", 
+      link: "https://member.resamania.com/irongym/",
     },
   ];
+
+  // Défilement automatique toutes les 6 secondes
+  useEffect(() => {
+    const interval = setInterval(() => {
+      handleNext();
+    }, 6000);
+    return () => clearInterval(interval);
+  }, [currentIndex]);
+
+  const handlePrev = () => {
+    setCurrentIndex((prev) => (prev - 1 + plans.length) % plans.length);
+  };
+
+  const handleNext = () => {
+    setCurrentIndex((prev) => (prev + 1) % plans.length);
+  };
+
+  const handleDragStart = (event, info) => {
+    setDragStart(info.point.x);
+  };
+
+  const handleDragEnd = (event, info) => {
+    setDragEnd(info.point.x);
+    const distance = info.point.x - dragStart;
+
+    // Si le swipe est assez long vers la droite
+    if (distance > 100) {
+      handlePrev();
+    }
+    // Si le swipe est assez long vers la gauche
+    else if (distance < -100) {
+      handleNext();
+    }
+  };
 
   return (
     <div className="min-h-screen py-12 px-4 sm:px-6 lg:px-8 relative">
       {/* Titre */}
-      <div className="text-center mb-12">
+      <div className="text-center mb-10">
         <h1 className="text-4xl font-bold text-yellow-400">Abonnement</h1>
+        <p className="text-white/70 mt-2">Choisis ton plan d'entraînement</p>
       </div>
 
-      {/* Cartes d'abonnement */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
-        {plans.map((plan) => (
-          <div
-            key={plan.name}
-            className="bg-white/20 backdrop-blur-md border border-white/30 rounded-2xl p-6 flex flex-col justify-between shadow-lg transition hover:shadow-2xl hover:-translate-y-2 hover:scale-[1.03] hover:rotate-1"
+      {/* Carrousel */}
+      <div className="relative max-w-3xl mx-auto overflow-hidden">
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={currentIndex}
+            initial={{ opacity: 0, x: 100 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: -100 }}
+            transition={{ duration: 0.5 }}
+            drag="x"
+            dragConstraints={{ left: 0, right: 0 }}
+            onDragStart={handleDragStart}
+            onDragEnd={handleDragEnd}
+            className="bg-white/20 backdrop-blur-lg border border-white/30 rounded-2xl p-6 shadow-lg flex flex-col items-center cursor-grab active:cursor-grabbing"
           >
-            <div>
-              <h2 className="text-xl font-bold uppercase text-yellow-400 tracking-wide">
-                {plan.name}
-              </h2>
-              <div className="border-t-2 border-yellow-400 w-16 mt-2 mb-4" />
+            <h2 className="text-xl font-bold uppercase text-yellow-400">
+              {plans[currentIndex].name}
+            </h2>
+            <div className="border-t-2 border-yellow-400 w-16 mt-2 mb-4" />
 
-              <div className="text-4xl font-extrabold text-yellow-400 flex items-baseline gap-1">
-                {plan.price}
-                <span className="text-base font-normal text-white">{plan.per}</span>
-              </div>
-
-              <p className="text-sm text-white/80 mt-2">{plan.description}</p>
-
-              <ul className="mt-6 space-y-3 text-left text-white/90">
-                {plan.features.map((feature, index) => (
-                  <li key={index} className="flex items-start gap-2">
-                    <span className="text-yellow-400">✔</span>
-                    <span>{feature}</span>
-                  </li>
-                ))}
-              </ul>
+            <div className="text-4xl font-extrabold text-yellow-400 flex items-baseline gap-1">
+              {plans[currentIndex].price}
+              <span className="text-base font-normal text-white">
+                {plans[currentIndex].per}
+              </span>
             </div>
 
+            <p className="text-sm text-white/80 mt-2">
+              {plans[currentIndex].description}
+            </p>
+
+            <ul className="mt-6 space-y-3 text-left text-white/90">
+              {plans[currentIndex].features.map((feature, index) => (
+                <li key={index} className="flex items-start gap-2">
+                  <span className="text-yellow-400">✔</span>
+                  <span>{feature}</span>
+                </li>
+              ))}
+            </ul>
+
             <button
-              onClick={() => setSelectedPlan(plan)}
-              className="mt-8 bg-yellow-400 text-black text-center py-3 rounded-xl font-semibold uppercase tracking-wide hover:bg-yellow-300 transition"
+              onClick={() => setSelectedPlan(plans[currentIndex])}
+              className="mt-8 bg-yellow-400 text-black py-3 px-6 rounded-xl font-semibold uppercase tracking-wide hover:bg-yellow-300 transition"
             >
               Je m’inscris
             </button>
-          </div>
-        ))}
+          </motion.div>
+        </AnimatePresence>
+
+        {/* Boutons navigation */}
+        <button
+          onClick={handlePrev}
+          className="absolute left-0 top-1/2 -translate-y-1/2 bg-yellow-400 hover:bg-yellow-300 text-black p-3 rounded-full shadow-lg transition"
+        >
+          <ChevronLeft size={22} />
+        </button>
+        <button
+          onClick={handleNext}
+          className="absolute right-0 top-1/2 -translate-y-1/2 bg-yellow-400 hover:bg-yellow-300 text-black p-3 rounded-full shadow-lg transition"
+        >
+          <ChevronRight size={22} />
+        </button>
       </div>
 
       {/* Pop-up Confirmation */}
       {selectedPlan && (
         <div className="fixed inset-0 z-50 bg-black/60 flex items-center justify-center">
           <div className="bg-white rounded-2xl shadow-2xl p-8 max-w-md w-full text-center relative animate-fade-in">
-            {/* Bouton fermer */}
             <button
               onClick={() => setSelectedPlan(null)}
               className="absolute top-3 right-3 text-black hover:text-red-600 text-2xl"
@@ -109,14 +172,15 @@ function Abonnement() {
             <p className="text-gray-700 mb-4">{selectedPlan.description}</p>
             <p className="text-3xl font-extrabold mb-4 text-black">
               {selectedPlan.price}
-              <span className="text-base font-medium"> {selectedPlan.per}</span>
+              <span className="text-base font-medium">
+                {selectedPlan.per}
+              </span>
             </p>
 
-            {/* Bouton de confirmation */}
             <button
               onClick={() => {
-                window.open(selectedPlan.link, "_blank") // Redirection vers le lien externe
-                setSelectedPlan(null)
+                window.open(selectedPlan.link, "_blank");
+                setSelectedPlan(null);
               }}
               className="bg-yellow-400 text-black px-6 py-3 rounded-xl font-semibold hover:bg-yellow-300 transition"
             >

@@ -1,4 +1,6 @@
-import React from "react";
+import { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 
 const machines = [
   {
@@ -94,30 +96,102 @@ const machines = [
 ];
 
 function Machine() {
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [dragStart, setDragStart] = useState(0);
+
+  // Défilement automatique toutes les 5 secondes
+  useEffect(() => {
+    const interval = setInterval(() => {
+      handleNext();
+    }, 5000);
+    return () => clearInterval(interval);
+  }, [currentIndex]);
+
+  const handlePrev = () => {
+    setCurrentIndex((prev) => (prev - 1 + machines.length) % machines.length);
+  };
+
+  const handleNext = () => {
+    setCurrentIndex((prev) => (prev + 1) % machines.length);
+  };
+
+  const handleDragStart = (e, info) => {
+    setDragStart(info.point.x);
+  };
+
+  const handleDragEnd = (e, info) => {
+    const distance = info.point.x - dragStart;
+
+    if (distance > 100) {
+      handlePrev();
+    } else if (distance < -100) {
+      handleNext();
+    }
+  };
+
   return (
     <div className="min-h-screen py-12 px-4 sm:px-6 lg:px-8 text-center">
       <h1 className="text-4xl font-bold text-yellow-400 mb-4">Nos Machines</h1>
       <p className="text-white/80 max-w-xl mx-auto mb-12">
-        Sélectionnez une machine pour en apprendre plus sur son utilisation et ses bienfaits.
+        Glisse pour découvrir nos machines et leur utilisation.
       </p>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
-        {machines.map((machine) => (
-          <div
-            key={machine.id}
-            className="bg-white/20 backdrop-blur-md border border-white/30 rounded-2xl p-4 shadow-lg transition hover:shadow-2xl hover:-translate-y-2 hover:scale-[1.02]"
+      <div className="relative max-w-lg mx-auto overflow-hidden">
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={currentIndex}
+            initial={{ opacity: 0, x: 100 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: -100 }}
+            transition={{ duration: 0.5 }}
+            drag="x"
+            dragConstraints={{ left: 0, right: 0 }}
+            onDragStart={handleDragStart}
+            onDragEnd={handleDragEnd}
+            className="bg-white/20 backdrop-blur-md border border-white/30 rounded-2xl p-5 shadow-lg flex flex-col items-center cursor-grab active:cursor-grabbing"
           >
             <img
-              src={machine.image}
-              alt={machine.name}
-              className="rounded-xl mb-4 w-full h-48 object-cover"
+              src={machines[currentIndex].image}
+              alt={machines[currentIndex].name}
+              className="rounded-xl mb-4 w-full h-52 object-cover"
             />
-            <h3 className="text-xl font-semibold text-yellow-400 mb-2">{machine.name}</h3>
-            <p className="text-white/80 text-sm mb-4">{machine.description}</p>
-            <button className="bg-yellow-400 text-black py-2 px-4 rounded-full text-sm font-medium hover:bg-yellow-300 transition">
+            <h3 className="text-2xl font-semibold text-yellow-400 mb-2">
+              {machines[currentIndex].name}
+            </h3>
+            <p className="text-white/80 text-sm mb-4">
+              {machines[currentIndex].description}
+            </p>
+            <button className="bg-yellow-400 text-black py-2 px-5 rounded-full text-sm font-semibold hover:bg-yellow-300 transition">
               Comment l’utiliser
             </button>
-          </div>
+          </motion.div>
+        </AnimatePresence>
+
+        {/* Boutons navigation */}
+        <button
+          onClick={handlePrev}
+          className="absolute left-0 top-1/2 -translate-y-1/2 bg-yellow-400 hover:bg-yellow-300 text-black p-3 rounded-full shadow-lg transition"
+        >
+          <ChevronLeft size={22} />
+        </button>
+        <button
+          onClick={handleNext}
+          className="absolute right-0 top-1/2 -translate-y-1/2 bg-yellow-400 hover:bg-yellow-300 text-black p-3 rounded-full shadow-lg transition"
+        >
+          <ChevronRight size={22} />
+        </button>
+      </div>
+
+      {/* Petits points indicateurs */}
+      <div className="flex justify-center mt-6 gap-2">
+        {machines.map((_, index) => (
+          <button
+            key={index}
+            onClick={() => setCurrentIndex(index)}
+            className={`w-3 h-3 rounded-full transition ${
+              index === currentIndex ? "bg-yellow-400" : "bg-white/40"
+            }`}
+          ></button>
         ))}
       </div>
     </div>
