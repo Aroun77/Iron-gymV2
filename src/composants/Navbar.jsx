@@ -71,7 +71,7 @@ export default function Navbar() {
         } max-w-5xl w-full`}
       >
         {/* Logo */}
-        <Link to="/" className="flex items-center gap-3 group">
+        <Link to="/" className="flex items-center gap-3 group no-underline">
           <img
             src={logo}
             alt="Iron Gym"

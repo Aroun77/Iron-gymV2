@@ -25,7 +25,7 @@ const machines = [
     id: 4,
     name: "Presse à épaules",
     description: "Cible les deltoïdes pour des épaules solides.",
-    image: "/assets/machine1.jpg",
+    image: "/machine1.jpg",
   },
   {
     id: 5,
@@ -153,7 +153,7 @@ function Machine() {
             <img
               src={machines[currentIndex].image}
               alt={machines[currentIndex].name}
-              className="rounded-xl mb-4 w-full h-52 object-cover"
+              className="rounded-xl mb-4 w-full h-82 object-contain bg-white"
             />
             <h3 className="text-2xl font-semibold text-yellow-400 mb-2">
               {machines[currentIndex].name}
