@@ -15,9 +15,10 @@ function Abonnement() {
       per: "/mois",
       description: "Soit 456€/1 an",
       features: [
-        "xxxxxxxxxxxxxxxxxxx",
-        "xxxxxxxxxxxxxxxxxxxx",
-        "xxxxxxxxxxxxxxxxxxxx",
+        "Power Lifting",
+        "Cross Training",
+        "Weight Lifting",
+        "Cardio Training",
       ],
       link: "https://member.resamania.com/irongym/",
     },
@@ -27,10 +28,10 @@ function Abonnement() {
       per: "/mois",
       description: "Soit 408€/1 an",
       features: [
-        "xxxxxxxxxxxxxxxxxxx",
-        "xxxxxxxxxxxxxxxxxxxx",
-        "xxxxxxxxxxxxxxxxxxxx",
-        "xxxxxxxxxxxxxxxxxxx",
+        "Power Lifting",
+        "Cross Training",
+        "Weight Lifting",
+        "Cardio Training",
       ],
       link: "https://member.resamania.com/irongym/",
     },
@@ -40,10 +41,10 @@ function Abonnement() {
       per: "/mois",
       description: "Soit 384€/1 an",
       features: [
-        "xxxxxxxxxxxxxxxxxxx",
-        "xxxxxxxxxxxxxxxxxxxx",
-        "xxxxxxxxxxxxxxxxxxxx",
-        "xxxxxxxxxxxxxxxxxxx",
+        "Power Lifting",
+        "Cross Training",
+        "Weight Lifting",
+        "Cardio Training",
       ],
       link: "https://member.resamania.com/irongym/",
     },
@@ -106,7 +107,7 @@ function Abonnement() {
             onDragEnd={handleDragEnd}
             className="bg-white/20 backdrop-blur-lg border border-white/30 rounded-2xl p-6 shadow-lg flex flex-col items-center cursor-grab active:cursor-grabbing"
           >
-            <h2 className="text-xl font-bold uppercase text-yellow-400">
+            <h2 className="text-xl font-bold uppercase text-yellow-400 text-center">
               {plans[currentIndex].name}
             </h2>
             <div className="border-t-2 border-yellow-400 w-16 mt-2 mb-4" />
@@ -184,7 +185,7 @@ function Abonnement() {
               }}
               className="bg-yellow-400 text-black px-6 py-3 rounded-xl font-semibold hover:bg-yellow-300 transition"
             >
-              Confirmer et payer
+              Confirmer 
             </button>
           </div>
         </div>

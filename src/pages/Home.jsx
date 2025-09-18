@@ -2,6 +2,7 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import ScrollFloat from "../composants/ScrollFloat";
 import SectionCategories from "../composants/SectionCategories";
+import Etages from "../composants/Etages";
 
 function Home() {
   const [popup, setPopup] = useState(null);
@@ -69,7 +70,7 @@ function Home() {
         {/* 🌀 Scroll flottant */}
         <a
           href="#categories"
-          className="absolute bottom-6 left-1/2 -translate-x-1/2 z-30 flex flex-col items-center group"
+          className="absolute bottom-6 left-1/2 -translate-x-1/2 z-30 flex flex-col items-center group no-underline"
         >
           <div className="animate-bounce group-hover:animate-[pulse_1.2s_ease-in-out_infinite]">
             <svg
@@ -96,6 +97,7 @@ function Home() {
         transition={{ duration: 0.8, ease: "easeOut" }}
         viewport={{ once: true, amount: 0.3 }}
       >
+        <Etages />
         <SectionCategories />
       </motion.section>
 
