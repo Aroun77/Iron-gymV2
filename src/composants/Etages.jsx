@@ -48,4 +48,4 @@ function Etages() {
   );
 }
 
-export default Etages;
+export default Etages; 
