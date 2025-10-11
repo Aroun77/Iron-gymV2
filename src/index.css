@@ -25,7 +25,7 @@ body,
   }
 }
 
-/* Animations utilitaires */
+/* Animations  */
 .animate-fade-in-top {
   animation: fade-in-top 0.5s ease forwards;
 }
@@ -54,14 +54,18 @@ body,
   }
 }
 
-/* ✅ Rend les images toujours centrées et jamais déformées */
 img {
   display: block;
   max-width: 100%;
   height: auto;
-  margin: 0 auto;
+
 }
 
 html {
   scroll-behavior: smooth;
+}
+
+/* Reset box-sizing pour éviter les problèmes de dimensions */
+*, *::before, *::after {
+  box-sizing: border-box;
 }
