@@ -3,7 +3,7 @@ import { Link, useLocation } from "react-router-dom";
 import { Instagram, Facebook, } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import HamburgerButton from "./HamburgerButton";
-import logo from "../assets/Logo.png";
+import logo from "/Logo.png";
 
 // Icône TikTok custom
 const TikTok = (props) => (
