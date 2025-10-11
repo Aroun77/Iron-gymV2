@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Instagram, Facebook, Moon, Sun } from "lucide-react";
+import { Instagram, Facebook, } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import HamburgerButton from "./HamburgerButton";
-import logo from "../assets/logo.png";
+import logo from "../assets/Logo.png";
 
 // Icône TikTok custom
 const TikTok = (props) => (
@@ -12,33 +12,10 @@ const TikTok = (props) => (
   </svg>
 );
 
-// Hook dark mode
-function useDarkMode() {
-  const [isDark, setIsDark] = useState(() => {
-    return (
-      localStorage.getItem("theme") === "dark" ||
-      (!("theme" in localStorage) && window.matchMedia("(prefers-color-scheme: dark)").matches)
-    );
-  });
-
-  useEffect(() => {
-    if (isDark) {
-      document.documentElement.classList.add("dark");
-      localStorage.setItem("theme", "dark");
-    } else {
-      document.documentElement.classList.remove("dark");
-      localStorage.setItem("theme", "light");
-    }
-  }, [isDark]);
-
-  return [isDark, setIsDark];
-}
-
 export default function Navbar() {
   const location = useLocation();
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
-  const [isDark, setIsDark] = useDarkMode();
 
   const navLinks = [
     { path: "/", label: "Accueil" },
@@ -124,25 +101,7 @@ export default function Navbar() {
             >
               <Icon className="w-5 h-5 text-white" />
             </a>
-          ))}
-
-          {/* Dark / Light Toggle */}
-          <button
-            onClick={() => setIsDark(!isDark)}
-            className="ml-4 relative w-12 h-6 bg-gray-700 dark:bg-gray-600 rounded-full shadow-inner transition-colors duration-500"
-          >
-            <span
-              className={`absolute top-[2px] left-[2px] w-5 h-5 bg-yellow-400 rounded-full shadow-lg transition-transform duration-500 flex items-center justify-center ${
-                isDark ? "translate-x-6" : "translate-x-0"
-              }`}
-            >
-              {isDark ? (
-                <Sun className="w-4 h-4 text-black" />
-              ) : (
-                <Moon className="w-4 h-4 text-black" />
-              )}
-            </span>
-          </button>
+          ))} 
         </div>
 
         {/* Hamburger Mobile */}
@@ -172,7 +131,7 @@ export default function Navbar() {
                 <span className="text-lg font-bold">Menu</span>
                 <button
                   onClick={() => setMenuOpen(false)}
-                  className="text-white hover:text-yellow-400 text-2xl"
+                  className="text-white text-yellow-400 text-2xl"
                 >
                   ✕
                 </button>
@@ -208,7 +167,7 @@ export default function Navbar() {
                     ][idx]}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="hover:text-yellow-400 hover:scale-110 transition-transform"
+                    className="text-white hover:text-yellow-400 hover:scale-110 transition-transform"
                   >
                     <Icon className="w-5 h-5" />
                   </a>

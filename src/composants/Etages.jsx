@@ -2,46 +2,44 @@ import { motion } from "framer-motion";
 
 function Etages() {
   return (
-    <section className="w-full px-4 sm:px-6 md:px-12 lg:px-20 py-12 max-w-7xl mx-auto flex flex-col items-center text-center">
-      {/* 🏷️ Titre */}
-      <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-10 text-white">
-        Découvrez notre salle 
+    <section className="flex flex-col items-center justify-center text-center py-12 px-4 md:px-8 lg:px-16">
+      <h2 className="text-3xl md:text-4xl font-bold mb-10 text-yellow-400">
+        Découvrez nos espaces
       </h2>
 
-      {/* 🖼️ Grille images */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-10 w-full max-w-5xl">
-        {/* 🏋️ Premier étage */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 w-full max-w-6xl mx-auto">
+        {/* Premier étage */}
         <motion.div
-          className="relative group rounded-2xl overflow-hidden shadow-lg"
+          className="relative group rounded-2xl overflow-hidden shadow-lg w-full"
           initial={{ opacity: 0, x: -60 }}
           whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true, amount: 0.2 }}
-          transition={{ duration: 0.8, ease: 'easeOut' }}
+          viewport={{ once: true, amount: 0.3 }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
         >
           <img
-            src="/1er.jpg"
+            src="EnHaut.JPG"
             alt="Premier étage"
-            className="w-full h-56 sm:h-72 md:h-80 lg:h-96 object-cover transform group-hover:scale-105 transition duration-500"
+            className="w-full h-64 sm:h-80 md:h-96 object-cover transition-transform duration-500 group-hover:scale-105"
           />
-          <span className="absolute bottom-4 left-1/2 -translate-x-1/2 bg-black/60 text-white px-4 py-2 rounded-lg text-sm sm:text-base md:text-lg font-semibold">
+          <span className="absolute bottom-4 left-1/2 -translate-x-1/2 bg-black/70 text-white px-4 py-2 rounded-lg text-sm sm:text-base font-semibold">
             Premier étage
           </span>
         </motion.div>
 
-        {/* 🪜 Deuxième étage */}
+        {/* Deuxième étage */}
         <motion.div
-          className="relative group rounded-2xl overflow-hidden shadow-lg"
+          className="relative group rounded-2xl overflow-hidden shadow-lg w-full"
           initial={{ opacity: 0, x: 60 }}
           whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true, amount: 0.2 }}
-          transition={{ duration: 0.8, ease: 'easeOut' }}
+          viewport={{ once: true, amount: 0.3 }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
         >
           <img
-            src="/EnHaut.JPG"
+            src="1er.jpg" 
             alt="Deuxième étage"
-            className="w-full h-56 sm:h-72 md:h-80 lg:h-96 object-cover transform group-hover:scale-105 transition duration-500"
+            className="w-full h-64 sm:h-80 md:h-96 object-cover transition-transform duration-500 group-hover:scale-105"
           />
-          <span className="absolute bottom-4 left-1/2 -translate-x-1/2 bg-black/60 text-white px-4 py-2 rounded-lg text-sm sm:text-base md:text-lg font-semibold">
+          <span className="absolute bottom-4 left-1/2 -translate-x-1/2 bg-black/70 text-white px-4 py-2 rounded-lg text-sm sm:text-base font-semibold">
             Deuxième étage
           </span>
         </motion.div>

@@ -20,7 +20,7 @@ function Abonnement() {
         "Weight Lifting",
         "Cardio Training",
       ],
-      link: "https://member.resamania.com/irongym/",
+      link: "https://member.resamania.com/irongym/registration",
     },
     {
       name: "POLICE/POMPIER",
@@ -33,7 +33,7 @@ function Abonnement() {
         "Weight Lifting",
         "Cardio Training",
       ],
-      link: "https://member.resamania.com/irongym/",
+      link: "https://member.resamania.com/irongym/registration",
     },
     {
       name: "ETUDIANT",
@@ -46,11 +46,11 @@ function Abonnement() {
         "Weight Lifting",
         "Cardio Training",
       ],
-      link: "https://member.resamania.com/irongym/",
+      link: "https://member.resamania.com/irongym/registration",
     },
   ];
 
-  // Défilement automatique toutes les 6 secondes
+  // Défilement automatique 
   useEffect(() => {
     const interval = setInterval(() => {
       handleNext();

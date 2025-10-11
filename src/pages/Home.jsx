@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import ScrollFloat from "../composants/ScrollFloat";
 import SectionCategories from "../composants/SectionCategories";
 import Etages from "../composants/Etages";
 
@@ -88,7 +87,7 @@ function Home() {
         </a>
       </section>
 
-      {/* ================= SECTION CATEGORIES ================= */}
+      {/* SECTION CATEGORIES */}
       <motion.section
         id="categories"
         className="relative z-20"
@@ -101,7 +100,7 @@ function Home() {
         <SectionCategories />
       </motion.section>
 
-      {/* 🔔 Pop-up glassmorphism */}
+      {/* Pop-up glassmorphism */}
       {popup && (
         <div className="fixed inset-0 bg-black/70 backdrop-blur-sm z-50 flex items-center justify-center transition-opacity duration-300">
           <div className="bg-white/10 backdrop-blur-2xl border border-white/20 rounded-3xl shadow-2xl p-8 max-w-md w-full text-center animate-[zoomIn_0.3s_ease]">
