@@ -2,6 +2,7 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import SectionCategories from "../composants/SectionCategories";
 import Etages from "../composants/Etages";
+import SectionCoach from "../composants/SectionCoach";
 
 function Home() {
   const [popup, setPopup] = useState(null);
@@ -99,6 +100,7 @@ function Home() {
         <Etages />
         <SectionCategories />
       </motion.section>
+       <SectionCoach /> 
 
       {/* Pop-up glassmorphism */}
       {popup && (

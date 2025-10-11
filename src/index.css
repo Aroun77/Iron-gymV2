@@ -69,3 +69,64 @@ html {
 *, *::before, *::after {
   box-sizing: border-box;
 }
+/*card styles */
+.card-active {
+  --card-opacity: 1 !important;
+}
+
+.inset--10px {
+  inset: -10px;
+}
+
+.rounded-30px {
+  border-radius: 30px;
+}
+
+.rounded-15px {
+  border-radius: 15px;
+}
+
+.rounded-8px {
+  border-radius: 8px;
+}
+
+.backdrop-blur-30px {
+  backdrop-filter: blur(30px);
+}
+
+
+/* Support du bg-clip-text pour les navigateurs */
+.bg-clip-text {
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+
+/* Animation pour les cartes de coach */
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+/* Amélioration des transitions */
+* {
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Support des images avec loading */
+img[loading="lazy"] {
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+}
+
+img[loading="lazy"].loaded,
+img[loading="lazy"]:not([loading]) {
+  opacity: 1;
+}
