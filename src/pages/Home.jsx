@@ -99,8 +99,8 @@ function Home() {
       >
         <Etages />
         <SectionCategories />
-       <SectionCoach /> 
       </motion.section>
+       <SectionCoach /> 
 
       {/* Pop-up glassmorphism */}
       {popup && (
