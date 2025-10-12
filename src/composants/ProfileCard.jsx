@@ -195,11 +195,10 @@ const ProfileCard = ({
       {/* Carte principale */}
       <div
         ref={cardRef}
-        className="relative rounded-30px overflow-hidden shadow-2xl transition-transform duration-1000 cursor-pointer"
+        className="relative rounded-30px overflow-hidden shadow-2xl transition-transform duration-1000 cursor-pointer w-full"
         style={{
           aspectRatio: '0.718',
-          height: '70vh',
-          maxHeight: '500px',
+          height: 'clamp(380px, 60vh, 500px)',
           transform: 'translate3d(0, 0, 0.1px) rotateX(var(--rotate-y)) rotateY(var(--rotate-x))',
           background: `
             radial-gradient(farthest-side circle at var(--pointer-x) var(--pointer-y), 
@@ -259,9 +258,9 @@ const ProfileCard = ({
 
           {/* Info utilisateur en bas */}
           {showUserInfo && (
-            <div className="absolute bottom-20px left-20px right-20px z-10 flex items-center justify-between bg-white/10 backdrop-blur-30px border border-white/10 rounded-15px p-12px pointer-events-auto">
-              <div className="flex items-center gap-12px">
-                <div className="w-48px h-48px rounded-full overflow-hidden border border-white/10 flex-shrink-0">
+            <div className="absolute bottom-3 left-3 right-3 sm:bottom-5 sm:left-5 sm:right-5 z-10 flex items-center justify-between bg-white/10 backdrop-blur-30px border border-white/10 rounded-xl sm:rounded-15px p-2 sm:p-3 pointer-events-auto">
+              <div className="flex items-center gap-2 sm:gap-3">
+                <div className="w-8 h-8 sm:w-12 sm:h-12 rounded-full overflow-hidden border border-white/10 flex-shrink-0">
                   <img
                     src={avatarUrl}
                     alt={`${name} mini`}
@@ -269,18 +268,18 @@ const ProfileCard = ({
                     loading="lazy"
                   />
                 </div>
-                <div className="flex flex-col gap-6px">
-                  <div className="text-14px font-500 text-white/90 leading-none">
+                <div className="flex flex-col gap-1">
+                  <div className="text-xs sm:text-sm font-500 text-white/90 leading-none">
                     @{handle}
                   </div>
-                  <div className="text-14px text-white/70 leading-none">
+                  <div className="text-xs sm:text-sm text-white/70 leading-none">
                     {status}
                   </div>
                 </div>
               </div>
               <button
                 onClick={handleContactClickInternal}
-                className="border border-white/10 rounded-8px px-16px py-8px text-14px font-600 text-white/90 cursor-pointer transition-all duration-200 hover:border-white/40 hover:transform hover:translateY--1px bg-transparent"
+                className="border border-white/10 rounded-lg px-3 py-1.5 sm:px-4 sm:py-2 text-xs sm:text-sm font-600 text-white/90 cursor-pointer transition-all duration-200 hover:border-white/40 hover:transform hover:translateY--1px bg-transparent whitespace-nowrap"
                 type="button"
               >
                 {contactText}
@@ -288,9 +287,9 @@ const ProfileCard = ({
             </div>
           )}
 
-          {/* Nom et titre en haut de la card */}
+          {/* Nom et titre en haut */}
           <div 
-            className="absolute top-0.5em left-5em right-0 text-center z-5 pointer-events-none px-4 text-shadow-lg " 
+            className="absolute top-8 sm:top-12 left-0 right-0 text-center z-5 pointer-events-none px-2 sm:px-4"
             style={{
               transform: `translate3d(
                 calc(var(--pointer-from-left) * -6px + 3px),
@@ -299,10 +298,10 @@ const ProfileCard = ({
               )`
             }}
           >
-            <h3 className="text-3xl font-extrabold m-0 text-transparent bg-clip-text bg-gradient-to-b from-white to-yellow-400 leading-tight">
+            <h3 className="text-3xl sm:text-4xl md:text-5xl font-extrabold m-0 text-transparent bg-clip-text bg-gradient-to-b from-white to-yellow-400 leading-tight">
               {name}
             </h3>
-            <p className="text-xl font-600 m-0 mt--12px text-transparent bg-clip-text bg-gradient-to-b from-white/90 to-yellow-500">
+            <p className="text-base sm:text-lg md:text-xl font-600 m-0 mt-1 sm:mt-2 text-transparent bg-clip-text bg-gradient-to-b from-white/90 to-yellow-500">
               {title}
             </p>
           </div>
