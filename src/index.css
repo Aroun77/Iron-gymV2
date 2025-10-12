@@ -1,21 +1,36 @@
-html,
-body,
-#root {
+/* Reset de base */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  height: 100%;
+  width: 100%;
+}
+
+body {
   height: 100%;
   width: 100%;
   margin: 0;
   padding: 0;
   overflow-x: hidden;
   color: white;
+  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   background: linear-gradient(to bottom right, black, #1a1a1a, #D2A813);
   background-size: 300% 300%;
   animation: gradientBG 15s ease infinite;
 }
 
-:root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+#root {
+  min-height: 100%;
+  width: 100%;
+  position: relative;
 }
 
+/* Animation du gradient */
 @keyframes gradientBG {
   0%, 100% {
     background-position: 0% 50%;
@@ -25,7 +40,7 @@ body,
   }
 }
 
-/* Animations  */
+/* Animations utilitaires */
 .animate-fade-in-top {
   animation: fade-in-top 0.5s ease forwards;
 }
@@ -54,26 +69,29 @@ body,
   }
 }
 
+/* Styles des images */
 img {
   display: block;
   max-width: 100%;
   height: auto;
-
 }
 
-html {
-  scroll-behavior: smooth;
+img[loading="lazy"] {
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
 }
 
-/* Reset box-sizing pour éviter les problèmes de dimensions */
-*, *::before, *::after {
-  box-sizing: border-box;
+img[loading="lazy"].loaded,
+img[loading="lazy"]:not([loading]) {
+  opacity: 1;
 }
-/*card styles */
+
+/* Styles pour les cartes de profil */
 .card-active {
   --card-opacity: 1 !important;
 }
 
+/* Classes utilitaires custom */
 .inset--10px {
   inset: -10px;
 }
@@ -92,16 +110,17 @@ html {
 
 .backdrop-blur-30px {
   backdrop-filter: blur(30px);
+  -webkit-backdrop-filter: blur(30px);
 }
 
-
-/* Support du bg-clip-text pour les navigateurs */
+/* Support du bg-clip-text */
 .bg-clip-text {
   -webkit-background-clip: text;
   background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
-/* Animation pour les cartes de coach */
+/* Animation float pour les cartes */
 @keyframes float {
   0%, 100% {
     transform: translateY(0px);
@@ -115,18 +134,67 @@ html {
   animation: float 3s ease-in-out infinite;
 }
 
-/* Amélioration des transitions */
-* {
-  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+/* Transitions par défaut */
+button, a, [role="button"] {
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* Support des images avec loading */
-img[loading="lazy"] {
-  opacity: 0;
-  transition: opacity 0.3s ease-in-out;
+/* Fix pour les input et textarea */
+input, textarea, select {
+  font-family: inherit;
 }
 
-img[loading="lazy"].loaded,
-img[loading="lazy"]:not([loading]) {
-  opacity: 1;
+/* Empêcher le zoom sur les input en mobile */
+@media screen and (max-width: 768px) {
+  input, textarea, select {
+    font-size: 16px !important;
+  }
+}
+
+/* Scrollbar custom (optionnel) */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #1a1a1a;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #D2A813;
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #e6b514;
+}
+
+/* Fix pour Safari */
+@supports (-webkit-touch-callout: none) {
+  body {
+    min-height: -webkit-fill-available;
+  }
+}
+
+/* Amélioration des performances */
+.gpu-accelerated {
+  transform: translateZ(0);
+  will-change: transform;
+}
+
+/* Focus visible pour l'accessibilité */
+:focus-visible {
+  outline: 2px solid #D2A813;
+  outline-offset: 2px;
+}
+
+/* Désactiver les animations si l'utilisateur préfère */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }
