@@ -1,40 +1,79 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
+import { supabase } from "../services/supabaseImages"; // ton client Supabase
 
 function SectionCategories() {
-  const categories = [
-    {
-      name: "Équipement",
-      image: "/Cardio.JPG",
-      description:
-        "Entraîne-toi avec les plus grandes marques : TechnoGym, Hammer Strength.",
-    },
-    {
-      name: "Motivation",
-      image: "/GILL.jpg",
-      description:
-        "Chaque goutte de sueur te rapproche de ton but. Ne lâche rien 💪",
-    },
-    {
-      name: "OLD SCHOOL",
-      image: "/DevantIron.jpg",
-      description:
-        "Retour aux sources, là où tout a commencé. Brut, authentique, efficace.",
-    },
-  ];
-
+  const [categories, setCategories] = useState([]);
+  const [loading, setLoading] = useState(true);
   const [activeIndex, setActiveIndex] = useState(null);
+
+  useEffect(() => {
+    async function loadCategories() {
+      try {
+        //  Liste des fichiers dans le dossier "categories"
+        const { data, error } = await supabase
+          .storage
+          .from("gym-images")
+          .list("categories", { limit: 10 });
+
+        if (error) throw error;
+
+        //  On ignore les fichiers cachés type .emptyFolderPlaceholder
+        const validFiles = data.filter(f => f.name && !f.name.startsWith("."));
+
+        //  On crée les URLs publiques
+        const urls = validFiles.map((file) => {
+          const { data } = supabase
+            .storage
+            .from("gym-images")
+            .getPublicUrl(`categories/${file.name}`);
+
+          // 🧠 Associe les descriptions manuellement selon le nom du fichier
+          let description = "";
+          if (file.name.toLowerCase().includes("cardio"))
+            description = "Entraîne-toi avec les plus grandes marques : TechnoGym, Hammer Strength.";
+          else if (file.name.toLowerCase().includes("gill"))
+            description = "Chaque goutte de sueur te rapproche de ton but. Ne lâche rien 💪";
+          else if (file.name.toLowerCase().includes("iron"))
+            description = "Retour aux sources, là où tout a commencé. Brut, authentique, efficace.";
+
+          return {
+            name: file.name.split(".")[0], // sans l’extension
+            image: data.publicUrl,
+            description,
+          };
+        });
+
+        console.log(" Catégories Supabase :", urls);
+        setCategories(urls);
+      } catch (err) {
+        console.error("Erreur chargement catégories :", err);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    loadCategories();
+  }, []);
+
+  if (loading) {
+    return (
+      <section className="flex justify-center items-center py-20 text-yellow-400">
+        Chargement des catégories...
+      </section>
+    );
+  }
 
   return (
     <section className="relative w-full min-h-screen flex items-center justify-center py-20 px-4 sm:px-8 overflow-hidden">
-      {/* 🌄 Image de fond */}
+      {/*  Image de fond */}
       <div
         className="absolute inset-0 bg-cover bg-center"
         style={{ backgroundImage: "url('/dosGill.jpg')" }}
       />
       <div className="absolute inset-0 bg-black/70" />
 
-      {/* 💪 Contenu principal */}
+      {/*  Contenu principal */}
       <div className="relative z-10 w-full max-w-7xl mx-auto">
         <div className="flex flex-col items-center justify-center gap-14">
           {/* 📝 Texte */}
@@ -59,14 +98,13 @@ function SectionCategories() {
             </p>
           </motion.div>
 
-          {/* 🖼️ Grille de cartes - ULTRA CENTRÉE */}
+          {/* Grille de catégories */}
           <div className="w-full flex justify-center">
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 w-full max-w-6xl justify-items-center">
               {categories.map((cat, index) => (
                 <motion.div
                   key={index}
                   className="relative group rounded-2xl overflow-hidden shadow-xl cursor-pointer w-full max-w-sm"
-                  style={{ margin: '0 auto' }} // Force le centrage inline
                   onMouseEnter={() => setActiveIndex(index)}
                   onMouseLeave={() => setActiveIndex(null)}
                   onClick={() =>
@@ -82,13 +120,14 @@ function SectionCategories() {
                   }}
                   whileHover={{ scale: 1.05 }}
                 >
-                  {/* Conteneur image avec aspect-ratio fixe */}
+                  {/* Image Supabase */}
                   <div className="relative w-full" style={{ aspectRatio: '4/5' }}>
                     <motion.img
                       src={cat.image}
                       alt={cat.name}
+                      loading="lazy"
+                      onLoad={(e) => e.currentTarget.classList.add("loaded")}
                       className="absolute inset-0 w-full h-full object-cover"
-                      style={{ margin: 0 }} // Annule le margin global
                       initial={{ scale: 1 }}
                       whileHover={{ scale: 1.1 }}
                       transition={{
