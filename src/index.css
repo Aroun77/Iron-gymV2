@@ -75,7 +75,7 @@ img {
   max-width: 100%;
   height: auto;
 }
-
+/*
 img[loading="lazy"] {
   opacity: 0;
   transition: opacity 0.3s ease-in-out;
@@ -84,7 +84,7 @@ img[loading="lazy"] {
 img[loading="lazy"].loaded,
 img[loading="lazy"]:not([loading]) {
   opacity: 1;
-}
+}*/
 
 /* Styles pour les cartes de profil */
 .card-active {
