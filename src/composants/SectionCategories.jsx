@@ -7,7 +7,7 @@ function SectionCategories() {
   const [activeIndex, setActiveIndex] = useState(null);
 
   useEffect(() => {
-    // Préconnexion au CDN Supabase pour accélérer le premier chargement
+    // Préconnexion CDN
     const link = document.createElement("link");
     link.rel = "preconnect";
     link.href = "https://cxhhepesqvcrlwfenhck.supabase.co";
@@ -22,57 +22,59 @@ function SectionCategories() {
 
         if (error) throw error;
 
-        //  Ignore les fichiers vides / cachés
         const validFiles = data.filter(f => f.name && !f.name.startsWith("."));
 
-        //  Dictionnaire noms + descriptions personnalisés
         const labelMap = {
-          "Cardio.jpg": {
-            name: "Equipement",
-            description: "Entraîne-toi avec les plus grandes marques : TechnoGym, Hammer Strength."
+          "cardio.jpg": {
+            name: "Espace Cardio",
+            description: "Entraîne-toi avec les meilleures machines TechnoGym & Hammer Strength."
           },
-          "GILL.jpg": {
+          "gill.jpg": {
             name: "Motivation",
             description: "Chaque goutte de sueur te rapproche de ton but. Ne lâche rien 💪"
           },
-          "DevantIron.jpg": {
+          "iron.jpg": {
             name: "Old School",
             description: "Retour aux sources, brut et authentique. L’essence même de la force."
           },
+          "force.jpg": {
+            name: "Espace Force",
+            description: "Des charges lourdes pour construire du vrai muscle."
+          },
+          "cours.jpg": {
+            name: "Cours Collectifs",
+            description: "Ambiance, énergie et dépassement — rejoins le mouvement."
+          }
         };
 
-        //  Génération des URLs publiques et mapping avec labels
-        const urls = await Promise.all(
-          validFiles.map(async (file) => {
-            const { data } = supabase
-              .storage
-              .from("gym-images")
-              .getPublicUrl(`categories/${file.name}`);
+        const urls = validFiles.map((file) => {
+          const { data } = supabase
+            .storage
+            .from("gym-images")
+            .getPublicUrl(`categories/${file.name}`);
 
-            const imageUrl = data.publicUrl;
+          const baseUrl = data.publicUrl;
 
-            // Préchargement silencieux dans le cache navigateur
-            fetch(imageUrl, { cache: "force-cache" }).catch(() =>
-              console.warn("⚠️ Préchargement échoué :", file.name)
-            );
+          // ✅ version optimisée pour mobile : 800px max, qualité 70%
+          const optimizedUrl = baseUrl.replace(
+            "/object/public/",
+            "/render/image/public/"
+          ) + "?width=800&quality=70";
 
-            // Récupération du label défini ou fallback
-            const meta = labelMap[file.name] || {
-              name: file.name.replace(/\.[^/.]+$/, ""),
-              description: "Découvrez notre espace unique."
-            };
+          const meta = labelMap[file.name] || {
+            name: file.name.replace(/\.[^/.]+$/, ""),
+            description: "Découvrez notre espace unique."
+          };
 
-            return {
-              name: meta.name,
-              image: imageUrl,
-              description: meta.description,
-            };
-          })
-        );
+          return {
+            ...meta,
+            image: optimizedUrl
+          };
+        });
 
         setCategories(urls);
       } catch (err) {
-        console.error(" Erreur chargement catégories :", err);
+        console.error("❌ Erreur chargement catégories :", err);
       }
     }
 
@@ -81,17 +83,17 @@ function SectionCategories() {
 
   return (
     <section className="relative w-full min-h-screen flex items-center justify-center py-20 px-4 sm:px-8 overflow-hidden">
-      {/*  Image de fond */}
+      {/* Fond */}
       <div
         className="absolute inset-0 bg-cover bg-center"
         style={{ backgroundImage: "url('/dosGill.jpg')" }}
       />
       <div className="absolute inset-0 bg-black/70" />
 
-      {/*  Contenu principal */}
+      {/* Contenu principal */}
       <div className="relative z-10 w-full max-w-7xl mx-auto">
         <div className="flex flex-col items-center justify-center gap-14">
-          {/*  Texte principal */}
+          {/* Texte principal */}
           <motion.div
             initial={{ opacity: 0, y: -40 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -108,7 +110,7 @@ function SectionCategories() {
             </p>
           </motion.div>
 
-          {/* Grille de catégories */}
+          {/* Grille */}
           <div className="w-full flex justify-center">
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 w-full max-w-6xl justify-items-center">
               {categories.map((cat, index) => (
@@ -123,7 +125,7 @@ function SectionCategories() {
                   transition={{ duration: 0.6, delay: index * 0.1 }}
                   whileHover={{ scale: 1.04 }}
                 >
-                  {/* Image Supabase optimisée */}
+                  {/* Image Supabase optimisée mobile */}
                   <div className="relative w-full" style={{ aspectRatio: "4/5" }}>
                     <img
                       src={cat.image}
