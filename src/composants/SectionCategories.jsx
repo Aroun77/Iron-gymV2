@@ -1,68 +1,83 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { supabase } from "../services/supabaseImages"; // ton client Supabase
+import { supabase } from "../services/supabaseImages";
 
 function SectionCategories() {
   const [categories, setCategories] = useState([]);
-  const [loading, setLoading] = useState(true);
   const [activeIndex, setActiveIndex] = useState(null);
 
   useEffect(() => {
+    // Préconnexion au CDN Supabase pour accélérer le premier chargement
+    const link = document.createElement("link");
+    link.rel = "preconnect";
+    link.href = "https://cxhhepesqvcrlwfenhck.supabase.co";
+    document.head.appendChild(link);
+
     async function loadCategories() {
       try {
-        //  Liste des fichiers dans le dossier "categories"
         const { data, error } = await supabase
           .storage
           .from("gym-images")
-          .list("categories", { limit: 10 });
+          .list("categories", { limit: 20 });
 
         if (error) throw error;
 
-        //  On ignore les fichiers cachés type .emptyFolderPlaceholder
+        //  Ignore les fichiers vides / cachés
         const validFiles = data.filter(f => f.name && !f.name.startsWith("."));
 
-        //  On crée les URLs publiques
-        const urls = validFiles.map((file) => {
-          const { data } = supabase
-            .storage
-            .from("gym-images")
-            .getPublicUrl(`categories/${file.name}`);
+        //  Dictionnaire noms + descriptions personnalisés
+        const labelMap = {
+          "Cardio.jpg": {
+            name: "Equipement",
+            description: "Entraîne-toi avec les plus grandes marques : TechnoGym, Hammer Strength."
+          },
+          "GILL.jpg": {
+            name: "Motivation",
+            description: "Chaque goutte de sueur te rapproche de ton but. Ne lâche rien 💪"
+          },
+          "DevantIron.jpg": {
+            name: "Old School",
+            description: "Retour aux sources, brut et authentique. L’essence même de la force."
+          },
+        };
 
-          // 🧠 Associe les descriptions manuellement selon le nom du fichier
-          let description = "";
-          if (file.name.toLowerCase().includes("cardio"))
-            description = "Entraîne-toi avec les plus grandes marques : TechnoGym, Hammer Strength.";
-          else if (file.name.toLowerCase().includes("gill"))
-            description = "Chaque goutte de sueur te rapproche de ton but. Ne lâche rien 💪";
-          else if (file.name.toLowerCase().includes("iron"))
-            description = "Retour aux sources, là où tout a commencé. Brut, authentique, efficace.";
+        //  Génération des URLs publiques et mapping avec labels
+        const urls = await Promise.all(
+          validFiles.map(async (file) => {
+            const { data } = supabase
+              .storage
+              .from("gym-images")
+              .getPublicUrl(`categories/${file.name}`);
 
-          return {
-            name: file.name.split(".")[0], // sans l’extension
-            image: data.publicUrl,
-            description,
-          };
-        });
+            const imageUrl = data.publicUrl;
 
-        console.log(" Catégories Supabase :", urls);
+            // Préchargement silencieux dans le cache navigateur
+            fetch(imageUrl, { cache: "force-cache" }).catch(() =>
+              console.warn("⚠️ Préchargement échoué :", file.name)
+            );
+
+            // Récupération du label défini ou fallback
+            const meta = labelMap[file.name] || {
+              name: file.name.replace(/\.[^/.]+$/, ""),
+              description: "Découvrez notre espace unique."
+            };
+
+            return {
+              name: meta.name,
+              image: imageUrl,
+              description: meta.description,
+            };
+          })
+        );
+
         setCategories(urls);
       } catch (err) {
-        console.error("Erreur chargement catégories :", err);
-      } finally {
-        setLoading(false);
+        console.error(" Erreur chargement catégories :", err);
       }
     }
 
     loadCategories();
   }, []);
-
-  if (loading) {
-    return (
-      <section className="flex justify-center items-center py-20 text-yellow-400">
-        Chargement des catégories...
-      </section>
-    );
-  }
 
   return (
     <section className="relative w-full min-h-screen flex items-center justify-center py-20 px-4 sm:px-8 overflow-hidden">
@@ -76,25 +91,20 @@ function SectionCategories() {
       {/*  Contenu principal */}
       <div className="relative z-10 w-full max-w-7xl mx-auto">
         <div className="flex flex-col items-center justify-center gap-14">
-          {/* 📝 Texte */}
+          {/*  Texte principal */}
           <motion.div
             initial={{ opacity: 0, y: -40 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.3 }}
-            transition={{ duration: 1 }}
+            transition={{ duration: 0.6 }}
             className="text-center max-w-3xl"
           >
-            <h2 className="text-4xl sm:text-5xl md:text-6xl font-extrabold text-yellow-400 leading-tight drop-shadow-lg mb-6">
-              Équipement.
-              <br />
-              Motivation.
-              <br />
-              OLD SCHOOL.
+            <h2 className="text-4xl sm:text-5xl md:text-6xl font-extrabold text-yellow-400 leading-tight mb-6">
+              Équipement.<br />Motivation.<br />OLD SCHOOL.
             </h2>
             <p className="text-white/90 text-base sm:text-lg md:text-xl leading-relaxed px-2 sm:px-4">
-              Des valeurs fortes pour des performances réelles.  
-              Chez <span className="text-yellow-400 font-semibold">Iron GYM</span>,  
-              chaque entraînement est un pas vers la légende.
+              Des valeurs fortes pour des performances réelles.<br />
+              Chez <span className="text-yellow-400 font-semibold">Iron GYM</span>, chaque entraînement est un pas vers la légende.
             </p>
           </motion.div>
 
@@ -104,44 +114,29 @@ function SectionCategories() {
               {categories.map((cat, index) => (
                 <motion.div
                   key={index}
-                  className="relative group rounded-2xl overflow-hidden shadow-xl cursor-pointer w-full max-w-sm"
+                  className="relative group rounded-2xl overflow-hidden shadow-xl cursor-pointer w-full max-w-sm bg-[#111]"
                   onMouseEnter={() => setActiveIndex(index)}
                   onMouseLeave={() => setActiveIndex(null)}
-                  onClick={() =>
-                    setActiveIndex(activeIndex === index ? null : index)
-                  }
-                  initial={{ opacity: 0, y: 60, scale: 0.95 }}
-                  whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, amount: 0.3 }}
-                  transition={{
-                    duration: 1.2,
-                    delay: index * 0.2,
-                    ease: "easeOut",
-                  }}
-                  whileHover={{ scale: 1.05 }}
+                  transition={{ duration: 0.6, delay: index * 0.1 }}
+                  whileHover={{ scale: 1.04 }}
                 >
-                  {/* Image Supabase */}
-                  <div className="relative w-full" style={{ aspectRatio: '4/5' }}>
-                    <motion.img
+                  {/* Image Supabase optimisée */}
+                  <div className="relative w-full" style={{ aspectRatio: "4/5" }}>
+                    <img
                       src={cat.image}
                       alt={cat.name}
                       loading="lazy"
-                      onLoad={(e) => e.currentTarget.classList.add("loaded")}
-                      className="absolute inset-0 w-full h-full object-cover"
-                      initial={{ scale: 1 }}
-                      whileHover={{ scale: 1.1 }}
-                      transition={{
-                        duration: 3,
-                        ease: "easeInOut",
-                        repeat: Infinity,
-                        repeatType: "reverse",
-                      }}
+                      className="absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-200 ease-out"
+                      onLoad={(e) => (e.currentTarget.style.opacity = "1")}
                     />
                   </div>
 
                   {/* Overlay texte */}
                   <div
-                    className={`absolute inset-0 flex flex-col items-center justify-center text-center p-6 transition-all duration-500 ${
+                    className={`absolute inset-0 flex flex-col items-center justify-center text-center p-6 transition-all duration-400 ${
                       activeIndex === index
                         ? "bg-black/80 opacity-100"
                         : "bg-black/70 opacity-0 group-hover:opacity-100"
