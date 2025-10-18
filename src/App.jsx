@@ -6,8 +6,6 @@ import Products from "./pages/Products";
 import Abonnement from "./pages/Abonnement";
 import Machine from "./pages/Machines";
 import Tableau from "./pages/Tableau";
-import { SpeedInsights } from "@vercel/speed-insights/react"  
-
 
 
 
@@ -22,7 +20,6 @@ function App() {
         <Route path="/abonnement" element={<Abonnement />} />
         <Route path="/machines" element={<Machine />} />
         <Route path="/tableau" element={<Tableau />} />
-        <SpeedInsights />
       </Routes>
     </Router>
   );
