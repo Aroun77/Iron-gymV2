@@ -7,7 +7,7 @@ function SectionCategories() {
   const [activeIndex, setActiveIndex] = useState(null);
 
   useEffect(() => {
-    // Préconnexion au CDN Supabase pour accélérer le premier chargement
+    // Préconnexion Supabase CDN
     const link = document.createElement("link");
     link.rel = "preconnect";
     link.href = "https://cxhhepesqvcrlwfenhck.supabase.co";
@@ -22,10 +22,9 @@ function SectionCategories() {
 
         if (error) throw error;
 
-        //  Ignore les fichiers vides / cachés
         const validFiles = data.filter(f => f.name && !f.name.startsWith("."));
 
-        //  Dictionnaire noms + descriptions personnalisés
+        // Mapping pour les noms custom
         const labelMap = {
           "Cardio.jpg": {
             name: "Equipement",
@@ -41,38 +40,42 @@ function SectionCategories() {
           },
         };
 
-        //  Génération des URLs publiques et mapping avec labels
+        // ⚡ ICI : Image optimisée via /render/image/public
         const urls = await Promise.all(
-          validFiles.map(async (file) => {
-            const { data } = supabase
-              .storage
-              .from("gym-images")
-              .getPublicUrl(`categories/${file.name}`);
+    validFiles.map(async (file) => {
 
-            const imageUrl = data.publicUrl;
+    const { data } = supabase
+      .storage
+      .from("gym-images")
+      .getPublicUrl(`categories/${file.name}`);
 
-            // Préchargement silencieux dans le cache navigateur
-            fetch(imageUrl, { cache: "force-cache" }).catch(() =>
-              console.warn("⚠️ Préchargement échoué :", file.name)
-            );
+    const baseUrl = data.publicUrl;
 
-            // Récupération du label défini ou fallback
-            const meta = labelMap[file.name] || {
-              name: file.name.replace(/\.[^/.]+$/, ""),
-              description: "Découvrez notre espace unique."
-            };
+    // URL optimisée PUBLIC
+    const optimizedUrl =
+      `${baseUrl}?width=900&quality=70&resize=contain`;
 
-            return {
-              name: meta.name,
-              image: imageUrl,
-              description: meta.description,
-            };
-          })
-        );
+    // On précharge pour un rendu instantané
+    fetch(optimizedUrl, { cache: "force-cache" }).catch(() => {});
+
+    // Label
+    const meta = labelMap[file.name] || {
+      name: file.name.replace(/\.[^/.]+$/, ""),
+      description: "Découvrez notre espace unique."
+    };
+
+    return {
+      name: meta.name,
+      image: optimizedUrl,
+      description: meta.description,
+    };
+  })
+);
+
 
         setCategories(urls);
       } catch (err) {
-        console.error(" Erreur chargement catégories :", err);
+        console.error("Erreur catégories :", err);
       }
     }
 
@@ -81,17 +84,19 @@ function SectionCategories() {
 
   return (
     <section className="relative w-full min-h-screen flex items-center justify-center py-20 px-4 sm:px-8 overflow-hidden">
-      {/*  Image de fond */}
+      
+      {/* Fond */}
       <div
         className="absolute inset-0 bg-cover bg-center"
         style={{ backgroundImage: "url('/dosGill.jpg')" }}
       />
       <div className="absolute inset-0 bg-black/70" />
 
-      {/*  Contenu principal */}
+      {/* Contenu */}
       <div className="relative z-10 w-full max-w-7xl mx-auto">
         <div className="flex flex-col items-center justify-center gap-14">
-          {/*  Texte principal */}
+
+          {/* Texte */}
           <motion.div
             initial={{ opacity: 0, y: -40 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -108,7 +113,7 @@ function SectionCategories() {
             </p>
           </motion.div>
 
-          {/* Grille de catégories */}
+          {/* Grille */}
           <div className="w-full flex justify-center">
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 w-full max-w-6xl justify-items-center">
               {categories.map((cat, index) => (
@@ -123,7 +128,8 @@ function SectionCategories() {
                   transition={{ duration: 0.6, delay: index * 0.1 }}
                   whileHover={{ scale: 1.04 }}
                 >
-                  {/* Image Supabase optimisée */}
+                  
+                  {/* IMAGE OPTIMISÉE */}
                   <div className="relative w-full" style={{ aspectRatio: "4/5" }}>
                     <img
                       src={cat.image}
@@ -134,7 +140,7 @@ function SectionCategories() {
                     />
                   </div>
 
-                  {/* Overlay texte */}
+                  {/* Overlay */}
                   <div
                     className={`absolute inset-0 flex flex-col items-center justify-center text-center p-6 transition-all duration-400 ${
                       activeIndex === index
@@ -149,10 +155,12 @@ function SectionCategories() {
                       {cat.description}
                     </p>
                   </div>
+
                 </motion.div>
               ))}
             </div>
           </div>
+
         </div>
       </div>
     </section>

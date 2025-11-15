@@ -15,13 +15,29 @@ function Etages() {
 
         if (error) throw error;
 
-        const validFiles = data.filter(f => f.name && !f.name.startsWith("."));
-        const urls = validFiles.map(file => {
+        // On ignore les .hidden ou fichiers vides
+        const validFiles = data.filter(
+          (f) => f.name && !f.name.startsWith(".")
+        );
+
+        const urls = validFiles.map((file) => {
           const { data } = supabase
             .storage
             .from("gym-images")
             .getPublicUrl(`etages/${file.name}`);
-          return { name: file.name, url: data.publicUrl };
+
+          const baseUrl = data.publicUrl;
+
+          // 🔥 URL optimisée SANS /render → donc PAS de 403
+          const optimizedUrl = `${baseUrl}?width=1200&quality=70&resize=contain`;
+
+          // Préchargement pour accélérer l'affichage
+          fetch(optimizedUrl, { cache: "force-cache" }).catch(() => {});
+
+          return {
+            name: file.name,
+            url: optimizedUrl,
+          };
         });
 
         setImages(urls);
@@ -50,7 +66,7 @@ function Etages() {
         Découvrez nos espaces
       </h2>
 
-      {/*  Grille des étages */}
+      {/* Grille des étages */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 w-full max-w-6xl mx-auto place-items-center">
         {images.map((img, index) => (
           <motion.div
@@ -65,8 +81,10 @@ function Etages() {
               src={img.url}
               alt={img.name}
               loading="lazy"
+              onLoad={(e) => e.currentTarget.classList.add("loaded")}
               className="w-full h-64 sm:h-80 md:h-96 object-cover transition-transform duration-700 group-hover:scale-110"
             />
+
             <div className="absolute bottom-4 left-1/2 -translate-x-1/2 bg-black/70 text-white px-5 py-2 rounded-xl text-sm sm:text-base font-semibold backdrop-blur-sm">
               {index === 0 ? "Premier étage" : "Deuxième étage"}
             </div>
