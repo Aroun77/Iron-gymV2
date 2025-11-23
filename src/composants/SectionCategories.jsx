@@ -1,81 +1,52 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { supabase } from "../services/supabaseImages";
+import { getCategories } from "../services/api";
 
 function SectionCategories() {
   const [categories, setCategories] = useState([]);
   const [activeIndex, setActiveIndex] = useState(null);
 
   useEffect(() => {
-    // Préconnexion Supabase CDN
+    // Préconnecter le CDN Supabase
     const link = document.createElement("link");
     link.rel = "preconnect";
     link.href = "https://cxhhepesqvcrlwfenhck.supabase.co";
     document.head.appendChild(link);
-
+  
+    
+    
     async function loadCategories() {
       try {
-        const { data, error } = await supabase
-          .storage
-          .from("gym-images")
-          .list("categories", { limit: 20 });
-
-        if (error) throw error;
-
-        const validFiles = data.filter(f => f.name && !f.name.startsWith("."));
-
-        // Mapping pour les noms custom
-        const labelMap = {
-          "Cardio.jpg": {
+        const data = await getCategories();
+        
+        // Renommage + descriptions custom
+        const metaData = {
+          Cardio: {
             name: "Equipement",
             description: "Entraîne-toi avec les plus grandes marques : TechnoGym, Hammer Strength."
           },
-          "GILL.jpg": {
+          GILL: {
             name: "Motivation",
             description: "Chaque goutte de sueur te rapproche de ton but. Ne lâche rien 💪"
           },
-          "DevantIron.jpg": {
+          DevantIron: {
             name: "Old School",
             description: "Retour aux sources, brut et authentique. L’essence même de la force."
           },
         };
+        
+        const filtered = data.filter(it => it?.url && !it.url.toLowerCase().includes('empty') && !it.url.toLowerCase().includes('placeholder'));
+        setCategories(filtered);
+        
+        const formatted = data.map(cat => ({
+          ...cat,
+          name: metaData[cat.name]?.name || cat.name,
+          description: metaData[cat.name]?.description || "Découvrez notre espace unique."
+        }));
 
-        // ⚡ ICI : Image optimisée via /render/image/public
-        const urls = await Promise.all(
-    validFiles.map(async (file) => {
-
-    const { data } = supabase
-      .storage
-      .from("gym-images")
-      .getPublicUrl(`categories/${file.name}`);
-
-    const baseUrl = data.publicUrl;
-
-    // URL optimisée PUBLIC
-    const optimizedUrl =
-      `${baseUrl}?width=900&quality=70&resize=contain`;
-
-    // On précharge pour un rendu instantané
-    fetch(optimizedUrl, { cache: "force-cache" }).catch(() => {});
-
-    // Label
-    const meta = labelMap[file.name] || {
-      name: file.name.replace(/\.[^/.]+$/, ""),
-      description: "Découvrez notre espace unique."
-    };
-
-    return {
-      name: meta.name,
-      image: optimizedUrl,
-      description: meta.description,
-    };
-  })
-);
-
-
-        setCategories(urls);
+        setCategories(formatted);
       } catch (err) {
-        console.error("Erreur catégories :", err);
+        console.error("Erreur Chargement Catégories:", err);
       }
     }
 
@@ -128,11 +99,11 @@ function SectionCategories() {
                   transition={{ duration: 0.6, delay: index * 0.1 }}
                   whileHover={{ scale: 1.04 }}
                 >
-                  
+
                   {/* IMAGE OPTIMISÉE */}
                   <div className="relative w-full" style={{ aspectRatio: "4/5" }}>
                     <img
-                      src={cat.image}
+                      src={cat.url}
                       alt={cat.name}
                       loading="lazy"
                       className="absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-200 ease-out"

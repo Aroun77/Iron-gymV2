@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
-import { supabase } from "../services/supabaseImages";
+import { getEtages } from "../services/api"; // 🌟 NOUVEAU : appel backend Express
 
 function Etages() {
   const [images, setImages] = useState([]);
@@ -9,40 +9,10 @@ function Etages() {
   useEffect(() => {
     async function loadImages() {
       try {
-        const { data, error } = await supabase.storage
-          .from("gym-images")
-          .list("etages", { limit: 10 });
-
-        if (error) throw error;
-
-        // On ignore les .hidden ou fichiers vides
-        const validFiles = data.filter(
-          (f) => f.name && !f.name.startsWith(".")
-        );
-
-        const urls = validFiles.map((file) => {
-          const { data } = supabase
-            .storage
-            .from("gym-images")
-            .getPublicUrl(`etages/${file.name}`);
-
-          const baseUrl = data.publicUrl;
-
-          // 🔥 URL optimisée SANS /render → donc PAS de 403
-          const optimizedUrl = `${baseUrl}?width=1200&quality=70&resize=contain`;
-
-          // Préchargement pour accélérer l'affichage
-          fetch(optimizedUrl, { cache: "force-cache" }).catch(() => {});
-
-          return {
-            name: file.name,
-            url: optimizedUrl,
-          };
-        });
-
-        setImages(urls);
+        const data = await getEtages(); // Récupère depuis Express
+        setImages(data);
       } catch (err) {
-        console.error("Erreur chargement images:", err);
+        console.error("Erreur chargement étages:", err);
       } finally {
         setLoading(false);
       }
@@ -61,12 +31,13 @@ function Etages() {
 
   return (
     <section className="flex flex-col items-center justify-center text-center py-16 px-4 sm:px-8 md:px-12 lg:px-20 bg-[#111] text-white">
+
       {/* Titre */}
       <h2 className="text-4xl sm:text-5xl font-extrabold text-yellow-400 mb-12 tracking-wide">
         Découvrez nos espaces
       </h2>
 
-      {/* Grille des étages */}
+      {/* Grille */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 w-full max-w-6xl mx-auto place-items-center">
         {images.map((img, index) => (
           <motion.div
@@ -85,12 +56,14 @@ function Etages() {
               className="w-full h-64 sm:h-80 md:h-96 object-cover transition-transform duration-700 group-hover:scale-110"
             />
 
+            {/* Légende dynamique */}
             <div className="absolute bottom-4 left-1/2 -translate-x-1/2 bg-black/70 text-white px-5 py-2 rounded-xl text-sm sm:text-base font-semibold backdrop-blur-sm">
-              {index === 0 ? "Premier étage" : "Deuxième étage"}
+              {img.label || `Étage ${index + 1}`} 
             </div>
           </motion.div>
         ))}
       </div>
+
     </section>
   );
 }
