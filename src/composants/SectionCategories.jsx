@@ -12,6 +12,12 @@ function SectionCategories() {
     link.rel = "preconnect";
     link.href = "https://cxhhepesqvcrlwfenhck.supabase.co";
     document.head.appendChild(link);
+
+    if ("requestIdleCallback" in window) {
+    requestIdleCallback(() => {
+      fetch(`${API_URL}/api/images/categories`, { cache: "force-cache" });
+    });
+  }
   
     
     
@@ -106,6 +112,8 @@ function SectionCategories() {
                       src={cat.url}
                       alt={cat.name}
                       loading="lazy"
+                      decoding="async"
+                      style={{contentVisibility: "auto", containIntrinsicSize:"400px"}}
                       className="absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-200 ease-out"
                       onLoad={(e) => (e.currentTarget.style.opacity = "1")}
                     />

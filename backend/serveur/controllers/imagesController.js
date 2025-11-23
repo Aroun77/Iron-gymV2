@@ -31,7 +31,7 @@ export async function getImagesByFolder(req, res, noSend = false) {
     const cached = cache.get(cacheKey);
     if (cached) {
       if (!noSend) {
-        res.setHeader('Cache-Control', 'public, max-age=120, stale-while-revalidate=600');
+        res.setHeader('Cache-Control', 'public, max-age=86400, stale-while-revalidate=604800');
         return res.json(cached);
       }
       return cached;
@@ -54,7 +54,7 @@ export async function getImagesByFolder(req, res, noSend = false) {
         return {
           name: f.name.replace(/\.[^/.]+$/, ''),
           url: publicUrl,
-          optimized: getOptimizedPublicUrl(publicUrl, { width: 900, quality: 70 })
+          optimized: getOptimizedPublicUrl(publicUrl, { width: 600, quality: 65 })
         };
       });
 
@@ -63,7 +63,7 @@ export async function getImagesByFolder(req, res, noSend = false) {
 
     // ⚡ 5) Retour (option noSend si utilisé par d’autres contrôleurs)
     if (!noSend) {
-      res.setHeader('Cache-Control', 'public, max-age=120, stale-while-revalidate=600');
+      res.setHeader('Cache-Control', 'public, max-age=86400, stale-while-revalidate=604800');
       return res.json(files);
     }
     return files;

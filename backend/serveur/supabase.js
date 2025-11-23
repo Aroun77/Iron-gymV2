@@ -52,7 +52,7 @@ export async function listImages(folder = '', bucket = 'gym-images') {
  */
 export function getOptimizedPublicUrl(
   publicUrl,
-  { width = 900, quality = 70, format = 'webp', resize = 'contain' } = {}
+  { width = 600, quality = 65, format = 'webp', resize = 'contain' } = {}
 ) {
   if (!publicUrl) return null;
 

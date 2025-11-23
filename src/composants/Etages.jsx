@@ -17,6 +17,11 @@ function Etages() {
         setLoading(false);
       }
     }
+    if ("requestIdleCallback" in window) {
+    requestIdleCallback(() => {
+      fetch(`${API_URL}/api/images/etages`, { cache: "force-cache" });
+    });
+  }
 
     loadImages();
   }, []);
@@ -52,6 +57,8 @@ function Etages() {
               src={img.url}
               alt={img.name}
               loading="lazy"
+              decoding="async"
+              style={{contentVisibility: "auto", containIntrinsicSize:"400px"}}
               onLoad={(e) => e.currentTarget.classList.add("loaded")}
               className="w-full h-64 sm:h-80 md:h-96 object-cover transition-transform duration-700 group-hover:scale-110"
             />
