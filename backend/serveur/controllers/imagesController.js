@@ -47,7 +47,8 @@ export async function getImagesByFolder(req, res, noSend = false) {
     }
 
     // ⚡ 3) Filtrage + création URLs via proxy backend
-    const backendUrl = process.env.BACKEND_URL || 'http://localhost:5000';
+    // Utiliser l'URL de production Render au lieu de localhost
+    const backendUrl = process.env.BACKEND_URL || 'https://iron-gymv2.onrender.com';
     const files = (data || [])
       .filter(f => f?.name && !isPlaceholderFile(f.name))
       .map(f => {
