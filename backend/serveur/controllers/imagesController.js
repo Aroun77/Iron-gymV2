@@ -31,7 +31,7 @@ export async function getImagesByFolder(req, res, noSend = false) {
     const cached = cache.get(cacheKey);
     if (cached) {
       if (!noSend) {
-        res.setHeader('Cache-Control', 'public, max-age=86400, stale-while-revalidate=604800');
+        res.setHeader("Cache-Control", "public, max-age=86400, stale-while-revalidate=604800 , must-revalidate");
         return res.json(cached);
       }
       return cached;
@@ -63,7 +63,7 @@ export async function getImagesByFolder(req, res, noSend = false) {
 
     // ⚡ 5) Retour (option noSend si utilisé par d’autres contrôleurs)
     if (!noSend) {
-      res.setHeader('Cache-Control', 'public, max-age=86400, stale-while-revalidate=604800');
+      res.setHeader("Cache-Control", "public, max-age=86400, stale-while-revalidate=604800 , must-revalidate");
       return res.json(files);
     }
     return files;

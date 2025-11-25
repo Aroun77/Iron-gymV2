@@ -4,7 +4,7 @@ export async function cachedFetch(url) {
   const cache = sessionStorage.getItem(url);
   if (cache) return JSON.parse(cache);
 
-  const res = await fetch(url, { cache: "force-cache" });
+  const res = await fetch(url, { cache: "no-cache" });
   const data = await res.json();
   sessionStorage.setItem(url, JSON.stringify(data));
   return data;

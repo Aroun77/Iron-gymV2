@@ -7,50 +7,57 @@ function SectionCategories() {
   const [activeIndex, setActiveIndex] = useState(null);
 
   useEffect(() => {
-    // Préconnecter le CDN Supabase
+    //  Préconnect CDN Supabase
     const link = document.createElement("link");
     link.rel = "preconnect";
     link.href = "https://cxhhepesqvcrlwfenhck.supabase.co";
     document.head.appendChild(link);
 
-    if ("requestIdleCallback" in window) {
-    requestIdleCallback(() => {
-      fetch(`${API_URL}/api/images/categories`, { cache: "force-cache" });
-    });
-  }
-  
-    
-    
     async function loadCategories() {
       try {
         const data = await getCategories();
-        
-        // Renommage + descriptions custom
+
         const metaData = {
           Cardio: {
             name: "Equipement",
-            description: "Entraîne-toi avec les plus grandes marques : TechnoGym, Hammer Strength."
+            description:
+              "Entraîne-toi avec les plus grandes marques : TechnoGym, Hammer Strength.",
           },
           GILL: {
             name: "Motivation",
-            description: "Chaque goutte de sueur te rapproche de ton but. Ne lâche rien 💪"
+            description:
+              "Chaque goutte de sueur te rapproche de ton but. Ne lâche rien 💪",
           },
           DevantIron: {
             name: "Old School",
-            description: "Retour aux sources, brut et authentique. L’essence même de la force."
+            description:
+              "Retour aux sources, brut et authentique. L’essence même de la force.",
           },
         };
-        
-        const filtered = data.filter(it => it?.url && !it.url.toLowerCase().includes('empty') && !it.url.toLowerCase().includes('placeholder'));
-        setCategories(filtered);
-        
-        const formatted = data.map(cat => ({
-          ...cat,
-          name: metaData[cat.name]?.name || cat.name,
-          description: metaData[cat.name]?.description || "Découvrez notre espace unique."
-        }));
+
+        const formatted = data
+          .filter(
+            (it) =>
+              it?.url &&
+              !it.url.toLowerCase().includes("empty") &&
+              !it.url.toLowerCase().includes("placeholder")
+          )
+          .map((cat) => ({
+            ...cat,
+            name: metaData[cat.name]?.name || cat.name,
+            description:
+              metaData[cat.name]?.description ||
+              "Découvrez notre espace unique.",
+          }));
 
         setCategories(formatted);
+
+        //  FIX iOS SAFARI : force no-store au premier chargement
+        formatted.forEach((cat) => {
+          if (cat?.url) {
+            fetch(cat.url, { cache: "no-store" }).catch(() => {});
+          }
+        });
       } catch (err) {
         console.error("Erreur Chargement Catégories:", err);
       }
@@ -61,7 +68,6 @@ function SectionCategories() {
 
   return (
     <section className="relative w-full min-h-screen flex items-center justify-center py-20 px-4 sm:px-8 overflow-hidden">
-      
       {/* Fond */}
       <div
         className="absolute inset-0 bg-cover bg-center"
@@ -72,7 +78,6 @@ function SectionCategories() {
       {/* Contenu */}
       <div className="relative z-10 w-full max-w-7xl mx-auto">
         <div className="flex flex-col items-center justify-center gap-14">
-
           {/* Texte */}
           <motion.div
             initial={{ opacity: 0, y: -40 }}
@@ -86,11 +91,13 @@ function SectionCategories() {
             </h2>
             <p className="text-white/90 text-base sm:text-lg md:text-xl leading-relaxed px-2 sm:px-4">
               Des valeurs fortes pour des performances réelles.<br />
-              Chez <span className="text-yellow-400 font-semibold">Iron GYM</span>, chaque entraînement est un pas vers la légende.
+              Chez{" "}
+              <span className="text-yellow-400 font-semibold">Iron GYM</span>,
+              chaque entraînement est un pas vers la légende.
             </p>
           </motion.div>
 
-          {/* Grille */}
+          {/* Grid */}
           <div className="w-full flex justify-center">
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 w-full max-w-6xl justify-items-center">
               {categories.map((cat, index) => (
@@ -105,7 +112,6 @@ function SectionCategories() {
                   transition={{ duration: 0.6, delay: index * 0.1 }}
                   whileHover={{ scale: 1.04 }}
                 >
-
                   {/* IMAGE OPTIMISÉE */}
                   <div className="relative w-full" style={{ aspectRatio: "4/5" }}>
                     <img
@@ -113,7 +119,10 @@ function SectionCategories() {
                       alt={cat.name}
                       loading="lazy"
                       decoding="async"
-                      style={{contentVisibility: "auto", containIntrinsicSize:"400px"}}
+                      style={{
+                        contentVisibility: "auto",
+                        containIntrinsicSize: "400px",
+                      }}
                       className="absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-200 ease-out"
                       onLoad={(e) => (e.currentTarget.style.opacity = "1")}
                     />
@@ -134,12 +143,10 @@ function SectionCategories() {
                       {cat.description}
                     </p>
                   </div>
-
                 </motion.div>
               ))}
             </div>
           </div>
-
         </div>
       </div>
     </section>

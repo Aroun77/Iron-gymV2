@@ -1,27 +1,42 @@
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
-import { getEtages } from "../services/api"; // 🌟 NOUVEAU : appel backend Express
+import { getEtages } from "../services/api";
 
 function Etages() {
   const [images, setImages] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    //  Préconnect CDN Supabase (iPhone boost)
+    const link = document.createElement("link");
+    link.rel = "preconnect";
+    link.href = "https://cxhhepesqvcrlwfenhck.supabase.co";
+    document.head.appendChild(link);
+
     async function loadImages() {
       try {
-        const data = await getEtages(); // Récupère depuis Express
+        const data = await getEtages();
         setImages(data);
+
+        //  FIX SAFARI / ANDROID : force no-store au 1er rendu
+        data?.forEach((img) => {
+          if (img?.url) {
+            fetch(img.url, { cache: "no-store" }).catch(() => {});
+          }
+        });
       } catch (err) {
         console.error("Erreur chargement étages:", err);
       } finally {
         setLoading(false);
       }
     }
+
+    //  Pendant idle → préfetch Express route
     if ("requestIdleCallback" in window) {
-    requestIdleCallback(() => {
-      fetch(`${API_URL}/api/images/etages`, { cache: "force-cache" });
-    });
-  }
+      requestIdleCallback(() => {
+        fetch(`${API_URL}/api/images/etages`, { cache: "no-cache" }).catch(() => {});
+      });
+    }
 
     loadImages();
   }, []);
@@ -58,14 +73,13 @@ function Etages() {
               alt={img.name}
               loading="lazy"
               decoding="async"
-              style={{contentVisibility: "auto", containIntrinsicSize:"400px"}}
-              onLoad={(e) => e.currentTarget.classList.add("loaded")}
-              className="w-full h-64 sm:h-80 md:h-96 object-cover transition-transform duration-700 group-hover:scale-110"
+              style={{ contentVisibility: "auto", containIntrinsicSize: "460px" }}
+              className="w-full h-64 sm:h-80 md:h-96 object-cover transition-transform duration-700 group-hover:scale-110 opacity-0"
+              onLoad={(e) => (e.currentTarget.style.opacity = "1")}
             />
 
-            {/* Légende dynamique */}
             <div className="absolute bottom-4 left-1/2 -translate-x-1/2 bg-black/70 text-white px-5 py-2 rounded-xl text-sm sm:text-base font-semibold backdrop-blur-sm">
-              {img.label || `Étage ${index + 1}`} 
+              {img.label || `Étage ${index + 1}`}
             </div>
           </motion.div>
         ))}

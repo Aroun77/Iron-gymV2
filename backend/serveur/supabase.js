@@ -4,24 +4,23 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
-//  VÉRIFICATION ENV
+//  Vérification des variables ENV
 if (!process.env.SUPABASE_URL || !process.env.SUPABASE_SERVICE_ROLE_KEY) {
   console.warn('⚠️ Missing SUPABASE_URL or SUPABASE_SERVICE_ROLE_KEY in .env');
 }
 
-// 💡 Client privé (serveur) — NO SESSION
+//  Client privé Serveur (pas de sessions)
 export const supabase = createClient(
   process.env.SUPABASE_URL,
   process.env.SUPABASE_SERVICE_ROLE_KEY,
   {
     auth: { persistSession: false },
-    global: { headers: { 'x-iron-cache': 'true' } } // ♻️ hint cache CDN
+    global: { headers: { 'x-iron-cache': 'true' } } // ➕ hint CDN
   }
 );
 
 /**
- *  List files from folder inside bucket `gym-images`
- * Returns => { name, path, publicUrl }
+ *  List images in folder (public bucket)
  */
 export async function listImages(folder = '', bucket = 'gym-images') {
   try {
@@ -46,27 +45,24 @@ export async function listImages(folder = '', bucket = 'gym-images') {
 }
 
 /**
- *  Create an optimized PUBLIC image URL
- *  Compatible iOS / Safari / Chrome / Android
- *  Always return a WORKING URL
+ *  Generate optimized PUBLIC URL
+ * Compatible iOS/Android/Chrome/Safari
+ *  DO NOT use /render/... (causes 403 mobile)
  */
 export function getOptimizedPublicUrl(
   publicUrl,
-  { width = 600, quality = 65, format = 'webp', resize = 'contain' } = {}
+  { width = 600, quality = 65, format = 'webp' } = {}
 ) {
   if (!publicUrl) return null;
 
   const url = new URL(publicUrl);
 
-  // 🧠 Safari Bug Fix: must be integer strings
+  //  Fix Safari Bug: parameters must be simple integer strings
   if (width) url.searchParams.set('width', String(width));
   if (quality) url.searchParams.set('quality', String(quality));
 
-  // 💪 Resize works safely everywhere
-  if (resize) url.searchParams.set('resize', resize);
-
-  // 🖼️ Try WebP, fallback auto if unsupported
-  if (format) url.searchParams.set('format', format);
+  // Force WebP for compression, auto fallback if unsupported
+  if (format) url.searchParams.set('format', String(format));
 
   return url.toString();
 }
