@@ -24,7 +24,7 @@ function Etages() {
             const preloadLink = document.createElement('link');
             preloadLink.rel = 'preload';
             preloadLink.as = 'image';
-            preloadLink.href = img.url; // Utiliser URL de base pour compatibilité iOS
+            preloadLink.href = img.url;
             document.head.appendChild(preloadLink);
           });
         }
@@ -72,13 +72,11 @@ function Etages() {
               alt={img.name || `Étage ${index + 1}`}
               loading={index < 2 ? "eager" : "lazy"}
               decoding="async"
-              className="w-full h-64 sm:h-80 md:h-96 object-cover transition-transform duration-700 group-hover:scale-110 loaded"
+              className="w-full h-64 sm:h-80 md:h-96 object-cover transition-transform duration-700 group-hover:scale-110"
               style={{
                 willChange: 'transform',
                 backgroundColor: '#1a1a1a'
               }}
-              onLoad={(e) => e.target.classList.add('loaded')}
-              onError={(e) => console.error("❌ Erreur image:", e.target.src)}
             />
 
             <div className="absolute bottom-4 left-1/2 -translate-x-1/2 bg-black/70 text-white px-5 py-2 rounded-xl text-sm sm:text-base font-semibold backdrop-blur-sm">

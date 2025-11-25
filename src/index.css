@@ -76,6 +76,7 @@ img {
   height: auto;
 }
 
+/* Désactivé car cause des problèmes sur iOS/Safari avec le cache
 img {
   opacity: 0;
   transition: opacity 0.2s ease-in;
@@ -84,6 +85,7 @@ img {
 img.loaded {
   opacity: 1;
 }
+*/
 
 /*
 img[loading="lazy"] {

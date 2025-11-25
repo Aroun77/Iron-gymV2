@@ -58,7 +58,7 @@ function SectionCategories() {
             const preloadLink = document.createElement('link');
             preloadLink.rel = 'preload';
             preloadLink.as = 'image';
-            preloadLink.href = cat.url; // Utiliser URL de base pour compatibilité iOS
+            preloadLink.href = cat.url;
             document.head.appendChild(preloadLink);
           });
         }
@@ -125,13 +125,11 @@ function SectionCategories() {
                       alt={cat.name}
                       loading={index < 3 ? "eager" : "lazy"}
                       decoding="async"
-                      className="absolute inset-0 w-full h-full object-cover transition-opacity duration-500 loaded"
+                      className="absolute inset-0 w-full h-full object-cover transition-opacity duration-500"
                       style={{
                         willChange: 'opacity, transform',
                         backgroundColor: '#111'
                       }}
-                      onLoad={(e) => e.target.classList.add('loaded')}
-                      onError={(e) => console.error("❌ Erreur image:", e.target.src)}
                     />
                   </div>
 
