@@ -17,7 +17,7 @@ const isPlaceholderFile = (fileName) => {
 };
 
 /**
- * Récupère les images d’un dossier avec optimisation + cache serveur
+ * Récupère les images d'un dossier avec optimisation + cache serveur
  * @param {*} req
  * @param {*} res
  * @param {boolean} noSend - si true → renvoie simplement les données (utilisé par cache)
@@ -46,25 +46,22 @@ export async function getImagesByFolder(req, res, noSend = false) {
       return [];
     }
 
-    // ⚡ 3) Filtrage + création URLs via proxy backend
-    // Utiliser l'URL de production Render au lieu de localhost
-    const backendUrl = process.env.BACKEND_URL || 'https://iron-gymv2.onrender.com';
+    // ⚡ 3) Filtrage + URLs publiques Supabase directes
     const files = (data || [])
       .filter(f => f?.name && !isPlaceholderFile(f.name))
       .map(f => {
-        // Utiliser le proxy backend au lieu de l'URL Supabase directe (évite CORS sur iOS)
-        const proxyUrl = `${backendUrl}/api/images/proxy/${folder}/${f.name}`;
+        const publicUrl = `${process.env.SUPABASE_URL}/storage/v1/object/public/gym-images/${folder ? folder + '/' : ''}${f.name}`;
         return {
           name: f.name.replace(/\.[^/.]+$/, ''),
-          url: proxyUrl,
-          optimized: proxyUrl // Même URL pour éviter la complexité
+          url: publicUrl,
+          optimized: publicUrl
         };
       });
 
     // ⚡ 4) Mettre en cache pour 2 minutes (config NodeCache)
     cache.set(cacheKey, files);
 
-    // ⚡ 5) Retour (option noSend si utilisé par d’autres contrôleurs)
+    // ⚡ 5) Retour (option noSend si utilisé par d'autres contrôleurs)
     if (!noSend) {
       res.setHeader("Cache-Control", "public, max-age=86400, stale-while-revalidate=604800 , must-revalidate");
       return res.json(files);
@@ -108,10 +105,22 @@ export async function proxyImage(req, res) {
       return res.status(404).json({ error: 'Image not found' });
     }
 
-    // Copier les headers importants
+    // Headers CORS critiques pour permettre l'affichage cross-origin
+    const origin = req.headers.origin;
+    if (origin && (
+      origin.includes('vercel.app') ||
+      origin.includes('localhost')
+    )) {
+      res.setHeader('Access-Control-Allow-Origin', origin);
+      res.setHeader('Access-Control-Allow-Credentials', 'true');
+      res.setHeader('Access-Control-Allow-Methods', 'GET, OPTIONS');
+      res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+    }
+
+    // Headers de l'image
     res.setHeader('Content-Type', response.headers.get('content-type') || 'image/jpeg');
     res.setHeader('Cache-Control', 'public, max-age=31536000, immutable');
-    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Cross-Origin-Resource-Policy', 'cross-origin');
 
     // Stream l'image
     const buffer = await response.arrayBuffer();
@@ -122,4 +131,3 @@ export async function proxyImage(req, res) {
     res.status(500).json({ error: 'Failed to proxy image' });
   }
 }
-
