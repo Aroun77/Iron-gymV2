@@ -52,12 +52,18 @@ function SectionCategories() {
 
         setCategories(formatted);
 
-        //  FIX iOS SAFARI : force no-store au premier chargement
-        formatted.forEach((cat) => {
-          if (cat?.url) {
-            fetch(cat.url, { cache: "no-store" }).catch(() => {});
-          }
-        });
+        // Preload des 3 premières images de catégories
+        if (formatted && formatted.length > 0) {
+          formatted.slice(0, 3).forEach(cat => {
+            const link = document.createElement('link');
+            link.rel = 'preload';
+            link.as = 'image';
+            link.href = cat.optimized || cat.url;
+            document.head.appendChild(link);
+          });
+        }
+
+
       } catch (err) {
         console.error("Erreur Chargement Catégories:", err);
       }
@@ -103,38 +109,38 @@ function SectionCategories() {
               {categories.map((cat, index) => (
                 <motion.div
                   key={index}
+                  layoutId={`category-${index}`}
                   className="relative group rounded-2xl overflow-hidden shadow-xl cursor-pointer w-full max-w-sm bg-[#111]"
                   onMouseEnter={() => setActiveIndex(index)}
                   onMouseLeave={() => setActiveIndex(null)}
                   initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, amount: 0.3 }}
-                  transition={{ duration: 0.6, delay: index * 0.1 }}
-                  whileHover={{ scale: 1.04 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6, delay: index * 0.15, ease: "easeOut" }}
+                  whileHover={{ scale: 1.04, transition: { duration: 0.3 } }}
+                  style={{ willChange: 'transform, opacity' }}
                 >
                   {/* IMAGE OPTIMISÉE */}
                   <div className="relative w-full" style={{ aspectRatio: "4/5" }}>
                     <img
-                      src={cat.url}
+                      src={cat.optimized || cat.url}
                       alt={cat.name}
-                      loading="lazy"
+                      loading={index < 3 ? "eager" : "lazy"}
                       decoding="async"
+                      className="absolute inset-0 w-full h-full object-cover transition-opacity duration-500 loaded"
                       style={{
-                        contentVisibility: "auto",
-                        containIntrinsicSize: "400px",
+                        willChange: 'opacity, transform',
+                        backgroundColor: '#111'
                       }}
-                      className="absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-200 ease-out"
-                      onLoad={(e) => (e.currentTarget.style.opacity = "1")}
+                      onLoad={(e) => e.target.classList.add('loaded')}
                     />
                   </div>
 
                   {/* Overlay */}
                   <div
-                    className={`absolute inset-0 flex flex-col items-center justify-center text-center p-6 transition-all duration-400 ${
-                      activeIndex === index
-                        ? "bg-black/80 opacity-100"
-                        : "bg-black/70 opacity-0 group-hover:opacity-100"
-                    }`}
+                    className={`absolute inset-0 flex flex-col items-center justify-center text-center p-6 transition-all duration-400 ${activeIndex === index
+                      ? "bg-black/80 opacity-100"
+                      : "bg-black/70 opacity-0 group-hover:opacity-100"
+                      }`}
                   >
                     <h3 className="text-2xl font-bold text-yellow-400 mb-3 drop-shadow-lg">
                       {cat.name}

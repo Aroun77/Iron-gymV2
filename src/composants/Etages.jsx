@@ -18,24 +18,21 @@ function Etages() {
         const data = await getEtages();
         setImages(data);
 
-        //  FIX SAFARI / ANDROID : force no-store au 1er rendu
-        data?.forEach((img) => {
-          if (img?.url) {
-            fetch(img.url, { cache: "no-store" }).catch(() => {});
-          }
-        });
+        // Preload des 2 premières images pour un affichage instantané
+        if (data && data.length > 0) {
+          data.slice(0, 2).forEach(img => {
+            const preloadLink = document.createElement('link');
+            preloadLink.rel = 'preload';
+            preloadLink.as = 'image';
+            preloadLink.href = img.optimized || img.url;
+            document.head.appendChild(preloadLink);
+          });
+        }
       } catch (err) {
         console.error("Erreur chargement étages:", err);
       } finally {
         setLoading(false);
       }
-    }
-
-    //  Pendant idle → préfetch Express route
-    if ("requestIdleCallback" in window) {
-      requestIdleCallback(() => {
-        fetch(`${API_URL}/api/images/etages`, { cache: "no-cache" }).catch(() => {});
-      });
     }
 
     loadImages();
@@ -61,25 +58,31 @@ function Etages() {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 w-full max-w-6xl mx-auto place-items-center">
         {images.map((img, index) => (
           <motion.div
-            key={img.name}
-            className="relative group rounded-2xl overflow-hidden shadow-xl bg-black w-full max-w-[480px] transition-transform duration-500 hover:scale-105"
+            key={img.name || index}
+            layoutId={`etage-${img.name || index}`}
+            className="relative group rounded-2xl overflow-hidden shadow-xl bg-black w-full max-w-[480px]"
             initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.3 }}
-            transition={{ duration: 0.8, ease: "easeOut" }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: index * 0.1, ease: "easeOut" }}
+            whileHover={{ scale: 1.05, transition: { duration: 0.3 } }}
+            style={{ willChange: 'transform, opacity' }}
           >
             <img
-              src={img.url}
-              alt={img.name}
-              loading="lazy"
+              src={img.optimized || img.url}
+              alt={img.name || `Étage ${index + 1}`}
+              loading={index < 2 ? "eager" : "lazy"}
               decoding="async"
-              style={{ contentVisibility: "auto", containIntrinsicSize: "460px" }}
-              className="w-full h-64 sm:h-80 md:h-96 object-cover transition-transform duration-700 group-hover:scale-110 opacity-0"
-              onLoad={(e) => (e.currentTarget.style.opacity = "1")}
+              className="w-full h-64 sm:h-80 md:h-96 object-cover transition-transform duration-700 group-hover:scale-110 loaded"
+              style={{
+                willChange: 'transform',
+                backgroundColor: '#1a1a1a'
+              }}
+              onLoad={(e) => e.target.classList.add('loaded')}
+              onError={(e) => console.error("❌ Erreur image:", e.target.src)}
             />
 
             <div className="absolute bottom-4 left-1/2 -translate-x-1/2 bg-black/70 text-white px-5 py-2 rounded-xl text-sm sm:text-base font-semibold backdrop-blur-sm">
-              {img.label || `Étage ${index + 1}`}
+              {img.label || img.name || `Étage ${index + 1}`}
             </div>
           </motion.div>
         ))}

@@ -1,12 +1,13 @@
 const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
 
+const memoryCache = new Map();
+
 export async function cachedFetch(url) {
-  const cache = sessionStorage.getItem(url);
-  if (cache) return JSON.parse(cache);
+  if (memoryCache.has(url)) return memoryCache.get(url);
 
   const res = await fetch(url, { cache: "no-cache" });
   const data = await res.json();
-  sessionStorage.setItem(url, JSON.stringify(data));
+  memoryCache.set(url, data);
   return data;
 }
 

@@ -22,7 +22,7 @@ app.use(helmet());
 app.use(
   cors({
     origin: ['https://iron-gym-v2-kwwgldsyr-aroun77s-projects.vercel.app',
-    /\.vercel\.app$/]
+      /\.vercel\.app$/, 'http://localhost:5173']
   })
 );
 app.use((req, res, next) => {
@@ -33,7 +33,7 @@ app.use(compression({
   level: 6,
   threshold: 0,
   filter: (req, res) => {
-    if (/image\//.test(res.getHeader('Content-Type'))) return false; 
+    if (/image\//.test(res.getHeader('Content-Type'))) return false;
     return compression.filter(req, res);
   },
   brotli: {

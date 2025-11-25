@@ -27,17 +27,11 @@ function Home() {
       {/* ================= SECTION HERO ================= */}
       <section className="relative h-screen w-full overflow-hidden">
         {/* 🎥 Vidéo de fond */}
-        <video
-          autoPlay
-          loop
-          muted
-          playsInline
+        <img
+          src="/GILL.jpg"
+          alt="Background"
           className="absolute top-0 left-0 w-full h-full object-cover"
-          aria-label="Vidéo de fond Iron Gym"
-        >
-          <source src="/GILL.jpg" type="video/mp4" />
-          Votre navigateur ne supporte pas les vidéos HTML5.
-        </video>
+        />
         {/* 🔲 Overlay sombre */}
         <div className="absolute inset-0 bg-black bg-opacity-60 z-10" />
 
@@ -100,7 +94,7 @@ function Home() {
         <Etages />
         <SectionCategories />
       </motion.section>
-       <SectionCoach /> 
+      <SectionCoach />
 
       {/* Pop-up glassmorphism */}
       {popup && (

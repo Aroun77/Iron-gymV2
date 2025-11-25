@@ -54,7 +54,7 @@ export async function getImagesByFolder(req, res, noSend = false) {
         return {
           name: f.name.replace(/\.[^/.]+$/, ''),
           url: publicUrl,
-          optimized: getOptimizedPublicUrl(publicUrl, { width: 600, quality: 65 })
+          optimized: getOptimizedPublicUrl(publicUrl, { width: 400, quality: 50 })
         };
       });
 
