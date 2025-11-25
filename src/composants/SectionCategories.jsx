@@ -31,7 +31,7 @@ function SectionCategories() {
           DevantIron: {
             name: "Old School",
             description:
-              "Retour aux sources, brut et authentique. L’essence même de la force.",
+              "Retour aux sources, brut et authentique. L'essence même de la force.",
           },
         };
 
@@ -55,14 +55,13 @@ function SectionCategories() {
         // Preload des 3 premières images de catégories
         if (formatted && formatted.length > 0) {
           formatted.slice(0, 3).forEach(cat => {
-            const link = document.createElement('link');
-            link.rel = 'preload';
-            link.as = 'image';
-            link.href = cat.optimized || cat.url;
-            document.head.appendChild(link);
+            const preloadLink = document.createElement('link');
+            preloadLink.rel = 'preload';
+            preloadLink.as = 'image';
+            preloadLink.href = cat.url; // Utiliser URL de base pour compatibilité iOS
+            document.head.appendChild(preloadLink);
           });
         }
-
 
       } catch (err) {
         console.error("Erreur Chargement Catégories:", err);
@@ -119,10 +118,10 @@ function SectionCategories() {
                   whileHover={{ scale: 1.04, transition: { duration: 0.3 } }}
                   style={{ willChange: 'transform, opacity' }}
                 >
-                  {/* IMAGE OPTIMISÉE */}
+                  {/* IMAGE */}
                   <div className="relative w-full" style={{ aspectRatio: "4/5" }}>
                     <img
-                      src={cat.optimized || cat.url}
+                      src={cat.url}
                       alt={cat.name}
                       loading={index < 3 ? "eager" : "lazy"}
                       decoding="async"
@@ -132,14 +131,15 @@ function SectionCategories() {
                         backgroundColor: '#111'
                       }}
                       onLoad={(e) => e.target.classList.add('loaded')}
+                      onError={(e) => console.error("❌ Erreur image:", e.target.src)}
                     />
                   </div>
 
                   {/* Overlay */}
                   <div
                     className={`absolute inset-0 flex flex-col items-center justify-center text-center p-6 transition-all duration-400 ${activeIndex === index
-                      ? "bg-black/80 opacity-100"
-                      : "bg-black/70 opacity-0 group-hover:opacity-100"
+                        ? "bg-black/80 opacity-100"
+                        : "bg-black/70 opacity-0 group-hover:opacity-100"
                       }`}
                   >
                     <h3 className="text-2xl font-bold text-yellow-400 mb-3 drop-shadow-lg">

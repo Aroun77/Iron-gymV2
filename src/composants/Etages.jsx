@@ -18,13 +18,13 @@ function Etages() {
         const data = await getEtages();
         setImages(data);
 
-        // Preload des 2 premières images pour un affichage instantané
+        // Preload des 2 premières images
         if (data && data.length > 0) {
           data.slice(0, 2).forEach(img => {
             const preloadLink = document.createElement('link');
             preloadLink.rel = 'preload';
             preloadLink.as = 'image';
-            preloadLink.href = img.optimized || img.url;
+            preloadLink.href = img.url; // Utiliser URL de base pour compatibilité iOS
             document.head.appendChild(preloadLink);
           });
         }
@@ -68,7 +68,7 @@ function Etages() {
             style={{ willChange: 'transform, opacity' }}
           >
             <img
-              src={img.optimized || img.url}
+              src={img.url}
               alt={img.name || `Étage ${index + 1}`}
               loading={index < 2 ? "eager" : "lazy"}
               decoding="async"

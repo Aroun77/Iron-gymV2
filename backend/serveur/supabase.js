@@ -51,7 +51,7 @@ export async function listImages(folder = '', bucket = 'gym-images') {
  */
 export function getOptimizedPublicUrl(
   publicUrl,
-  { width = 600, quality = 65, format = 'webp' } = {}
+  { width = 400, quality = 50 } = {}
 ) {
   if (!publicUrl) return null;
 
@@ -61,8 +61,8 @@ export function getOptimizedPublicUrl(
   if (width) url.searchParams.set('width', String(width));
   if (quality) url.searchParams.set('quality', String(quality));
 
-  // Force WebP for compression, auto fallback if unsupported
-  if (format) url.searchParams.set('format', String(format));
+  // Ne pas forcer WebP pour compatibilité iOS - laisser le navigateur décider
+  // if (format) url.searchParams.set('format', String(format));
 
   return url.toString();
 }
