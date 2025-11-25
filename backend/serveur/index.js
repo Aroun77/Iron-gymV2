@@ -21,8 +21,14 @@ const PORT = process.env.PORT || 5000;
 app.use(helmet());
 app.use(
   cors({
-    origin: ['https://iron-gym-v2-kwwgldsyr-aroun77s-projects.vercel.app',
-      /\.vercel\.app$/, 'http://localhost:5173', 'http://localhost:5000']
+    origin: [
+      'https://iron-gym-v2-kwwgldsyr-aroun77s-projects.vercel.app',
+      'https://iron-gym-v2.vercel.app',
+      /\.vercel\.app$/,
+      'http://localhost:5173',
+      'http://localhost:5000'
+    ],
+    credentials: true
   })
 );
 app.use((req, res, next) => {
