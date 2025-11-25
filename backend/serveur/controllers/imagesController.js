@@ -46,15 +46,17 @@ export async function getImagesByFolder(req, res, noSend = false) {
       return [];
     }
 
-    // ⚡ 3) Filtrage + optimisation URL
+    // ⚡ 3) Filtrage + création URLs via proxy backend
+    const backendUrl = process.env.BACKEND_URL || 'http://localhost:5000';
     const files = (data || [])
       .filter(f => f?.name && !isPlaceholderFile(f.name))
       .map(f => {
-        const publicUrl = `${process.env.SUPABASE_URL}/storage/v1/object/public/gym-images/${folder ? folder + '/' : ''}${f.name}`;
+        // Utiliser le proxy backend au lieu de l'URL Supabase directe (évite CORS sur iOS)
+        const proxyUrl = `${backendUrl}/api/images/proxy/${folder}/${f.name}`;
         return {
           name: f.name.replace(/\.[^/.]+$/, ''),
-          url: publicUrl,
-          optimized: getOptimizedPublicUrl(publicUrl, { width: 400, quality: 50 })
+          url: proxyUrl,
+          optimized: proxyUrl // Même URL pour éviter la complexité
         };
       });
 
@@ -87,3 +89,36 @@ export async function getEtages(req, res) {
   req.params.folder = 'etages';
   return getImagesByFolder(req, res);
 }
+
+/**
+ * Proxy pour servir les images via le backend (évite CORS sur iOS)
+ */
+export async function proxyImage(req, res) {
+  try {
+    const { folder, filename } = req.params;
+
+    // Construire l'URL Supabase
+    const imageUrl = `${process.env.SUPABASE_URL}/storage/v1/object/public/gym-images/${folder}/${filename}`;
+
+    // Fetch l'image depuis Supabase
+    const response = await fetch(imageUrl);
+
+    if (!response.ok) {
+      return res.status(404).json({ error: 'Image not found' });
+    }
+
+    // Copier les headers importants
+    res.setHeader('Content-Type', response.headers.get('content-type') || 'image/jpeg');
+    res.setHeader('Cache-Control', 'public, max-age=31536000, immutable');
+    res.setHeader('Access-Control-Allow-Origin', '*');
+
+    // Stream l'image
+    const buffer = await response.arrayBuffer();
+    res.send(Buffer.from(buffer));
+
+  } catch (err) {
+    console.error('proxyImage error:', err);
+    res.status(500).json({ error: 'Failed to proxy image' });
+  }
+}
+

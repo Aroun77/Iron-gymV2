@@ -1,15 +1,20 @@
+// server/routes/images.js
 import express from 'express';
 import {
   getImagesByFolder,
   getCategories,
-  getEtages
+  getEtages,
+  proxyImage
 } from '../controllers/imagesController.js';
 
 const router = express.Router();
 
-// ⚠️ D’abord les routes fixes
+// ⚠️ D'abord les routes fixes
 router.get('/categories', getCategories);
 router.get('/etages', getEtages);
+
+// 📌 Route pour proxifier les images (évite CORS sur iOS)
+router.get('/proxy/:folder/:filename', proxyImage);
 
 // 📌 Puis les routes dynamiques
 router.get('/folder/:folder', getImagesByFolder);
