@@ -33,6 +33,9 @@ app.use(
 );
 app.use((req, res, next) => {
   res.setHeader('Accept', 'image/webp,image/*,*/*');
+  // Headers spécifiques pour iOS Safari
+  res.setHeader('X-Content-Type-Options', 'nosniff');
+  res.setHeader('Cross-Origin-Resource-Policy', 'cross-origin');
   next();
 });
 app.use(compression({
