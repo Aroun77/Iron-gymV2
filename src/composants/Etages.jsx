@@ -17,17 +17,6 @@ function Etages() {
       try {
         const data = await getEtages();
         setImages(data);
-
-        // Preload des 2 premières images
-        if (data && data.length > 0) {
-          data.slice(0, 2).forEach(img => {
-            const preloadLink = document.createElement('link');
-            preloadLink.rel = 'preload';
-            preloadLink.as = 'image';
-            preloadLink.href = img.url;
-            document.head.appendChild(preloadLink);
-          });
-        }
       } catch (err) {
         console.error("Erreur chargement étages:", err);
       } finally {
@@ -72,6 +61,7 @@ function Etages() {
               alt={img.name || `Étage ${index + 1}`}
               loading={index < 2 ? "eager" : "lazy"}
               decoding="async"
+              crossOrigin="anonymous"
               className="w-full h-64 sm:h-80 md:h-96 object-cover transition-transform duration-700 group-hover:scale-110"
               style={{
                 willChange: 'transform',

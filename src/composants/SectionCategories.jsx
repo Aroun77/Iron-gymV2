@@ -52,17 +52,6 @@ function SectionCategories() {
 
         setCategories(formatted);
 
-        // Preload des 3 premières images de catégories
-        if (formatted && formatted.length > 0) {
-          formatted.slice(0, 3).forEach(cat => {
-            const preloadLink = document.createElement('link');
-            preloadLink.rel = 'preload';
-            preloadLink.as = 'image';
-            preloadLink.href = cat.url;
-            document.head.appendChild(preloadLink);
-          });
-        }
-
       } catch (err) {
         console.error("Erreur Chargement Catégories:", err);
       }
@@ -125,6 +114,7 @@ function SectionCategories() {
                       alt={cat.name}
                       loading={index < 3 ? "eager" : "lazy"}
                       decoding="async"
+                      crossOrigin="anonymous"
                       className="absolute inset-0 w-full h-full object-cover transition-opacity duration-500"
                       style={{
                         willChange: 'opacity, transform',
