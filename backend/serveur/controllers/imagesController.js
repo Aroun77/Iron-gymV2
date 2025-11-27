@@ -125,8 +125,16 @@ export async function proxyImage(req, res) {
     // Headers de l'image
     const contentType = response.headers.get('content-type') || 'image/jpeg';
     res.setHeader('Content-Type', contentType);
-    res.setHeader('Cache-Control', 'public, max-age=31536000, immutable');
+
+    // Cache plus court pour éviter les problèmes iOS Safari (1 jour au lieu de 1 an)
+    res.setHeader('Cache-Control', 'public, max-age=86400, must-revalidate');
     res.setHeader('Cross-Origin-Resource-Policy', 'cross-origin');
+
+    // Copier l'ETag si présent pour la validation du cache
+    const etag = response.headers.get('etag');
+    if (etag) {
+      res.setHeader('ETag', etag);
+    }
 
     // Stream l'image
     const buffer = await response.arrayBuffer();
