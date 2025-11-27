@@ -95,6 +95,15 @@ export async function getEtages(req, res) {
  */
 export async function proxyImage(req, res) {
   try {
+    // Support pour les requêtes OPTIONS (preflight CORS)
+    if (req.method === 'OPTIONS') {
+      res.setHeader('Access-Control-Allow-Origin', '*');
+      res.setHeader('Access-Control-Allow-Methods', 'GET, OPTIONS');
+      res.setHeader('Access-Control-Allow-Headers', '*');
+      res.setHeader('Access-Control-Max-Age', '86400');
+      return res.status(200).end();
+    }
+
     const { folder, filename } = req.params;
 
     // Construire l'URL Supabase
@@ -104,23 +113,18 @@ export async function proxyImage(req, res) {
     const response = await fetch(imageUrl);
 
     if (!response.ok) {
+      console.error(`Image not found: ${imageUrl}`);
       return res.status(404).json({ error: 'Image not found' });
     }
 
-    // Headers CORS critiques pour permettre l'affichage cross-origin
-    const origin = req.headers.origin;
-    if (origin && (
-      origin.includes('vercel.app') ||
-      origin.includes('localhost')
-    )) {
-      res.setHeader('Access-Control-Allow-Origin', origin);
-      res.setHeader('Access-Control-Allow-Credentials', 'true');
-      res.setHeader('Access-Control-Allow-Methods', 'GET, OPTIONS');
-      res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
-    }
+    // Headers CORS universels (accepter toutes les origines)
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, OPTIONS');
+    res.setHeader('Access-Control-Allow-Headers', '*');
 
     // Headers de l'image
-    res.setHeader('Content-Type', response.headers.get('content-type') || 'image/jpeg');
+    const contentType = response.headers.get('content-type') || 'image/jpeg';
+    res.setHeader('Content-Type', contentType);
     res.setHeader('Cache-Control', 'public, max-age=31536000, immutable');
     res.setHeader('Cross-Origin-Resource-Policy', 'cross-origin');
 
