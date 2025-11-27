@@ -46,15 +46,17 @@ export async function getImagesByFolder(req, res, noSend = false) {
       return [];
     }
 
-    // ⚡ 3) Filtrage + URLs publiques Supabase directes
+    // ⚡ 3) Filtrage + URLs via proxy backend (pour contourner CORS Supabase sur iOS)
+    const backendUrl = process.env.BACKEND_URL || 'https://iron-gymv2.onrender.com';
     const files = (data || [])
       .filter(f => f?.name && !isPlaceholderFile(f.name))
       .map(f => {
-        const publicUrl = `${process.env.SUPABASE_URL}/storage/v1/object/public/gym-images/${folder ? folder + '/' : ''}${f.name}`;
+        // Utiliser le proxy backend pour éviter les problèmes CORS iOS avec Supabase gratuit
+        const proxyUrl = `${backendUrl}/api/images/proxy/${folder}/${f.name}`;
         return {
           name: f.name.replace(/\.[^/.]+$/, ''),
-          url: publicUrl,
-          optimized: publicUrl
+          url: proxyUrl,
+          optimized: proxyUrl
         };
       });
 
