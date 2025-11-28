@@ -1,7 +1,10 @@
 // server/controllers/imagesController.js
 import { supabase, getOptimizedPublicUrl } from '../supabase.js';
-import { cache } from '../index.js';
+import { cache } from '../index.js'; // ⬅️ IMPORTANT
 
+/**
+ * Helper pour détecter les fichiers placeholders (à ignorer)
+ */
 const isPlaceholderFile = (fileName) => {
   if (!fileName) return true;
   const low = fileName.toLowerCase();
@@ -13,20 +16,28 @@ const isPlaceholderFile = (fileName) => {
   );
 };
 
+/**
+ * Récupère les images d'un dossier avec optimisation + cache serveur
+ * @param {*} req
+ * @param {*} res
+ * @param {boolean} noSend - si true → renvoie simplement les données (utilisé par cache)
+ */
 export async function getImagesByFolder(req, res, noSend = false) {
   try {
     const folder = req.params.folder || '';
     const cacheKey = `folder_${folder}`;
 
+    // ⚡ 1) Vérifier cache serveur
     const cached = cache.get(cacheKey);
     if (cached) {
       if (!noSend) {
-        res.setHeader("Cache-Control", "public, max-age=86400, stale-while-revalidate=604800, must-revalidate");
+        res.setHeader("Cache-Control", "public, max-age=86400, stale-while-revalidate=604800 , must-revalidate");
         return res.json(cached);
       }
       return cached;
     }
 
+    // ⚡ 2) Requête Supabase uniquement si pas en cache
     const { data, error } = await supabase.storage.from('gym-images').list(folder, { limit: 200 });
 
     if (error) {
@@ -35,10 +46,12 @@ export async function getImagesByFolder(req, res, noSend = false) {
       return [];
     }
 
+    // ⚡ 3) Filtrage + URLs via proxy backend (pour contourner CORS Supabase sur iOS)
     const backendUrl = process.env.BACKEND_URL || 'https://iron-gymv2.onrender.com';
     const files = (data || [])
       .filter(f => f?.name && !isPlaceholderFile(f.name))
       .map(f => {
+        // Utiliser le proxy backend pour éviter les problèmes CORS iOS avec Supabase gratuit
         const proxyUrl = `${backendUrl}/api/images/proxy/${folder}/${f.name}`;
         return {
           name: f.name.replace(/\.[^/.]+$/, ''),
@@ -47,10 +60,12 @@ export async function getImagesByFolder(req, res, noSend = false) {
         };
       });
 
+    // ⚡ 4) Mettre en cache pour 2 minutes (config NodeCache)
     cache.set(cacheKey, files);
 
+    // ⚡ 5) Retour (option noSend si utilisé par d'autres contrôleurs)
     if (!noSend) {
-      res.setHeader("Cache-Control", "public, max-age=86400, stale-while-revalidate=604800, must-revalidate");
+      res.setHeader("Cache-Control", "public, max-age=86400, stale-while-revalidate=604800 , must-revalidate");
       return res.json(files);
     }
     return files;
@@ -62,6 +77,9 @@ export async function getImagesByFolder(req, res, noSend = false) {
   }
 }
 
+/**
+ * Convenience routes
+ */
 export async function getCategories(req, res) {
   req.params.folder = 'categories';
   return getImagesByFolder(req, res);
@@ -72,39 +90,41 @@ export async function getEtages(req, res) {
   return getImagesByFolder(req, res);
 }
 
+/**
+ * Proxy pour servir les images via le backend (évite CORS sur iOS)
+ */
 export async function proxyImage(req, res) {
   try {
-    if (req.method === 'OPTIONS') {
-      res.setHeader('Access-Control-Allow-Origin', '*');
-      res.setHeader('Access-Control-Allow-Methods', 'GET, OPTIONS');
-      res.setHeader('Access-Control-Allow-Headers', '*');
-      res.setHeader('Access-Control-Max-Age', '86400');
-      return res.status(200).end();
-    }
-
     const { folder, filename } = req.params;
+
+    // Construire l'URL Supabase
     const imageUrl = `${process.env.SUPABASE_URL}/storage/v1/object/public/gym-images/${folder}/${filename}`;
 
+    // Fetch l'image depuis Supabase
     const response = await fetch(imageUrl);
 
     if (!response.ok) {
-      console.error(`Image not found: ${imageUrl}`);
       return res.status(404).json({ error: 'Image not found' });
     }
 
-    res.setHeader('Access-Control-Allow-Origin', '*');
-    res.setHeader('Access-Control-Allow-Methods', 'GET, OPTIONS');
-    res.setHeader('Access-Control-Allow-Headers', '*');
+    // Headers CORS critiques pour permettre l'affichage cross-origin
+    const origin = req.headers.origin;
+    if (origin && (
+      origin.includes('vercel.app') ||
+      origin.includes('localhost')
+    )) {
+      res.setHeader('Access-Control-Allow-Origin', origin);
+      res.setHeader('Access-Control-Allow-Credentials', 'true');
+      res.setHeader('Access-Control-Allow-Methods', 'GET, OPTIONS');
+      res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+    }
 
-    const contentType = response.headers.get('content-type') || 'image/jpeg';
-    res.setHeader('Content-Type', contentType);
-
-    // Désactiver le cache pour iOS Safari
-    res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
-    res.setHeader('Pragma', 'no-cache');
-    res.setHeader('Expires', '0');
+    // Headers de l'image
+    res.setHeader('Content-Type', response.headers.get('content-type') || 'image/jpeg');
+    res.setHeader('Cache-Control', 'public, max-age=31536000, immutable');
     res.setHeader('Cross-Origin-Resource-Policy', 'cross-origin');
 
+    // Stream l'image
     const buffer = await response.arrayBuffer();
     res.send(Buffer.from(buffer));
 
