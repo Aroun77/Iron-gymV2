@@ -74,8 +74,8 @@ function SectionCategories() {
                   className="relative group rounded-2xl overflow-hidden shadow-xl cursor-pointer w-full max-w-sm bg-[#111]"
                   onMouseEnter={() => setActiveIndex(index)}
                   onMouseLeave={() => setActiveIndex(null)}
-                  initial={{ opacity: 0, y: 30 }}
-                  animate={{ opacity: 1, y: 0 }}
+                  initial={{ y: 30 }}
+                  animate={{ y: 0 }}
                   transition={{ duration: 0.6, delay: index * 0.15, ease: "easeOut" }}
                   whileHover={{ scale: 1.04, transition: { duration: 0.3 } }}
                 >
