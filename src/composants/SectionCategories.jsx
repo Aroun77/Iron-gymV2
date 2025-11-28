@@ -74,10 +74,10 @@ function SectionCategories() {
                   className="relative group rounded-2xl overflow-hidden shadow-xl cursor-pointer w-full max-w-sm bg-[#111]"
                   onMouseEnter={() => setActiveIndex(index)}
                   onMouseLeave={() => setActiveIndex(null)}
-                  initial={{ y: 30 }}
-                  animate={{ y: 0 }}
-                  transition={{ duration: 0.6, delay: index * 0.15, ease: "easeOut" }}
-                  whileHover={{ scale: 1.04, transition: { duration: 0.3 } }}
+                  initial={false}
+                  whileHover={{ scale: 1.04 }}
+                  transition={{ duration: 0.2 }}
+                  style={{ willChange: 'transform' }}
                 >
                   <div className="relative w-full" style={{ aspectRatio: "4/5" }}>
                     <img

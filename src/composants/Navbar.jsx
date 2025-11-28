@@ -41,20 +41,24 @@ export default function Navbar() {
           y: scrolled ? -4 : 0,
         }}
         transition={{ type: "spring", stiffness: 200, damping: 25 }}
-        className={`transition-all duration-500 rounded-full px-8 py-3 flex justify-between items-center shadow-lg border backdrop-blur-lg ${
-          scrolled
+        className={`transition-all duration-500 rounded-full px-8 py-3 flex justify-between items-center shadow-lg border backdrop-blur-lg ${scrolled
             ? "bg-white/10 border-white/20 shadow-xl"
             : "bg-white/5 border-white/10"
-        } max-w-5xl w-full`}
+          } max-w-5xl w-full`}
       >
         {/* Logo */}
         <Link to="/" className="flex items-center gap-3 group no-underline">
           <img
             src={logo}
             alt="Iron Gym"
-            className="h-10 transition-transform duration-300 group-hover:scale-110"
+            width="40"
+            height="40"
+            className="h-10 w-10 transition-transform duration-300 group-hover:scale-110"
           />
-          <span className="text-lg font-extrabold text-white tracking-widest transition duration-300 group-hover:text-yellow-400">
+          <span
+            className="text-lg font-extrabold text-white tracking-widest transition duration-300 group-hover:text-yellow-400"
+            style={{ minWidth: '95px', display: 'inline-block' }}
+          >
             Iron Gym
           </span>
         </Link>
@@ -65,11 +69,10 @@ export default function Navbar() {
             <div key={path} className="relative">
               <Link
                 to={path}
-                className={`relative px-3 py-1.5 text-sm font-medium transition-all duration-300 no-underline ${
-                  location.pathname === path
+                className={`relative px-3 py-1.5 text-sm font-medium transition-all duration-300 no-underline ${location.pathname === path
                     ? "text-yellow-400 font-semibold"
                     : "text-white hover:text-yellow-400"
-                }`}
+                  }`}
               >
                 {label}
               </Link>
@@ -101,7 +104,7 @@ export default function Navbar() {
             >
               <Icon className="w-5 h-5 text-white" />
             </a>
-          ))} 
+          ))}
         </div>
 
         {/* Hamburger Mobile */}
@@ -144,11 +147,10 @@ export default function Navbar() {
                     key={path}
                     to={path}
                     onClick={() => setMenuOpen(false)}
-                    className={`py-3 px-4 rounded-full text-left text-sm transition-all duration-300 no-underline ${
-                      location.pathname === path
+                    className={`py-3 px-4 rounded-full text-left text-sm transition-all duration-300 no-underline ${location.pathname === path
                         ? "bg-yellow-400 text-black font-semibold shadow"
                         : "bg-gray-700/80 text-white hover:bg-yellow-400 hover:text-black"
-                    }`}
+                      }`}
                   >
                     {label}
                   </Link>
