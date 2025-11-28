@@ -69,15 +69,11 @@ function SectionCategories() {
           <div className="w-full flex justify-center">
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 w-full max-w-6xl justify-items-center">
               {categories.map((cat, index) => (
-                <motion.div
+                <div
                   key={index}
-                  className="relative group rounded-2xl overflow-hidden shadow-xl cursor-pointer w-full max-w-sm bg-[#111]"
+                  className="relative group rounded-2xl overflow-hidden shadow-xl cursor-pointer w-full max-w-sm bg-[#111] transition-transform duration-300 hover:scale-105"
                   onMouseEnter={() => setActiveIndex(index)}
                   onMouseLeave={() => setActiveIndex(null)}
-                  initial={{ y: 30 }}
-                  animate={{ y: 0 }}
-                  transition={{ duration: 0.6, delay: index * 0.15, ease: "easeOut" }}
-                  whileHover={{ scale: 1.04, transition: { duration: 0.3 } }}
                 >
                   <div className="relative w-full" style={{ aspectRatio: "4/5" }}>
                     <img
@@ -96,7 +92,7 @@ function SectionCategories() {
                     <h3 className="text-2xl font-bold text-yellow-400 mb-3 drop-shadow-lg">{cat.name}</h3>
                     <p className="text-white text-sm sm:text-base leading-relaxed">{cat.description}</p>
                   </div>
-                </motion.div>
+                </div>
               ))}
             </div>
           </div>

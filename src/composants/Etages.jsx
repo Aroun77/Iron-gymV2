@@ -1,4 +1,3 @@
-import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import { getEtages } from "../services/api";
 
@@ -37,13 +36,9 @@ function Etages() {
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 w-full max-w-6xl mx-auto place-items-center">
         {images.map((img, index) => (
-          <motion.div
+          <div
             key={img.name || index}
-            className="relative group rounded-2xl overflow-hidden shadow-xl bg-black w-full max-w-[480px]"
-            initial={{ y: 40 }}
-            animate={{ y: 0 }}
-            transition={{ duration: 0.8, delay: index * 0.1, ease: "easeOut" }}
-            whileHover={{ scale: 1.05, transition: { duration: 0.3 } }}
+            className="relative group rounded-2xl overflow-hidden shadow-xl bg-black w-full max-w-[480px] transition-transform duration-300 hover:scale-105"
           >
             <img
               src={img.url}
@@ -56,7 +51,7 @@ function Etages() {
             <div className="absolute bottom-4 left-1/2 -translate-x-1/2 bg-black/70 text-white px-5 py-2 rounded-xl text-sm sm:text-base font-semibold backdrop-blur-sm">
               {img.label || img.name || `Étage ${index + 1}`}
             </div>
-          </motion.div>
+          </div>
         ))}
       </div>
     </section>
