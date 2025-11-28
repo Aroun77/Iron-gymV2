@@ -14,6 +14,11 @@ export const cache = new NodeCache({ stdTTL: 120, checkperiod: 180 }); // 2 min
 // Load .env
 dotenv.config();
 
+console.log('--- BACKEND STARTUP ---');
+console.log('IMGIX_URL:', process.env.IMGIX_URL ? process.env.IMGIX_URL : 'NOT DEFINED');
+console.log('SUPABASE_URL:', process.env.SUPABASE_URL ? 'DEFINED' : 'NOT DEFINED');
+console.log('-----------------------');
+
 const app = express();
 const PORT = process.env.PORT || 5000;
 

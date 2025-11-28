@@ -46,17 +46,29 @@ export async function getImagesByFolder(req, res, noSend = false) {
       return [];
     }
 
-    // ⚡ 3) Filtrage + URLs via proxy backend (pour contourner CORS Supabase sur iOS)
-    const backendUrl = process.env.BACKEND_URL || 'https://iron-gymv2.onrender.com';
+    // ⚡ 3) Filtrage + URLs Imgix
+    // Si IMGIX_URL est défini, on l'utilise. Sinon fallback sur Supabase direct.
+    const imgixUrl = process.env.IMGIX_URL;
+    console.log('Using Imgix URL:', imgixUrl ? imgixUrl : 'DISABLED (using Supabase)');
+
     const files = (data || [])
       .filter(f => f?.name && !isPlaceholderFile(f.name))
       .map(f => {
-        // Utiliser le proxy backend pour éviter les problèmes CORS iOS avec Supabase gratuit
-        const proxyUrl = `${backendUrl}/api/images/proxy/${folder}/${f.name}`;
+        let finalUrl;
+
+        if (imgixUrl) {
+          // Avec Imgix : https://mon-domaine.imgix.net/dossier/image.jpg
+          // On ajoute ?auto=format,compress pour l'optimisation automatique
+          finalUrl = `${imgixUrl}/${folder ? folder + '/' : ''}${f.name}?auto=format,compress`;
+        } else {
+          // Fallback Supabase direct
+          finalUrl = `${process.env.SUPABASE_URL}/storage/v1/object/public/gym-images/${folder ? folder + '/' : ''}${f.name}`;
+        }
+
         return {
           name: f.name.replace(/\.[^/.]+$/, ''),
-          url: proxyUrl,
-          optimized: proxyUrl
+          url: finalUrl,
+          optimized: finalUrl
         };
       });
 
