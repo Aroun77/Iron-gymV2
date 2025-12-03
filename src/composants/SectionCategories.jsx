@@ -1,8 +1,7 @@
-import { useState, useEffect } from "react";
-import { motion } from "framer-motion";
+import React, { useState, useEffect } from "react";
 import { getCategories } from "../services/api";
 
-function SectionCategories() {
+const SectionCategories = React.memo(function SectionCategories() {
   const [categories, setCategories] = useState([]);
   const [activeIndex, setActiveIndex] = useState(null);
 
@@ -50,13 +49,7 @@ function SectionCategories() {
 
       <div className="relative z-10 w-full max-w-7xl mx-auto">
         <div className="flex flex-col items-center justify-center gap-14">
-          <motion.div
-            initial={{ opacity: 0, y: -40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.3 }}
-            transition={{ duration: 0.6 }}
-            className="text-center max-w-3xl"
-          >
+          <div className="category-header text-center max-w-3xl">
             <h2 className="text-4xl sm:text-5xl md:text-6xl font-extrabold text-yellow-400 leading-tight mb-6">
               Équipement.<br />Motivation.<br />OLD SCHOOL.
             </h2>
@@ -64,20 +57,16 @@ function SectionCategories() {
               Des valeurs fortes pour des performances réelles.<br />
               Chez <span className="text-yellow-400 font-semibold">Iron GYM</span>, chaque entraînement est un pas vers la légende.
             </p>
-          </motion.div>
+          </div>
 
           <div className="w-full flex justify-center">
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 w-full max-w-6xl justify-items-center">
               {categories.map((cat, index) => (
-                <motion.div
+                <div
                   key={index}
-                  className="relative group rounded-2xl overflow-hidden shadow-xl cursor-pointer w-full max-w-sm bg-[#111]"
+                  className="category-card relative group rounded-2xl overflow-hidden shadow-xl cursor-pointer w-full max-w-sm bg-[#111]"
                   onMouseEnter={() => setActiveIndex(index)}
                   onMouseLeave={() => setActiveIndex(null)}
-                  initial={false}
-                  whileHover={{ scale: 1.04 }}
-                  transition={{ duration: 0.2 }}
-                  style={{ willChange: 'transform' }}
                 >
                   <div className="relative w-full" style={{ aspectRatio: "4/5" }}>
                     <img
@@ -102,7 +91,7 @@ function SectionCategories() {
                     <h3 className="text-2xl font-bold text-yellow-400 mb-3 drop-shadow-lg">{cat.name}</h3>
                     <p className="text-white text-sm sm:text-base leading-relaxed">{cat.description}</p>
                   </div>
-                </motion.div>
+                </div>
               ))}
             </div>
           </div>
@@ -110,6 +99,6 @@ function SectionCategories() {
       </div>
     </section>
   );
-}
+});
 
 export default SectionCategories;

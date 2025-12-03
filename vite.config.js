@@ -27,7 +27,10 @@ export default defineConfig({
       compress: {
         drop_console: true, // Remove console.logs in production
         drop_debugger: true,
+        pure_funcs: ['console.log', 'console.info', 'console.debug'], // Remove specific console methods
       },
     },
+    // CSS minification
+    cssMinify: true,
   },
 })

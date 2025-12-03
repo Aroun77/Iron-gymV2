@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Instagram, Facebook, } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -13,7 +13,7 @@ const TikTok = (props) => (
   </svg>
 );
 
-export default function Navbar() {
+function Navbar() {
   const location = useLocation();
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
@@ -187,3 +187,5 @@ export default function Navbar() {
     </div>
   );
 }
+
+export default React.memo(Navbar);

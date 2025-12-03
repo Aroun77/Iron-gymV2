@@ -56,45 +56,6 @@ body {
   animation: slide-in-right 0.3s ease forwards;
 }
 
-@keyframes fade-in-top {
-  from {
-    opacity: 0;
-    transform: translateY(-10px);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes slide-in-right {
-  from {
-    transform: translateX(100%);
-  }
-}
-
-img.loaded {
-  opacity: 1;
-}
-
-*/
-/*
-img[loading="lazy"] {
-  opacity: 0;
-  transition: opacity 0.3s ease-in-out;
-}
-
-img[loading="lazy"].loaded,
-img[loading="lazy"]:not([loading]) {
-  opacity: 1;
-}*/
-
-/* Styles pour les cartes de profil */
-.card-active {
-  --card-opacity: 1 !important;
-}
-
 /* Classes utilitaires custom */
 .inset--10px {
   inset: -10px;
