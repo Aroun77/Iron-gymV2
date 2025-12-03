@@ -1,8 +1,8 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { lazy, Suspense, useEffect, useState } from "react";
-import Navbar from "./composants/Navbar";
 
-// Code Splitting: Lazy load routes for better performance
+// Lazy load ALL components including Navbar
+const Navbar = lazy(() => import("./composants/Navbar"));
 const Home = lazy(() => import("./pages/Home"));
 const Products = lazy(() => import("./pages/Products"));
 const Abonnement = lazy(() => import("./pages/Abonnement"));
@@ -14,7 +14,7 @@ const SpeedInsights = lazy(() =>
   import("@vercel/speed-insights/react").then(module => ({ default: module.SpeedInsights }))
 );
 
-// Loading fallback component
+// Minimal loading fallback
 const PageLoader = () => (
   <div className="flex items-center justify-center min-h-screen bg-black">
     <div className="text-yellow-400 text-xl font-semibold animate-pulse">
@@ -22,6 +22,9 @@ const PageLoader = () => (
     </div>
   </div>
 );
+
+// Minimal navbar loader
+const NavLoader = () => <div style={{ height: '80px' }} />;
 
 function App() {
   const [showInsights, setShowInsights] = useState(false);
@@ -34,7 +37,9 @@ function App() {
 
   return (
     <Router>
-      <Navbar />
+      <Suspense fallback={<NavLoader />}>
+        <Navbar />
+      </Suspense>
       <Suspense fallback={<PageLoader />}>
         <Routes>
           <Route path="/" element={<Home />} />
