@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import ChevronLeft from "lucide-react/dist/esm/icons/chevron-left";
+import ChevronRight from "lucide-react/dist/esm/icons/chevron-right";
 
 function Abonnement() {
   const [selectedPlan, setSelectedPlan] = useState(null);
@@ -185,7 +186,7 @@ function Abonnement() {
               }}
               className="bg-yellow-400 text-black px-6 py-3 rounded-xl font-semibold hover:bg-yellow-300 transition"
             >
-              Confirmer 
+              Confirmer
             </button>
           </div>
         </div>

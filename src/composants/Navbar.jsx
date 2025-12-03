@@ -1,12 +1,3 @@
-import React, { useEffect, useState } from "react";
-import { Link, useLocation } from "react-router-dom";
-import { Instagram, Facebook, } from "lucide-react";
-import { motion, AnimatePresence } from "framer-motion";
-import HamburgerButton from "./HamburgerButton";
-import logo from "/Logo.png";
-import { usePrefetch, prefetchRoute } from "../hooks/usePrefetch";
-
-// Icône TikTok custom
 const TikTok = (props) => (
   <svg fill="currentColor" viewBox="0 0 256 256" xmlns="http://www.w3.org/2000/svg" {...props}>
     <path d="M168 32a40 40 0 0 0 40 40h24v40h-24a80 80 0 1 1-80-80z" />

@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import ChevronLeft from "lucide-react/dist/esm/icons/chevron-left";
+import ChevronRight from "lucide-react/dist/esm/icons/chevron-right";
 
 const machines = [
   {
@@ -188,9 +189,8 @@ function Machine() {
           <button
             key={index}
             onClick={() => setCurrentIndex(index)}
-            className={`w-3 h-3 rounded-full transition ${
-              index === currentIndex ? "bg-yellow-400" : "bg-white/40"
-            }`}
+            className={`w-3 h-3 rounded-full transition ${index === currentIndex ? "bg-yellow-400" : "bg-white/40"
+              }`}
           ></button>
         ))}
       </div>
