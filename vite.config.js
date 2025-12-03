@@ -7,4 +7,27 @@ export default defineConfig({
     react(),
     UnoCSS(),
   ],
+  build: {
+    // Optimize chunk splitting
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          // Vendor chunks
+          'react-vendor': ['react', 'react-dom', 'react-router-dom'],
+          'motion-vendor': ['framer-motion'],
+          // Route chunks are handled automatically by React.lazy
+        },
+      },
+    },
+    // Optimize CSS
+    cssCodeSplit: true,
+    // Minify for production
+    minify: 'terser',
+    terserOptions: {
+      compress: {
+        drop_console: true, // Remove console.logs in production
+        drop_debugger: true,
+      },
+    },
+  },
 })

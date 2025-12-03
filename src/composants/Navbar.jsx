@@ -4,6 +4,7 @@ import { Instagram, Facebook, } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import HamburgerButton from "./HamburgerButton";
 import logo from "/Logo.png";
+import { usePrefetch, prefetchRoute } from "../hooks/usePrefetch";
 
 // Icône TikTok custom
 const TikTok = (props) => (
@@ -16,6 +17,9 @@ export default function Navbar() {
   const location = useLocation();
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+
+  // Prefetch routes during idle time
+  usePrefetch();
 
   const navLinks = [
     { path: "/", label: "Accueil" },
@@ -42,8 +46,8 @@ export default function Navbar() {
         }}
         transition={{ type: "spring", stiffness: 200, damping: 25 }}
         className={`transition-all duration-500 rounded-full px-8 py-3 flex justify-between items-center shadow-lg border backdrop-blur-lg ${scrolled
-            ? "bg-white/10 border-white/20 shadow-xl"
-            : "bg-white/5 border-white/10"
+          ? "bg-white/10 border-white/20 shadow-xl"
+          : "bg-white/5 border-white/10"
           } max-w-5xl w-full`}
       >
         {/* Logo */}
@@ -69,9 +73,10 @@ export default function Navbar() {
             <div key={path} className="relative">
               <Link
                 to={path}
+                onMouseEnter={() => prefetchRoute(path)}
                 className={`relative px-3 py-1.5 text-sm font-medium transition-all duration-300 no-underline ${location.pathname === path
-                    ? "text-yellow-400 font-semibold"
-                    : "text-white hover:text-yellow-400"
+                  ? "text-yellow-400 font-semibold"
+                  : "text-white hover:text-yellow-400"
                   }`}
               >
                 {label}
@@ -148,8 +153,8 @@ export default function Navbar() {
                     to={path}
                     onClick={() => setMenuOpen(false)}
                     className={`py-3 px-4 rounded-full text-left text-sm transition-all duration-300 no-underline ${location.pathname === path
-                        ? "bg-yellow-400 text-black font-semibold shadow"
-                        : "bg-gray-700/80 text-white hover:bg-yellow-400 hover:text-black"
+                      ? "bg-yellow-400 text-black font-semibold shadow"
+                      : "bg-gray-700/80 text-white hover:bg-yellow-400 hover:text-black"
                       }`}
                   >
                     {label}
