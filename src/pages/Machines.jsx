@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
 import ChevronLeft from "lucide-react/dist/esm/icons/chevron-left";
 import ChevronRight from "lucide-react/dist/esm/icons/chevron-right";
 
@@ -31,7 +30,7 @@ const machines = [
   {
     id: 5,
     name: "Leg Curl",
-    description: "Musclez l’arrière des cuisses (ischio-jambiers).",
+    description: "Musclez l'arrière des cuisses (ischio-jambiers).",
     image: "https://source.unsplash.com/400x300/?legcurl,gym",
   },
   {
@@ -49,13 +48,13 @@ const machines = [
   {
     id: 8,
     name: "Stepper",
-    description: "Idéal pour le bas du corps et l’endurance.",
+    description: "Idéal pour le bas du corps et l'endurance.",
     image: "https://source.unsplash.com/400x300/?stepper,gym",
   },
   {
     id: 9,
     name: "Tapis de course",
-    description: "Parfait pour l’échauffement et le cardio.",
+    description: "Parfait pour l'échauffement et le cardio.",
     image: "https://source.unsplash.com/400x300/?treadmill,gym",
   },
   {
@@ -91,14 +90,13 @@ const machines = [
   {
     id: 15,
     name: "Machine adducteurs",
-    description: "Renforcez l’intérieur des cuisses.",
+    description: "Renforcez l'intérieur des cuisses.",
     image: "https://source.unsplash.com/400x300/?adductors,gym",
   },
 ];
 
 function Machine() {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [dragStart, setDragStart] = useState(0);
 
   // Défilement automatique toutes les 5 secondes
   useEffect(() => {
@@ -116,20 +114,6 @@ function Machine() {
     setCurrentIndex((prev) => (prev + 1) % machines.length);
   };
 
-  const handleDragStart = (e, info) => {
-    setDragStart(info.point.x);
-  };
-
-  const handleDragEnd = (e, info) => {
-    const distance = info.point.x - dragStart;
-
-    if (distance > 100) {
-      handlePrev();
-    } else if (distance < -100) {
-      handleNext();
-    }
-  };
-
   return (
     <div className="min-h-screen py-12 px-4 sm:px-6 lg:px-8 text-center">
       <h1 className="text-4xl font-bold text-yellow-400 mb-4">Nos Machines</h1>
@@ -138,18 +122,10 @@ function Machine() {
       </p>
 
       <div className="relative max-w-lg mx-auto overflow-hidden">
-        <AnimatePresence mode="wait">
-          <motion.div
+        <div className="carousel-container">
+          <div
+            className="carousel-card bg-white/20 backdrop-blur-md border border-white/30 rounded-2xl p-5 shadow-lg flex flex-col items-center"
             key={currentIndex}
-            initial={{ opacity: 0, x: 100 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: -100 }}
-            transition={{ duration: 0.5 }}
-            drag="x"
-            dragConstraints={{ left: 0, right: 0 }}
-            onDragStart={handleDragStart}
-            onDragEnd={handleDragEnd}
-            className="bg-white/20 backdrop-blur-md border border-white/30 rounded-2xl p-5 shadow-lg flex flex-col items-center cursor-grab active:cursor-grabbing"
           >
             <img
               src={machines[currentIndex].image}
@@ -163,10 +139,10 @@ function Machine() {
               {machines[currentIndex].description}
             </p>
             <button className="bg-yellow-400 text-black py-2 px-5 rounded-full text-sm font-semibold hover:bg-yellow-300 transition">
-              Comment l’utiliser
+              Comment l'utiliser
             </button>
-          </motion.div>
-        </AnimatePresence>
+          </div>
+        </div>
 
         {/* Boutons navigation */}
         <button

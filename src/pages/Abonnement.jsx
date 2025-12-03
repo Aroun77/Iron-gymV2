@@ -1,13 +1,10 @@
 import { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
 import ChevronLeft from "lucide-react/dist/esm/icons/chevron-left";
 import ChevronRight from "lucide-react/dist/esm/icons/chevron-right";
 
 function Abonnement() {
   const [selectedPlan, setSelectedPlan] = useState(null);
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [dragStart, setDragStart] = useState(0);
-  const [dragEnd, setDragEnd] = useState(0);
 
   const plans = [
     {
@@ -67,24 +64,6 @@ function Abonnement() {
     setCurrentIndex((prev) => (prev + 1) % plans.length);
   };
 
-  const handleDragStart = (event, info) => {
-    setDragStart(info.point.x);
-  };
-
-  const handleDragEnd = (event, info) => {
-    setDragEnd(info.point.x);
-    const distance = info.point.x - dragStart;
-
-    // Si le swipe est assez long vers la droite
-    if (distance > 100) {
-      handlePrev();
-    }
-    // Si le swipe est assez long vers la gauche
-    else if (distance < -100) {
-      handleNext();
-    }
-  };
-
   return (
     <div className="min-h-screen py-12 px-4 sm:px-6 lg:px-8 relative">
       {/* Titre */}
@@ -95,18 +74,10 @@ function Abonnement() {
 
       {/* Carrousel */}
       <div className="relative max-w-3xl mx-auto overflow-hidden">
-        <AnimatePresence mode="wait">
-          <motion.div
+        <div className="carousel-container">
+          <div
+            className="carousel-card bg-white/20 backdrop-blur-lg border border-white/30 rounded-2xl p-6 shadow-lg flex flex-col items-center"
             key={currentIndex}
-            initial={{ opacity: 0, x: 100 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: -100 }}
-            transition={{ duration: 0.5 }}
-            drag="x"
-            dragConstraints={{ left: 0, right: 0 }}
-            onDragStart={handleDragStart}
-            onDragEnd={handleDragEnd}
-            className="bg-white/20 backdrop-blur-lg border border-white/30 rounded-2xl p-6 shadow-lg flex flex-col items-center cursor-grab active:cursor-grabbing"
           >
             <h2 className="text-xl font-bold uppercase text-yellow-400 text-center">
               {plans[currentIndex].name}
@@ -137,10 +108,10 @@ function Abonnement() {
               onClick={() => setSelectedPlan(plans[currentIndex])}
               className="mt-8 bg-yellow-400 text-black py-3 px-6 rounded-xl font-semibold uppercase tracking-wide hover:bg-yellow-300 transition"
             >
-              Je m’inscris
+              Je m'inscris
             </button>
-          </motion.div>
-        </AnimatePresence>
+          </div>
+        </div>
 
         {/* Boutons navigation */}
         <button
