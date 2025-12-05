@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import ChevronLeft from "lucide-react/dist/esm/icons/chevron-left";
 import ChevronRight from "lucide-react/dist/esm/icons/chevron-right";
 import { getBackgrounds } from "../services/api";
+// Force rebuild - v2
 
 function Abonnement() {
   const [selectedPlan, setSelectedPlan] = useState(null);

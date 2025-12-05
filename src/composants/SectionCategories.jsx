@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { getCategories, getBackgrounds } from "../services/api";
+// Force rebuild - v2
 
 const SectionCategories = React.memo(function SectionCategories() {
   const [categories, setCategories] = useState([]);

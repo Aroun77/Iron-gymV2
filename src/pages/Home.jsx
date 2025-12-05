@@ -3,6 +3,7 @@ import SectionCategories from "../composants/SectionCategories";
 import Etages from "../composants/Etages";
 import SectionCoach from "../composants/SectionCoach";
 import { getBackgrounds } from "../services/api";
+// Force rebuild - v2
 
 function Home() {
   const [popup, setPopup] = useState(null);
