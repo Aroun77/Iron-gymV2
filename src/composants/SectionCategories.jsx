@@ -1,25 +1,27 @@
 import React, { useState, useEffect } from "react";
-import { getCategories } from "../services/api";
+import { getCategories, getBackgrounds } from "../services/api";
 
 const SectionCategories = React.memo(function SectionCategories() {
   const [categories, setCategories] = useState([]);
   const [activeIndex, setActiveIndex] = useState(null);
+  const [backgroundUrl, setBackgroundUrl] = useState('');
 
   useEffect(() => {
-    async function loadCategories() {
+    async function loadData() {
       try {
+        // Charger les catégories
         const data = await getCategories();
 
         const metaData = {
-          Cardio: {
+          Equipement: {
             name: "Equipement",
             description: "Entraîne-toi avec les plus grandes marques : TechnoGym, Hammer Strength.",
           },
-          GILL: {
+          Dumbells: {
             name: "Motivation",
             description: "Chaque goutte de sueur te rapproche de ton but. Ne lâche rien 💪",
           },
-          DevantIron: {
+          Old: {
             name: "Old School",
             description: "Retour aux sources, brut et authentique. L'essence même de la force.",
           },
@@ -34,17 +36,28 @@ const SectionCategories = React.memo(function SectionCategories() {
           }));
 
         setCategories(formatted);
+
+        // Charger le background dosGill
+        const backgrounds = await getBackgrounds();
+        const dosGill = backgrounds.find(bg => bg.name === 'dosGill');
+        if (dosGill) {
+          // Ajouter les paramètres d'optimisation pour le background
+          setBackgroundUrl(`${dosGill.url}&w=1920&fit=crop&q=80`);
+        }
       } catch (err) {
         console.error("Erreur Chargement Catégories:", err);
       }
     }
 
-    loadCategories();
+    loadData();
   }, []);
 
   return (
     <section className="relative w-full min-h-screen flex items-center justify-center py-20 px-4 sm:px-8 overflow-hidden">
-      <div className="absolute inset-0 bg-cover bg-center" style={{ backgroundImage: "url('/dosGill.jpg')" }} />
+      <div
+        className="absolute inset-0 bg-cover bg-center"
+        style={{ backgroundImage: backgroundUrl ? `url('${backgroundUrl}')` : "url('/dosGill.jpg')" }}
+      />
       <div className="absolute inset-0 bg-black/70" />
 
       <div className="relative z-10 w-full max-w-7xl mx-auto">

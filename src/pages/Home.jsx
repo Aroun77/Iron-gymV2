@@ -1,11 +1,29 @@
-import { useState } from "react";
-import { motion } from "framer-motion";
+import { useState, useEffect } from "react";
 import SectionCategories from "../composants/SectionCategories";
 import Etages from "../composants/Etages";
 import SectionCoach from "../composants/SectionCoach";
+import { getBackgrounds } from "../services/api";
 
 function Home() {
   const [popup, setPopup] = useState(null);
+  const [heroBackground, setHeroBackground] = useState('');
+
+  // Charger le background DevantIron
+  useEffect(() => {
+    async function loadBackground() {
+      try {
+        const backgrounds = await getBackgrounds();
+        const devantIron = backgrounds.find(bg => bg.name === 'DevantIron');
+
+        if (devantIron) {
+          setHeroBackground(`${devantIron.url}&w=1920&fit=crop&q=85`);
+        }
+      } catch (err) {
+        console.error("Erreur chargement background:", err);
+      }
+    }
+    loadBackground();
+  }, []);
 
   const handleOpenPopup = (type) => {
     setPopup(type);
@@ -26,9 +44,15 @@ function Home() {
     <div className="w-full">
       {/* ================= SECTION HERO ================= */}
       <section className="relative h-screen w-full overflow-hidden">
-        {/* 🎥 Vidéo de fond */}
+        {/* 🎥 Image de fond dynamique */}
         <img
-          src="/GILL.jpg"
+          src={heroBackground || "/DevantIron.jpg"}
+          srcSet={heroBackground ? `
+            ${heroBackground}&w=1280 1280w,
+            ${heroBackground}&w=1920 1920w,
+            ${heroBackground}&w=2560 2560w
+          ` : undefined}
+          sizes="100vw"
           alt="Background"
           className="absolute top-0 left-0 w-full h-full object-cover"
         />
@@ -83,17 +107,13 @@ function Home() {
       </section>
 
       {/* SECTION CATEGORIES */}
-      <motion.section
+      <section
         id="categories"
-        className="relative z-20"
-        initial={{ opacity: 0, y: 80 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8, ease: "easeOut" }}
-        viewport={{ once: true, amount: 0.3 }}
+        className="relative z-20 animate-fade-in-top"
       >
         <Etages />
         <SectionCategories />
-      </motion.section>
+      </section>
       <SectionCoach />
 
       {/* Pop-up glassmorphism */}
@@ -107,7 +127,7 @@ function Home() {
             </h2>
             <p className="text-white/90 mb-6 text-base">
               {popup === "register"
-                ? "En t’inscrivant, tu rejoins notre communauté de passionnés 💪"
+                ? "En t'inscrivant, tu rejoins notre communauté de passionnés 💪"
                 : "Entre dans ton espace membre pour accéder à tes avantages 🔑"}
             </p>
             <div className="flex justify-center gap-4">

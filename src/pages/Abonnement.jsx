@@ -1,10 +1,12 @@
 import { useState, useEffect } from "react";
 import ChevronLeft from "lucide-react/dist/esm/icons/chevron-left";
 import ChevronRight from "lucide-react/dist/esm/icons/chevron-right";
+import { getBackgrounds } from "../services/api";
 
 function Abonnement() {
   const [selectedPlan, setSelectedPlan] = useState(null);
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [backgroundUrl, setBackgroundUrl] = useState('');
 
   const plans = [
     {
@@ -48,6 +50,22 @@ function Abonnement() {
     },
   ];
 
+  // Charger le background
+  useEffect(() => {
+    async function loadBackground() {
+      try {
+        const backgrounds = await getBackgrounds();
+        const bgImage = backgrounds.find(bg => bg.name === 'Background');
+        if (bgImage) {
+          setBackgroundUrl(`${bgImage.url}&w=1920&fit=crop&q=80`);
+        }
+      } catch (err) {
+        console.error("Erreur chargement background:", err);
+      }
+    }
+    loadBackground();
+  }, []);
+
   // Défilement automatique 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -65,7 +83,15 @@ function Abonnement() {
   };
 
   return (
-    <div className="min-h-screen py-12 px-4 sm:px-6 lg:px-8 relative">
+    <div
+      className="min-h-screen py-12 px-4 sm:px-6 lg:px-8 relative"
+      style={{
+        backgroundImage: backgroundUrl ? `url('${backgroundUrl}')` : 'none',
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundAttachment: 'fixed'
+      }}
+    >
       {/* Titre */}
       <div className="text-center mb-10">
         <h1 className="text-4xl font-bold text-yellow-400">Abonnement</h1>

@@ -102,6 +102,13 @@ export async function getEtages(req, res) {
   return getImagesByFolder(req, res);
 }
 
+export async function getBackgrounds(req, res) {
+  req.params.folder = 'backgrounds';  // Avec un 's' pour correspondre à Supabase
+  return getImagesByFolder(req, res);
+}
+
+
+
 /**
  * Proxy pour servir les images via le backend (évite CORS sur iOS)
  */

@@ -20,4 +20,8 @@ export async function getEtages() {
   return cachedFetch(`${API_URL}/api/images/etages`);
 }
 
+export async function getBackgrounds() {
+  return cachedFetch(`${API_URL}/api/images/backgrounds`);
+}
+
 export { API_URL };
