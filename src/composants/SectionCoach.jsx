@@ -1,5 +1,5 @@
 import React from "react";
-import ProfileCard from "./ProfileCard";
+import CoachFlipCard from "./CoachFlipCard";
 
 const SectionCoach = () => {
   const coaches = [
@@ -8,7 +8,6 @@ const SectionCoach = () => {
       title: "Préparateur Physique",
       handle: "coach_wilmann",
       status: "Disponible",
-      contactText: "Contacter",
       avatarUrl: "/CoachW.jpg",
     },
     {
@@ -16,7 +15,6 @@ const SectionCoach = () => {
       title: "Éducateur Sportif",
       handle: "coach_simons",
       status: "Disponible",
-      contactText: "Contacter",
       avatarUrl: "/CoachS.jpg",
     },
     {
@@ -24,7 +22,6 @@ const SectionCoach = () => {
       title: "Éducateur Sportif",
       handle: "coach_dikense",
       status: "Disponible",
-      contactText: "Contacter",
       avatarUrl: "/CoachD.jpg",
     },
   ];
@@ -39,17 +36,13 @@ const SectionCoach = () => {
       {/* Cartes de coachs */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 place-items-center max-w-7xl w-full">
         {coaches.map((coach, index) => (
-          <ProfileCard
+          <CoachFlipCard
             key={index}
             name={coach.name}
             title={coach.title}
             handle={coach.handle}
             status={coach.status}
-            contactText={coach.contactText}
             avatarUrl={coach.avatarUrl}
-            showUserInfo={true}
-            enableTilt={true}
-            enableMobileTilt={true}
             onContactClick={() =>
               console.log(`Contact avec ${coach.name}`)
             }
@@ -57,7 +50,7 @@ const SectionCoach = () => {
         ))}
       </div>
     </section>
-    
+
   );
 };
 
