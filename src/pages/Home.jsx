@@ -16,7 +16,9 @@ function Home() {
         const devantIron = backgrounds.find(bg => bg.name === 'DevantIron');
 
         if (devantIron) {
-          setHeroBackground(`${devantIron.url}&w=1920&fit=crop&q=85`);
+          // Ajouter un cache buster pour forcer le rechargement
+          const cacheBuster = `&v=${Date.now()}`;
+          setHeroBackground(`${devantIron.url}&w=1920&fit=crop&q=85${cacheBuster}`);
         }
       } catch (err) {
         console.error("Erreur chargement background:", err);

@@ -57,7 +57,8 @@ function Abonnement() {
         const backgrounds = await getBackgrounds();
         const bgImage = backgrounds.find(bg => bg.name === 'Background');
         if (bgImage) {
-          setBackgroundUrl(`${bgImage.url}&w=1920&fit=crop&q=80`);
+          const cacheBuster = `&v=${Date.now()}`;
+          setBackgroundUrl(`${bgImage.url}&w=1920&fit=crop&q=80${cacheBuster}`);
         }
       } catch (err) {
         console.error("Erreur chargement background:", err);

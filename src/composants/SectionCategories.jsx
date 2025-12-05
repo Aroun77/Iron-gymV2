@@ -42,7 +42,8 @@ const SectionCategories = React.memo(function SectionCategories() {
         const dosGill = backgrounds.find(bg => bg.name === 'dosGill');
         if (dosGill) {
           // Ajouter les paramètres d'optimisation pour le background
-          setBackgroundUrl(`${dosGill.url}&w=1920&fit=crop&q=80`);
+          const cacheBuster = `&v=${Date.now()}`;
+          setBackgroundUrl(`${dosGill.url}&w=1920&fit=crop&q=80${cacheBuster}`);
         }
       } catch (err) {
         console.error("Erreur Chargement Catégories:", err);
