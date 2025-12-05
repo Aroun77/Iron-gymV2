@@ -87,7 +87,9 @@ function Abonnement() {
     <div
       className="min-h-screen py-12 px-4 sm:px-6 lg:px-8 relative"
       style={{
-        backgroundImage: backgroundUrl ? `url('${backgroundUrl}')` : 'none',
+        backgroundImage: backgroundUrl
+          ? `url('${backgroundUrl}')`
+          : "url('https://iron-gym.imgix.net/backgrounds/Background.jpg?auto=format,compress&w=1920&fit=crop&q=80')",
         backgroundSize: 'cover',
         backgroundPosition: 'center',
         backgroundAttachment: 'fixed'

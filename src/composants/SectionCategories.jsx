@@ -41,7 +41,6 @@ const SectionCategories = React.memo(function SectionCategories() {
         const backgrounds = await getBackgrounds();
         const dosGill = backgrounds.find(bg => bg.name === 'dosGill');
         if (dosGill) {
-          // Ajouter les paramètres d'optimisation pour le background
           const cacheBuster = `&v=${Date.now()}`;
           setBackgroundUrl(`${dosGill.url}&w=1920&fit=crop&q=80${cacheBuster}`);
         }
@@ -57,7 +56,11 @@ const SectionCategories = React.memo(function SectionCategories() {
     <section className="relative w-full min-h-screen flex items-center justify-center py-20 px-4 sm:px-8 overflow-hidden">
       <div
         className="absolute inset-0 bg-cover bg-center"
-        style={{ backgroundImage: backgroundUrl ? `url('${backgroundUrl}')` : "url('/dosGill.jpg')" }}
+        style={{
+          backgroundImage: backgroundUrl
+            ? `url('${backgroundUrl}')`
+            : "url('https://iron-gym.imgix.net/backgrounds/dosGill.jpg?auto=format,compress&w=1920&fit=crop&q=80')"
+        }}
       />
       <div className="absolute inset-0 bg-black/70" />
 
