@@ -5,6 +5,7 @@ import {
   getCategories,
   getEtages,
   getBackgrounds,
+  getCoaches,
   proxyImage
 } from '../controllers/imagesController.js';
 
@@ -14,6 +15,7 @@ const router = express.Router();
 router.get('/categories', getCategories);
 router.get('/etages', getEtages);
 router.get('/backgrounds', getBackgrounds);
+router.get('/coachs', getCoaches);
 
 // 📌 Route pour proxifier les images (évite CORS sur iOS)
 router.get('/proxy/:folder/:filename', proxyImage);

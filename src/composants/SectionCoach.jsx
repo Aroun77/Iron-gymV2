@@ -1,30 +1,91 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import CoachFlipCard from "./CoachFlipCard";
+import { getCoaches } from "../services/api";
 
 const SectionCoach = () => {
-  const coaches = [
-    {
-      name: "Coach Wilmann",
-      title: "Préparateur Physique",
-      handle: "coach_wilmann",
-      status: "Disponible",
-      avatarUrl: "/CoachW.jpg",
-    },
-    {
-      name: "Coach Simons",
-      title: "Éducateur Sportif",
-      handle: "coach_simons",
-      status: "Disponible",
-      avatarUrl: "/CoachS.jpg",
-    },
-    {
-      name: "Coach Dikense",
-      title: "Éducateur Sportif",
-      handle: "coach_dikense",
-      status: "Disponible",
-      avatarUrl: "/CoachD.jpg",
-    },
-  ];
+  const [coaches, setCoaches] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    async function loadCoaches() {
+      try {
+        const coachImages = await getCoaches();
+
+        // Mapping des données des coachs avec leurs images
+        const coachData = [
+          {
+            name: "Coach Wilmann",
+            title: "Préparateur Physique",
+            handle: "coach_wilmann",
+            status: "Disponible",
+            imageName: "CoachW"
+          },
+          {
+            name: "Coach Simons",
+            title: "Éducateur Sportif",
+            handle: "coach_simons",
+            status: "Disponible",
+            imageName: "CoachS"
+          },
+          {
+            name: "Coach Dikense",
+            title: "Éducateur Sportif",
+            handle: "coach_dikense",
+            status: "Disponible",
+            imageName: "CoachD"
+          },
+        ];
+
+        // Associer chaque coach à son image Imgix
+        const coachesWithImages = coachData.map(coach => {
+          const image = coachImages.find(img => img.name === coach.imageName);
+          return {
+            ...coach,
+            avatarUrl: image ? `${image.url}&w=800&h=800&fit=crop&q=85` : `/Coach${coach.imageName.slice(-1)}.jpg`
+          };
+        });
+
+        setCoaches(coachesWithImages);
+      } catch (err) {
+        console.error("Erreur chargement coachs:", err);
+        // Fallback vers les images locales en cas d'erreur
+        setCoaches([
+          {
+            name: "Coach Wilmann",
+            title: "Préparateur Physique",
+            handle: "coach_wilmann",
+            status: "Disponible",
+            avatarUrl: "/CoachW.jpg",
+          },
+          {
+            name: "Coach Simons",
+            title: "Éducateur Sportif",
+            handle: "coach_simons",
+            status: "Disponible",
+            avatarUrl: "/CoachS.jpg",
+          },
+          {
+            name: "Coach Dikense",
+            title: "Éducateur Sportif",
+            handle: "coach_dikense",
+            status: "Disponible",
+            avatarUrl: "/CoachD.jpg",
+          },
+        ]);
+      } finally {
+        setLoading(false);
+      }
+    }
+    loadCoaches();
+  }, []);
+
+  if (loading) {
+    return (
+      <section className="relative py-20 px-6 sm:px-10 lg:px-16 flex flex-col items-center justify-center text-center">
+        <div className="text-yellow-400 text-xl">Chargement des coachs...</div>
+      </section>
+    );
+  }
 
   return (
     <section className="relative py-20 px-6 sm:px-10 lg:px-16 flex flex-col items-center justify-center text-center">

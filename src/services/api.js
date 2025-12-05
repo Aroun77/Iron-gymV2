@@ -24,4 +24,8 @@ export async function getBackgrounds() {
   return cachedFetch(`${API_URL}/api/images/backgrounds`);
 }
 
+export async function getCoaches() {
+  return cachedFetch(`${API_URL}/api/images/coachs`);
+}
+
 export { API_URL };

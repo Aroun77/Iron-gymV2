@@ -107,6 +107,11 @@ export async function getBackgrounds(req, res) {
   return getImagesByFolder(req, res);
 }
 
+export async function getCoaches(req, res) {
+  req.params.folder = 'coachs';
+  return getImagesByFolder(req, res);
+}
+
 
 
 /**
