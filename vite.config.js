@@ -20,15 +20,8 @@ export default defineConfig({
     },
     // Optimize CSS
     cssCodeSplit: true,
-    // Minify for production
-    minify: 'terser',
-    terserOptions: {
-      compress: {
-        drop_console: true, // Remove console.logs in production
-        drop_debugger: true,
-        pure_funcs: ['console.log', 'console.info', 'console.debug'], // Remove specific console methods
-      },
-    },
+    // Minify for production with esbuild (faster and included with Vite)
+    minify: 'esbuild',
     // CSS minification
     cssMinify: true,
   },
