@@ -14,7 +14,6 @@ export default defineConfig({
         manualChunks: {
           // Vendor chunks
           'react-vendor': ['react', 'react-dom', 'react-router-dom'],
-          'motion-vendor': ['framer-motion'],
           // Route chunks are handled automatically by React.lazy
         },
       },
