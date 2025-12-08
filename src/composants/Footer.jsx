@@ -57,7 +57,7 @@ const Footer = () => {
                     <div className="space-y-4">
                         <Link
                             to="/"
-                            className="flex items-center gap-3 group"
+                            className="flex items-center gap-3 group no-underline"
                             onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
                         >
                             <img
@@ -77,12 +77,12 @@ const Footer = () => {
                     {/* Navigation */}
                     <div>
                         <h3 className="text-yellow-400 font-bold text-lg mb-4">Navigation</h3>
-                        <ul className="space-y-2">
+                        <ul className="space-y-2 list-none p-0 m-0">
                             {navLinks.map((link) => (
                                 <li key={link.path}>
                                     <Link
                                         to={link.path}
-                                        className="text-white/70 hover:text-yellow-400 transition-colors text-sm"
+                                        className="text-white/70 hover:text-yellow-400 transition-colors text-sm no-underline"
                                     >
                                         {link.label}
                                     </Link>
@@ -94,7 +94,7 @@ const Footer = () => {
                     {/* Informations de Contact */}
                     <div>
                         <h3 className="text-yellow-400 font-bold text-lg mb-4">Contact</h3>
-                        <ul className="space-y-3 text-sm">
+                        <ul className="space-y-3 text-sm list-none p-0 m-0">
                             <li className="flex items-start gap-2 text-white/70">
                                 <MapPin className="w-4 h-4 text-yellow-400 mt-0.5 flex-shrink-0" />
                                 <span>{contactInfo.address}</span>
@@ -103,7 +103,7 @@ const Footer = () => {
                                 <Phone className="w-4 h-4 text-yellow-400 flex-shrink-0" />
                                 <a
                                     href={`tel:${contactInfo.phone.replace(/\s/g, '')}`}
-                                    className="text-white/70 hover:text-yellow-400 transition-colors"
+                                    className="text-white/70 hover:text-yellow-400 transition-colors no-underline"
                                 >
                                     {contactInfo.phone}
                                 </a>
@@ -112,7 +112,7 @@ const Footer = () => {
                                 <Mail className="w-4 h-4 text-yellow-400 flex-shrink-0" />
                                 <a
                                     href={`mailto:${contactInfo.email}`}
-                                    className="text-white/70 hover:text-yellow-400 transition-colors"
+                                    className="text-white/70 hover:text-yellow-400 transition-colors no-underline"
                                 >
                                     {contactInfo.email}
                                 </a>

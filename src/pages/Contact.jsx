@@ -91,7 +91,7 @@ const Contact = () => {
                                 <h3 className="text-xl font-bold text-yellow-400 mb-2">Téléphone</h3>
                                 <a
                                     href={`tel:${contactInfo.phone.replace(/\s/g, '')}`}
-                                    className="text-white/90 hover:text-yellow-400 transition text-lg"
+                                    className="text-white/90 hover:text-yellow-400 transition text-lg no-underline"
                                 >
                                     {contactInfo.phone}
                                 </a>
@@ -109,7 +109,7 @@ const Contact = () => {
                                 <h3 className="text-xl font-bold text-yellow-400 mb-2">Email</h3>
                                 <a
                                     href={`mailto:${contactInfo.email}`}
-                                    className="text-white/90 hover:text-yellow-400 transition"
+                                    className="text-white/90 hover:text-yellow-400 transition no-underline"
                                 >
                                     {contactInfo.email}
                                 </a>
