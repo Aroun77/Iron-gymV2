@@ -3,7 +3,6 @@ import { lazy, Suspense, useEffect, useState } from "react";
 
 // Lazy load ALL components including Navbar
 const Navbar = lazy(() => import("./composants/Navbar"));
-const Footer = lazy(() => import("./composants/Footer"));
 const Home = lazy(() => import("./pages/Home"));
 const Abonnement = lazy(() => import("./pages/Abonnement"));
 const Machine = lazy(() => import("./pages/Machines"));
@@ -49,9 +48,6 @@ function App() {
           <Route path="/tableau" element={<Tableau />} />
           <Route path="/contact" element={<Contact />} />
         </Routes>
-      </Suspense>
-      <Suspense fallback={null}>
-        <Footer />
       </Suspense>
       {showInsights && (
         <Suspense fallback={null}>

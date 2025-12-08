@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import SectionCategories from "../composants/SectionCategories";
 import Etages from "../composants/Etages";
 import SectionCoach from "../composants/SectionCoach";
+import Footer from "../composants/Footer";
 import { getBackgrounds } from "../services/api";
 // Force rebuild - v2
 
@@ -118,6 +119,7 @@ function Home() {
         <SectionCategories />
       </section>
       <SectionCoach />
+      <Footer />
 
       {/* Pop-up glassmorphism */}
       {popup && (
