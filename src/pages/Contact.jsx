@@ -29,19 +29,18 @@ const Contact = () => {
             <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-8">
                 {/* Google Maps */}
                 <div className="relative group">
-                    <div className="absolute inset-0 bg-gradient-to-r from-yellow-400/20 to-yellow-600/20 rounded-2xl blur-xl group-hover:blur-2xl transition-all duration-300"></div>
                     <div
                         className="relative bg-gray-900 rounded-2xl overflow-hidden shadow-2xl border-2 border-yellow-400/30 cursor-pointer hover:border-yellow-400 transition-all duration-300"
                         onClick={() => window.open(contactInfo.mapsLink, '_blank')}
                     >
-                        <div className="aspect-video relative">
+                        <div className="aspect-video relative bg-gray-800">
                             <iframe
                                 src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2619.8447891234567!2d2.8678739!3d48.9477625!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47e8a0e12502f93b%3A0x43c5a396e934b2ac!2sIron%20Gym!5e0!3m2!1sfr!2sfr!4v1234567890"
                                 width="100%"
                                 height="100%"
                                 style={{ border: 0 }}
                                 allowFullScreen=""
-                                loading="lazy"
+                                loading="eager"
                                 referrerPolicy="no-referrer-when-downgrade"
                                 className="absolute inset-0 pointer-events-none"
                                 title="Iron Gym Location"
@@ -67,13 +66,14 @@ const Contact = () => {
                             </div>
                             <div className="flex-1">
                                 <h3 className="text-xl font-bold text-yellow-400 mb-2">Adresse</h3>
-                                <p className="text-white/90">{contactInfo.address}</p>
+                                <p className="text-white/90 mb-4">{contactInfo.address}</p>
                                 <button
                                     onClick={() => window.open(contactInfo.mapsLink, '_blank')}
-                                    className="mt-3 text-yellow-400 hover:text-yellow-300 font-semibold text-sm flex items-center gap-2 transition"
+                                    className="w-full bg-yellow-400 text-black px-6 py-3 rounded-lg font-bold hover:bg-yellow-300 transition-all hover:scale-105 shadow-lg flex items-center justify-center gap-2"
                                 >
+                                    <MapPin className="w-5 h-5" />
                                     Voir sur la carte
-                                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
                                     </svg>
                                 </button>
