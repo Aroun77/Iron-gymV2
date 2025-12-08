@@ -8,6 +8,7 @@ const Products = lazy(() => import("./pages/Products"));
 const Abonnement = lazy(() => import("./pages/Abonnement"));
 const Machine = lazy(() => import("./pages/Machines"));
 const Tableau = lazy(() => import("./pages/Tableau"));
+const Contact = lazy(() => import("./pages/Contact"));
 
 // Lazy load SpeedInsights (non-critical)
 const SpeedInsights = lazy(() =>
@@ -47,6 +48,7 @@ function App() {
           <Route path="/abonnement" element={<Abonnement />} />
           <Route path="/machines" element={<Machine />} />
           <Route path="/tableau" element={<Tableau />} />
+          <Route path="/contact" element={<Contact />} />
         </Routes>
       </Suspense>
       {showInsights && (

@@ -27,6 +27,7 @@ function Navbar() {
     { path: "/abonnement", label: "Abonnement" },
     { path: "/machines", label: "Machines" },
     { path: "/tableau", label: "Performances" },
+    { path: "/contact", label: "Contact" },
   ];
 
   useEffect(() => {
@@ -40,8 +41,8 @@ function Navbar() {
       {/* Navbar principale */}
       <nav
         className={`navbar-main transition-all duration-500 rounded-full px-8 py-3 flex justify-between items-center shadow-lg border backdrop-blur-lg ${scrolled
-            ? "bg-white/10 border-white/20 shadow-xl navbar-scrolled"
-            : "bg-white/5 border-white/10"
+          ? "bg-white/10 border-white/20 shadow-xl navbar-scrolled"
+          : "bg-white/5 border-white/10"
           } max-w-5xl w-full`}
       >
         {/* Logo */}
@@ -69,8 +70,8 @@ function Navbar() {
                 to={path}
                 onMouseEnter={() => prefetchRoute(path)}
                 className={`relative px-3 py-1.5 text-sm font-medium transition-all duration-300 no-underline ${location.pathname === path
-                    ? "text-yellow-400 font-semibold"
-                    : "text-white hover:text-yellow-400"
+                  ? "text-yellow-400 font-semibold"
+                  : "text-white hover:text-yellow-400"
                   }`}
               >
                 {label}
@@ -132,8 +133,8 @@ function Navbar() {
                   to={path}
                   onClick={() => setMenuOpen(false)}
                   className={`py-3 px-4 rounded-full text-left text-sm transition-all duration-300 no-underline ${location.pathname === path
-                      ? "bg-yellow-400 text-black font-semibold shadow"
-                      : "bg-gray-700/80 text-white hover:bg-yellow-400 hover:text-black"
+                    ? "bg-yellow-400 text-black font-semibold shadow"
+                    : "bg-gray-700/80 text-white hover:bg-yellow-400 hover:text-black"
                     }`}
                 >
                   {label}
