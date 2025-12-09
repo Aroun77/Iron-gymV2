@@ -46,7 +46,7 @@ Ce projet utilise les dernières technologies du développement web moderne :
 ### **Frontend**
 - **React 19** : Bibliothèque d'interface utilisateur (dernière version).
 - **Vite** : Modeleur de module ultra-rapide.
-- **Tailwind CSS v4** : Framework CSS utilitaire pour un styling rapide et maintenable.
+- **UnoCss** : Framework CSS utilitaire pour un styling rapide et maintenable.
 - **Lucide React** : Icônes vectorielles légères.
 - **GSAP** : Animations complexes (si activé).
 - **React Router v7** : Gestion du routage côté client.
