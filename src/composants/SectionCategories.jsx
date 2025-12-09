@@ -19,7 +19,7 @@ const SectionCategories = React.memo(function SectionCategories() {
             description: "Entraîne-toi avec les plus grandes marques : TechnoGym, Hammer Strength, Waston, Life Fitness. ",
           },
           Dumbells: {
-            name: "Motivation",
+            name: "Performance",
             description: "Un seul endroit. Cinq disciplines : Power Lifting, Cross Training, Weight Lifting et Cardio Training.",
           },
           Old: {
@@ -69,11 +69,11 @@ const SectionCategories = React.memo(function SectionCategories() {
         <div className="flex flex-col items-center justify-center gap-14">
           <div className="category-header text-center max-w-3xl">
             <h2 className="text-4xl sm:text-5xl md:text-6xl font-extrabold text-yellow-400 leading-tight mb-6">
-              Équipement.<br />Motivation.<br />OLD SCHOOL.
+              Performance.<br />Equipement.<br />OLD SCHOOL.
             </h2>
             <p className="text-white/90 text-base sm:text-lg md:text-xl leading-relaxed px-2 sm:px-4">
               Des valeurs fortes pour des performances réelles.<br />
-              Chez <span className="text-yellow-400 font-semibold">IRON GYM</span>, chaque entraînement est un pas vers la légende.
+              Chez <span className="text-yellow-400 font-semibold">IRON GYM</span>, chaque entraînement est un pas vers la meilleur  version de soi.
             </p>
           </div>
 
