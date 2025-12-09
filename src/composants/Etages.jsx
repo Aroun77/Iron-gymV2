@@ -15,12 +15,13 @@ const Etages = React.memo(function Etages() {
         const formattedLabels = {
           "Etage 1": "1er Étage",
           "Etage 2": "2ème Étage",
-          "Etage 3": "3ème Étage",
         };
 
         const formattedData = data.map(img => ({
           ...img,
-          label: formattedLabels[img.name] || img.name
+          label: formattedLabels[img.name] || img.name,
+          // Encoder l'URL pour gérer les espaces dans srcSet
+          url: img.url.replace(/ /g, '%20')
         })).sort((a, b) => a.name.localeCompare(b.name)); // Tri alphabétique
 
         setImages(formattedData);
