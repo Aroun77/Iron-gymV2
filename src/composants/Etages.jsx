@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { getEtages } from "../services/api";
+// Force rebuild - v3 refresh etages
 
 const Etages = React.memo(function Etages() {
   const [images, setImages] = useState([]);
@@ -9,7 +10,20 @@ const Etages = React.memo(function Etages() {
     async function loadImages() {
       try {
         const data = await getEtages();
-        setImages(data);
+
+        // Mapping des noms pour un affichage plus propre
+        const formattedLabels = {
+          "Etage 1": "1er Étage",
+          "Etage 2": "2ème Étage",
+          "Etage 3": "3ème Étage",
+        };
+
+        const formattedData = data.map(img => ({
+          ...img,
+          label: formattedLabels[img.name] || img.name
+        })).sort((a, b) => a.name.localeCompare(b.name)); // Tri alphabétique
+
+        setImages(formattedData);
       } catch (err) {
         console.error("Erreur chargement étages:", err);
       } finally {
