@@ -1,4 +1,5 @@
 import React from "react";
+import SEO from "../composants/SEO";
 
 function Tableau() {
   const performances = [
@@ -78,6 +79,11 @@ function Tableau() {
 
   return (
     <div className="min-h-screen flex flex-col items-center p-4 sm:p-6">
+      <SEO
+        title="Tableau des Performances | Records"
+        description="Consultez les records de la salle Iron Gym : Squat, Bench, Deadlift. Dépassez vos limites et inscrivez votre nom au tableau des légendes."
+        keywords="powerlifting records, tableau iron gym, squat record, bench press villenoy"
+      />
       <h1 className="text-2xl sm:text-4xl md:text-5xl font-bold text-center mb-6 sm:mb-10 text-yellow-500">
         🏆 Tableau des Performances
       </h1>

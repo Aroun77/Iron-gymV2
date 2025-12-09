@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import ChevronLeft from "lucide-react/dist/esm/icons/chevron-left";
 import ChevronRight from "lucide-react/dist/esm/icons/chevron-right";
 import { getBackgrounds } from "../services/api";
+import SEO from "../composants/SEO";
 // Force rebuild - v2
 
 function Abonnement() {
@@ -109,6 +110,11 @@ function Abonnement() {
         backgroundAttachment: 'fixed'
       }}
     >
+      <SEO
+        title="Tarifs & Abonnements"
+        description="Découvrez nos abonnements flexibles à Iron Gym Villenoy. À partir de 25€/mois. Accès illimité musculation, cardio, et cross training."
+        keywords="tarif salle de sport 77, abonnement musculation villenoy, prix gym meaux, cross training tarif"
+      />
       {/* Titre */}
       <div className="text-center mb-10">
         <h1 className="text-4xl font-bold text-yellow-400">Abonnement</h1>

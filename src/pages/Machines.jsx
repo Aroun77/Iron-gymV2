@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import ChevronLeft from "lucide-react/dist/esm/icons/chevron-left";
 import ChevronRight from "lucide-react/dist/esm/icons/chevron-right";
+import SEO from "../composants/SEO";
 
 const machines = [
   {
@@ -116,6 +117,11 @@ function Machine() {
 
   return (
     <div className="min-h-screen py-12 px-4 sm:px-6 lg:px-8 text-center">
+      <SEO
+        title="Nos Machines & Équipements"
+        description="Explorez notre parc machine complet : charges libres, machines guidées, cardio. TechnoGym, Hammer Strength. Tout pour votre progression."
+        keywords="machines musculation, équipement gym, technogym villenoy, hammer strength 77"
+      />
       <h1 className="text-4xl font-bold text-yellow-400 mb-4">Nos Machines</h1>
       <p className="text-white/80 max-w-xl mx-auto mb-12">
         Glisse pour découvrir nos machines et leur utilisation.

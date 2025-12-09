@@ -3,12 +3,51 @@ import SectionCategories from "../composants/SectionCategories";
 import Etages from "../composants/Etages";
 import SectionCoach from "../composants/SectionCoach";
 import Footer from "../composants/Footer";
+import SEO from "../composants/SEO";
 import { getBackgrounds } from "../services/api";
 // Force rebuild - v2
 
 function Home() {
   const [popup, setPopup] = useState(null);
   const [heroBackground, setHeroBackground] = useState('');
+
+  // Données structurées pour LocalBusiness (Gym)
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "ExerciseGym",
+    "name": "Iron Gym",
+    "image": "https://iron-gym.imgix.net/logo/Logo.png",
+    "telephone": "01 75 78 31 28",
+    "email": "iron-gym@hotmail.fr",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "71 Rue Aristide Briand",
+      "addressLocality": "Villenoy",
+      "postalCode": "77124",
+      "addressCountry": "FR"
+    },
+    "geo": {
+      "@type": "GeoCoordinates",
+      "latitude": 48.9477625,
+      "longitude": 2.8678739
+    },
+    "openingHoursSpecification": [
+      {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+        "opens": "07:00",
+        "closes": "23:00"
+      },
+      {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": ["Saturday", "Sunday"],
+        "opens": "09:00",
+        "closes": "20:00"
+      }
+    ],
+    "priceRange": "25€ - 38€",
+    "url": "https://irongym-villenoy.fr"
+  };
 
   // Charger le background DevantIron
   useEffect(() => {
@@ -46,6 +85,12 @@ function Home() {
 
   return (
     <div className="w-full">
+      <SEO
+        title="Iron Gym - Salle de Sport Villenoy (77)"
+        description="Rejoignez Iron Gym Villenoy. Profitez de nos équipements Power Lifting, Cross Training et de nos coachs experts. Ouvert 7j/7, ambiance authentique et motivante."
+        keywords="salle de sport villenoy, musculation 77, cross training meaux, powerlifting ile de france, coach sportif"
+        jsonLd={jsonLd}
+      />
       {/* ================= SECTION HERO ================= */}
       <section className="relative h-screen w-full overflow-hidden">
         {/* 🎥 Image de fond dynamique */}

@@ -1,5 +1,6 @@
 import React from "react";
 import { MapPin, Phone, Mail, Clock } from "lucide-react";
+import SEO from "../composants/SEO";
 
 const Contact = () => {
     const contactInfo = {
@@ -15,6 +16,11 @@ const Contact = () => {
 
     return (
         <div className="min-h-screen py-20 px-4 sm:px-6 lg:px-8">
+            <SEO
+                title="Contact & Horaires"
+                description="Contactez Iron Gym Villenoy (77124). Adresse : 71 Rue Aristide Briand. Ouvert 7j/7. Téléphone : 01 75 78 31 28. Venez vous entraîner !"
+                keywords="contact iron gym, adresse salle de sport villenoy, horaires musculation 77"
+            />
             {/* Header */}
             <div className="text-center mb-16">
                 <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold text-yellow-400 mb-4 drop-shadow-lg">
