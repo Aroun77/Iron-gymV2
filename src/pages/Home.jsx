@@ -114,7 +114,7 @@ function Home() {
             VOTRE CLUB AUX VALEURS UNIQUE
           </h1>
           <p className="text-lg mb-6 text-white drop-shadow-sm">
-            Iron GYM - Là où la force prend vie.💪
+            IRON GYM - La Salle au Concept Old School.💪
           </p>
 
           {/* 🔗 Boutons avec pop-ups */}

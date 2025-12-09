@@ -16,11 +16,11 @@ const SectionCategories = React.memo(function SectionCategories() {
         const metaData = {
           Equipement: {
             name: "Equipement",
-            description: "Entraîne-toi avec les plus grandes marques : TechnoGym, Hammer Strength.",
+            description: "Entraîne-toi avec les plus grandes marques : TechnoGym, Hammer Strength, Waston, Life Fitness. ",
           },
           Dumbells: {
             name: "Motivation",
-            description: "Chaque goutte de sueur te rapproche de ton but. Ne lâche rien 💪",
+            description: "Un seul endroit. Cinq disciplines : Power Lifting, Cross Training, Weight Lifting et Cardio Training.",
           },
           Old: {
             name: "Old School",
@@ -73,7 +73,7 @@ const SectionCategories = React.memo(function SectionCategories() {
             </h2>
             <p className="text-white/90 text-base sm:text-lg md:text-xl leading-relaxed px-2 sm:px-4">
               Des valeurs fortes pour des performances réelles.<br />
-              Chez <span className="text-yellow-400 font-semibold">Iron GYM</span>, chaque entraînement est un pas vers la légende.
+              Chez <span className="text-yellow-400 font-semibold">IRON GYM</span>, chaque entraînement est un pas vers la légende.
             </p>
           </div>
 
