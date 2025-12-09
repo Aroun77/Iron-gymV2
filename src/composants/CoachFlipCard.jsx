@@ -100,9 +100,9 @@ const CoachFlipCard = ({ name, title, handle, status, avatarUrl, onContactClick 
                             </h3>
                             <button
                                 onClick={closePopup}
-                                className="text-white/70 hover:text-white text-2xl transition"
+                                className="text-white hover:text-red-500 text-4xl transition font-bold leading-none"
                             >
-                                ×
+                                &times;
                             </button>
                         </div>
 
@@ -136,10 +136,10 @@ const CoachFlipCard = ({ name, title, handle, status, avatarUrl, onContactClick 
                                 <div className="bg-white/5 rounded-lg p-4 space-y-3">
                                     <div>
                                         <h4 className="text-yellow-400 font-semibold mb-2">Spécialités</h4>
-                                        <ul className="text-white/80 space-y-1 text-sm">
-                                            <li>• Musculation & Force</li>
-                                            <li>• Préparation physique</li>
-                                            <li>• Coaching personnalisé</li>
+                                        <ul className="text-white/80 space-y-1 text-sm list-none p-0">
+                                            <li>Musculation & Force</li>
+                                            <li>Préparation physique</li>
+                                            <li>Coaching personnalisé</li>
                                         </ul>
                                     </div>
                                     <div>

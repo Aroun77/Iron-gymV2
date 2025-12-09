@@ -18,7 +18,7 @@ function Abonnement() {
       description: "Soit 456€/1 an",
       features: [
         "Power Lifting",
-        "Cross Training",
+        "Cross Training (Non Inclus)",
         "Weight Lifting",
         "Cardio Training",
       ],
@@ -31,7 +31,7 @@ function Abonnement() {
       description: "Soit 408€/1 an",
       features: [
         "Power Lifting",
-        "Cross Training",
+        "Cross Training (Non Inclus)",
         "Weight Lifting",
         "Cardio Training",
       ],
@@ -44,22 +44,9 @@ function Abonnement() {
       description: "Soit 384€/1 an",
       features: [
         "Power Lifting",
-        "Cross Training",
+        "Cross Training (Non Inclus)",
         "Weight Lifting",
         "Cardio Training",
-      ],
-      link: "https://member.resamania.com/irongym/registration",
-    },
-    {
-      name: "CROSS TRAINING",
-      price: "25€",
-      per: "/mois",
-      description: "Accès exclusif Cross Training",
-      features: [
-        "Cross Training uniquement",
-        "Coaching spécialisé",
-        "Programmation WOD",
-        "Accès 7j/7",
       ],
       link: "https://member.resamania.com/irongym/registration",
     },
