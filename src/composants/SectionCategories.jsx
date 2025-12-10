@@ -14,22 +14,28 @@ const SectionCategories = React.memo(function SectionCategories() {
         const data = await getCategories();
 
         const metaData = {
-          Equipement: {
-            name: "Equipement",
-            description: "Entraîne-toi avec les plus grandes marques : TechnoGym, Hammer Strength, Waston, Life Fitness. ",
+          WeightLifting: {
+            name: "Weight Lifting",
+            description: "Plateau musculation complet avec charges libres et machines guidées.",
           },
-          Dumbells: {
-            name: "Performance",
-            description: "Un seul endroit. Cinq disciplines : Power Lifting, Cross Training, Weight Lifting et Cardio Training.",
+          CardioTraining: {
+            name: "Cardio Training",
+            description: "Espace cardio dernière génération pour votre endurance et échauffement.",
           },
-          Old: {
-            name: "Old School",
-            description: "Retour aux sources, brut et authentique. L'essence même de la force.",
+          PowerLifting: {
+            name: "Power Lifting",
+            description: "Zone dédiée à la force athlétique : Squat, Bench, Deadlift.",
+          },
+          CrossTraining: {
+            name: "Cross Training",
+            description: "Cage fonctionnelle et espace WOD pour un entraînement complet.",
           },
         };
 
+        const allowedCategories = ['WeightLifting', 'CardioTraining', 'PowerLifting', 'CrossTraining'];
+
         const formatted = data
-          .filter((it) => it?.url && !it.url.toLowerCase().includes("empty") && !it.url.toLowerCase().includes("placeholder"))
+          .filter((it) => it?.name && allowedCategories.includes(it.name))
           .map((cat) => ({
             ...cat,
             name: metaData[cat.name]?.name || cat.name,
@@ -69,7 +75,7 @@ const SectionCategories = React.memo(function SectionCategories() {
         <div className="flex flex-col items-center justify-center gap-14">
           <div className="category-header text-center max-w-3xl">
             <h2 className="text-4xl sm:text-5xl md:text-6xl font-extrabold text-yellow-400 leading-tight mb-6">
-              Performance.<br />Equipement.<br />OLD SCHOOL.
+              Nos Disciplines.
             </h2>
             <p className="text-white/90 text-base sm:text-lg md:text-xl leading-relaxed px-2 sm:px-4">
               Des valeurs fortes pour des performances réelles.<br />
@@ -78,7 +84,7 @@ const SectionCategories = React.memo(function SectionCategories() {
           </div>
 
           <div className="w-full flex justify-center">
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 w-full max-w-6xl justify-items-center">
+            <div className="flex flex-wrap justify-center gap-8 w-full max-w-6xl">
               {categories.map((cat, index) => (
                 <div
                   key={index}
