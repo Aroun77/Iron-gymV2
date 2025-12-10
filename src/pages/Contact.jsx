@@ -144,6 +144,47 @@ const Contact = () => {
                             </div>
                         </div>
                     </div>
+
+                    {/* Social Media Card */}
+                    <div className="bg-gradient-to-br from-gray-900 to-black border-2 border-yellow-400/30 rounded-2xl p-6 hover:border-yellow-400 transition-all duration-300 shadow-xl">
+                        <div className="flex items-start gap-4">
+                            <div className="bg-yellow-400/20 p-3 rounded-full">
+                                <span className="text-2xl">📱</span>
+                            </div>
+                            <div className="flex-1">
+                                <h3 className="text-xl font-bold text-yellow-400 mb-3">Réseaux Sociaux</h3>
+                                <div className="flex gap-4">
+                                    <a
+                                        href="https://www.instagram.com/irongymofficiel"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="bg-yellow-400/10 p-3 rounded-full hover:bg-yellow-400 hover:text-black transition-all duration-300"
+                                        aria-label="Instagram"
+                                    >
+                                        Instagram
+                                    </a>
+                                    <a
+                                        href="https://www.tiktok.com/@irongymofficiel"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="bg-yellow-400/10 p-3 rounded-full hover:bg-yellow-400 hover:text-black transition-all duration-300"
+                                        aria-label="TikTok"
+                                    >
+                                        TikTok
+                                    </a>
+                                    <a
+                                        href="https://www.facebook.com/share/1aGGtuBjer"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="bg-yellow-400/10 p-3 rounded-full hover:bg-yellow-400 hover:text-black transition-all duration-300"
+                                        aria-label="Facebook"
+                                    >
+                                        Facebook
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

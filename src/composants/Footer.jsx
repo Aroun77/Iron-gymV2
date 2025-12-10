@@ -34,17 +34,17 @@ const Footer = () => {
     const socialLinks = [
         {
             name: "Instagram",
-            url: "https://www.instagram.com/iron_gym77/",
+            url: "https://www.instagram.com/irongymofficiel",
             icon: Instagram
         },
         {
             name: "Facebook",
-            url: "https://www.facebook.com/IronGym77",
+            url: "https://www.facebook.com/share/1aGGtuBjer",
             icon: Facebook
         },
         {
             name: "TikTok",
-            url: "https://www.tiktok.com/@iron_gym77",
+            url: "https://www.tiktok.com/@irongymofficiel",
             icon: TikTok
         },
     ];
