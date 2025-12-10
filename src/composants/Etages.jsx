@@ -13,8 +13,8 @@ const Etages = React.memo(function Etages() {
 
         // Mapping des noms pour un affichage plus propre
         const formattedLabels = {
-          "Etage 1": "1er Étage",
-          "Etage 2": "2ème Étage",
+          "Etage1": "1er Étage",
+          "Etage2": "2ème Étage",
         };
 
         const formattedData = data.map(img => ({
