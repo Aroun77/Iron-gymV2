@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-const CoachFlipCard = ({ name, title, handle, status, avatarUrl, onContactClick }) => {
+const CoachFlipCard = ({ name, title, handle, status, avatarUrl, phone, email, onContactClick }) => {
     const [isFlipped, setIsFlipped] = useState(false);
     const [showPopup, setShowPopup] = useState(null); // 'contact' ou 'info'
 
@@ -116,11 +116,11 @@ const CoachFlipCard = ({ name, title, handle, status, avatarUrl, onContactClick 
                                 <div className="bg-white/5 rounded-lg p-4 space-y-3">
                                     <div className="flex items-center gap-3">
                                         <span className="text-yellow-400">📧</span>
-                                        <span className="text-white/80">{handle}@irongym.com</span>
+                                        <span className="text-white/80">{email || `${handle}@irongym.com`}</span>
                                     </div>
                                     <div className="flex items-center gap-3">
                                         <span className="text-yellow-400">📱</span>
-                                        <span className="text-white/80">+33 6 XX XX XX XX</span>
+                                        <span className="text-white/80">{phone || "+33 6 XX XX XX XX"}</span>
                                     </div>
                                     <div className="flex items-center gap-3">
                                         <span className="text-yellow-400">💬</span>

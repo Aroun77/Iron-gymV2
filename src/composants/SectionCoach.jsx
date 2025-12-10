@@ -18,21 +18,27 @@ const SectionCoach = () => {
             title: "Préparateur Physique",
             handle: "coach_wilmann",
             status: "Disponible",
-            imageName: "CoachW"
+            imageName: "CoachW",
+            phone: "+33 6 59 85 71 90",
+            email: "wilmannpro@gmail.com"
           },
           {
             name: "Coach Simons",
             title: "Éducateur Sportif",
             handle: "coach_simons",
             status: "Disponible",
-            imageName: "CoachS"
+            imageName: "CoachS",
+            phone: "+33 6 13 70 45 38",
+            email: "simoncomptepro@gmail.com"
           },
           {
             name: "Coach Dikense",
             title: "Éducateur Sportif",
             handle: "coach_dikense",
             status: "Disponible",
-            imageName: "CoachD"
+            imageName: "CoachD",
+            phone: "+33 6 63 97 93 12",
+            email: "dikensepro@gmail.com"
           },
         ];
 
@@ -56,6 +62,8 @@ const SectionCoach = () => {
             handle: "coach_wilmann",
             status: "Disponible",
             avatarUrl: "/CoachW.jpg",
+            phone: "+33 6 59 85 71 90",
+            email: "wilmannpro@gmail.com"
           },
           {
             name: "Coach Simons",
@@ -63,6 +71,8 @@ const SectionCoach = () => {
             handle: "coach_simons",
             status: "Disponible",
             avatarUrl: "/CoachS.jpg",
+            phone: "+33 6 13 70 45 38",
+            email: "simoncomptepro@gmail.com"
           },
           {
             name: "Coach Dikense",
@@ -70,6 +80,8 @@ const SectionCoach = () => {
             handle: "coach_dikense",
             status: "Disponible",
             avatarUrl: "/CoachD.jpg",
+            phone: "+33 6 63 97 93 12",
+            email: "dikensepro@gmail.com"
           },
         ]);
       } finally {
@@ -104,6 +116,8 @@ const SectionCoach = () => {
             handle={coach.handle}
             status={coach.status}
             avatarUrl={coach.avatarUrl}
+            phone={coach.phone}
+            email={coach.email}
             onContactClick={() =>
               console.log(`Contact avec ${coach.name}`)
             }
