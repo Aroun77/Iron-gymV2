@@ -33,6 +33,7 @@ app.use(
       'http://localhost:5173',
       'http://localhost:5000',
       'https://iron-gym.org',
+      'https://www.iron-gym.org',
     ],
     credentials: true
   })
