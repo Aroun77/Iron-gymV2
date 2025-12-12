@@ -17,7 +17,7 @@ const CoachFlipCard = ({ name, title, handle, status, avatarUrl, phone, email, o
     return (
         <>
             <div
-                className="flip-card-container w-full max-w-sm h-96 cursor-pointer"
+                className="flip-card-container w-full h-[450px] sm:h-96 cursor-pointer"
                 onClick={() => setIsFlipped(!isFlipped)}
                 onMouseEnter={() => setIsFlipped(true)}
                 onMouseLeave={() => setIsFlipped(false)}
@@ -100,7 +100,7 @@ const CoachFlipCard = ({ name, title, handle, status, avatarUrl, phone, email, o
                             </h3>
                             <button
                                 onClick={closePopup}
-                                className="text-white hover:text-red-500 text-4xl transition font-bold leading-none"
+                                className="text-yellow-400 hover:text-yellow-300 text-4xl transition font-bold leading-none"
                             >
                                 &times;
                             </button>

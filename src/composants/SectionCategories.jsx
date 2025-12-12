@@ -145,7 +145,7 @@ const SectionCategories = React.memo(function SectionCategories() {
         <div className="flex flex-col items-center justify-center gap-14">
           <div className="category-header text-center max-w-3xl">
             <h2 className="text-4xl sm:text-5xl md:text-6xl font-extrabold text-yellow-400 leading-tight mb-6">
-              Nos Disciplines.
+              Nos Disciplines
             </h2>
             <p className="text-white/90 text-base sm:text-lg md:text-xl leading-relaxed px-2 sm:px-4">
               Des valeurs fortes pour des performances réelles.<br />

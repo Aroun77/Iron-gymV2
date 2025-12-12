@@ -68,23 +68,21 @@ function Navbar() {
         {/* Menu Desktop centré */}
         <div className="hidden md:flex items-center gap-6 relative">
           {navLinks.map(({ path, label }) => (
-            <div key={path} className="relative">
-              <Link
-                to={path}
-                onMouseEnter={() => prefetchRoute(path)}
-                className={`relative px-3 py-1.5 text-sm font-medium transition-all duration-300 no-underline ${location.pathname === path
-                  ? "text-yellow-400 font-semibold"
-                  : "text-white hover:text-yellow-400"
-                  }`}
-              >
-                {label}
-              </Link>
-
-              {/* Barre sous le lien actif */}
+            <Link
+              key={path}
+              to={path}
+              onMouseEnter={() => prefetchRoute(path)}
+              className={`relative px-3 py-1.5 text-sm font-medium transition-all duration-300 no-underline z-10 ${location.pathname === path
+                ? "text-yellow-400 font-semibold"
+                : "text-white hover:text-yellow-400"
+                }`}
+            >
+              {label}
+              {/* Active Underline with clean slide animation per item (simpler than global) */}
               {location.pathname === path && (
-                <div className="absolute left-0 bottom-0 w-full h-[2px] bg-yellow-400 rounded-full" />
+                <span className="absolute left-0 bottom-0 w-full h-[2px] bg-yellow-400 rounded-full animate-underline-slide" />
               )}
-            </div>
+            </Link>
           ))}
         </div>
 

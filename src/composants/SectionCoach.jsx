@@ -165,53 +165,44 @@ const SectionCoach = () => {
     loadCoaches();
   }, []);
 
-  // Auto-scroll loop
-  useEffect(() => {
-    // Basic auto-scroll that moves to the next item every 4 seconds
-    // Only runs if we have coaches and it is not loading
+  const startAutoScroll = () => {
+    stopAutoScroll(); // Ensure no duplicate intervals
     if (!loading && coaches.length > 0) {
       intervalRef.current = setInterval(() => {
         if (scrollRef.current) {
           const { current } = scrollRef;
-          // If near end (last item), loop to start, else scroll right
           const isAtEnd = current.scrollLeft + current.clientWidth >= current.scrollWidth - 50;
-
           if (isAtEnd) {
+            // Loop back to start smoothly
             current.scrollTo({ left: 0, behavior: 'smooth' });
           } else {
-            // Scroll by a safe amount to trigger snap to next
-            current.scrollBy({ left: 300, behavior: 'smooth' });
+            // Scroll exactly one card width (approx 350px + gap) or just a chunk
+            // Better: scroll by width of first child + gap
+            const cardWidth = current.children[0]?.offsetWidth || 300;
+            const gap = 32; // gap-8 is 2rem = 32px
+            current.scrollBy({ left: cardWidth + gap, behavior: 'smooth' });
           }
         }
-      }, 5000);
+      }, 4000);
     }
+  };
 
-    return () => clearInterval(intervalRef.current);
+  const stopAutoScroll = () => {
+    if (intervalRef.current) {
+      clearInterval(intervalRef.current);
+      intervalRef.current = null;
+    }
+  };
+
+  // Auto-scroll lifecycle management
+  useEffect(() => {
+    startAutoScroll();
+    return () => stopAutoScroll();
   }, [loading, coaches.length]);
 
-  // Pause on hover
-  const pauseAutoScroll = () => {
-    if (intervalRef.current) clearInterval(intervalRef.current);
-  };
-
-  const resumeAutoScroll = () => {
-    // Re-instantiate interval logic if needed, or rely on useEffect dependecies to reset
-    // Simplest: just clean up on unmount. For strictly pausing on hover without complexity:
-    // The overhead of clearing/resetting interval on hover is fine.
-    if (!loading && coaches.length > 0) {
-      intervalRef.current = setInterval(() => {
-        if (scrollRef.current) {
-          const { current } = scrollRef;
-          const isAtEnd = current.scrollLeft + current.clientWidth >= current.scrollWidth - 50;
-          if (isAtEnd) {
-            current.scrollTo({ left: 0, behavior: 'smooth' });
-          } else {
-            current.scrollBy({ left: 300, behavior: 'smooth' });
-          }
-        }
-      }, 5000);
-    }
-  };
+  // Pause/Resume handlers
+  const pauseAutoScroll = stopAutoScroll;
+  const resumeAutoScroll = startAutoScroll;
 
 
   if (loading) {
@@ -250,7 +241,7 @@ const SectionCoach = () => {
             return (
               <div
                 key={index}
-                className={`flex-shrink-0 snap-center w-full max-w-sm transition-all duration-500 ease-out transform ${isActive ? 'scale-105 opacity-100' : 'scale-95 opacity-70'
+                className={`flex-shrink-0 snap-center w-[85vw] sm:w-[350px] transition-all duration-500 ease-out transform ${isActive ? 'scale-105 opacity-100' : 'scale-95 opacity-70'
                   }`}
               >
                 <CoachFlipCard

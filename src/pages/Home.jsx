@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { ChevronDown } from "lucide-react";
 import SectionCategories from "../composants/SectionCategories";
 import Etages from "../composants/Etages";
 import SectionCoach from "../composants/SectionCoach";
@@ -140,14 +141,7 @@ function Home() {
           className="absolute bottom-6 left-1/2 -translate-x-1/2 z-30 flex flex-col items-center group no-underline"
         >
           <div className="animate-bounce group-hover:animate-[pulse_1.2s_ease-in-out_infinite]">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="w-10 h-10 text-yellow-400 transition-transform duration-300 transform group-hover:scale-125"
-              viewBox="0 0 512 512"
-              fill="currentColor"
-            >
-              <path d="M426.7 117.3c-36.4-36.4-95.5-36.4-131.8 0-20.7 20.7-30.9 49.1-28.9 77.1-16.5 10.8-30.1 26.1-38.8 44.2-16.6-1.5-33.4 4.5-45.8 16.9L91.6 345.3c-26.5 26.5-26.5 69.4 0 95.9s69.4 26.5 95.9 0l89.5-89.5c12.4-12.4 18.4-29.2 16.9-45.8 18.1-8.7 33.4-22.3 44.2-38.8 28 2 56.4-8.2 77.1-28.9 36.4-36.4 36.4-95.5 0-131.9z" />
-            </svg>
+            <ChevronDown className="w-10 h-10 text-yellow-400 transition-transform duration-300 transform group-hover:scale-125" />
           </div>
           <span className="mt-1 text-xs tracking-widest font-semibold text-yellow-400 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
             SCROLL

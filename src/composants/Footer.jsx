@@ -70,7 +70,7 @@ const Footer = () => {
                             </span>
                         </Link>
                         <p className="text-white/70 text-sm">
-                            Votre salle de sport à Villenoy. Power Lifting, Cross Training, Weight Lifting et Cardio Training.
+                            Votre salle de sport à Villenoy. Power Lifting, Cross Training, Body Building et Cardio Training.
                         </p>
                     </div>
 

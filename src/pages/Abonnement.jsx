@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import ChevronLeft from "lucide-react/dist/esm/icons/chevron-left";
 import ChevronRight from "lucide-react/dist/esm/icons/chevron-right";
+import { CheckCircle2, XCircle } from "lucide-react";
 import { getBackgrounds } from "../services/api";
 import SEO from "../composants/SEO";
 // Force rebuild - v2
@@ -112,37 +113,49 @@ function Abonnement() {
       <div className="relative max-w-3xl mx-auto overflow-hidden">
         <div className="carousel-container">
           <div
-            className="carousel-card bg-white/20 backdrop-blur-lg border border-white/30 rounded-2xl p-6 shadow-lg flex flex-col items-center"
+            className="carousel-card relative overflow-hidden bg-gradient-to-br from-gray-900/90 to-black/90 backdrop-blur-xl border border-yellow-400/30 rounded-3xl p-8 shadow-2xl flex flex-col items-center transform transition-all hover:border-yellow-400/60 duration-300"
             key={currentIndex}
           >
-            <h2 className="text-xl font-bold uppercase text-yellow-400 text-center">
+            {/* Glow effect */}
+            <div className="absolute top-0 right-0 w-32 h-32 bg-yellow-400/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"></div>
+
+            <h2 className="text-2xl font-black uppercase tracking-wider text-yellow-400 text-center mb-2">
               {plans[currentIndex].name}
             </h2>
-            <div className="border-t-2 border-yellow-400 w-16 mt-2 mb-4" />
 
-            <div className="text-4xl font-extrabold text-yellow-400 flex items-baseline gap-1">
-              {plans[currentIndex].price}
-              <span className="text-base font-normal text-white">
-                {plans[currentIndex].per}
-              </span>
+            <div className="flex items-baseline justify-center gap-1 mb-1">
+              <span className="text-5xl font-extrabold text-white">{plans[currentIndex].price}</span>
+              <span className="text-lg text-white/60 font-medium">{plans[currentIndex].per}</span>
             </div>
 
-            <p className="text-sm text-white/80 mt-2">
+            <p className="text-sm text-yellow-400/80 mb-6 font-medium bg-yellow-400/10 px-3 py-1 rounded-full border border-yellow-400/20">
               {plans[currentIndex].description}
             </p>
 
-            <ul className="mt-6 space-y-3 text-left text-white/90">
-              {plans[currentIndex].features.map((feature, index) => (
-                <li key={index} className="flex items-start gap-2">
-                  <span className="text-yellow-400">✔</span>
-                  <span>{feature}</span>
-                </li>
-              ))}
-            </ul>
+            <div className="w-full bg-white/5 rounded-2xl p-6 mb-8 border border-white/5">
+              <ul className="space-y-4 text-left">
+                {plans[currentIndex].features.map((feature, index) => {
+                  const isExcluded = feature.includes("(Non Inclus)");
+                  return (
+                    <li key={index} className={`flex items-center gap-3 ${isExcluded ? "text-white/50" : "text-white/90"}`}>
+                      {isExcluded ? (
+                        <XCircle className="w-5 h-5 text-red-500/70 flex-shrink-0" />
+                      ) : (
+                        <CheckCircle2 className="w-5 h-5 text-yellow-400 flex-shrink-0" />
+                      )}
+                      <span className="font-medium">
+                        {feature.replace(" (Non Inclus)", "")}
+                        {isExcluded && <span className="text-red-400 ml-1 text-sm">(Non Inclus)</span>}
+                      </span>
+                    </li>
+                  );
+                })}
+              </ul>
+            </div>
 
             <button
               onClick={() => setSelectedPlan(plans[currentIndex])}
-              className="mt-8 bg-yellow-400 text-black py-3 px-6 rounded-xl font-semibold uppercase tracking-wide hover:bg-yellow-300 transition"
+              className="w-full bg-gradient-to-r from-yellow-400 to-yellow-500 text-black py-4 px-6 rounded-xl font-bold uppercase tracking-wider shadow-lg hover:shadow-yellow-400/20 hover:scale-105 transition-all duration-300"
             >
               Je m'inscris
             </button>
