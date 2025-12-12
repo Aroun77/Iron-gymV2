@@ -3,7 +3,7 @@ import { Link, useLocation } from "react-router-dom";
 import Instagram from "lucide-react/dist/esm/icons/instagram";
 import Facebook from "lucide-react/dist/esm/icons/facebook";
 import HamburgerButton from "./HamburgerButton";
-const logo = "/iron-gym-logo.png";
+const logo = "https://cxhhepesqvcrlwfenhck.supabase.co/storage/v1/object/public/gym-images/logo/LogoIG.png";
 import { usePrefetch, prefetchRoute } from "../hooks/usePrefetch";
 
 // Icône TikTok custom

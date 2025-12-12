@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { MapPin, Phone, Mail, Clock } from "lucide-react";
 import Instagram from "lucide-react/dist/esm/icons/instagram";
 import Facebook from "lucide-react/dist/esm/icons/facebook";
-const logo = "/iron-gym-logo.png";
+const logo = "https://cxhhepesqvcrlwfenhck.supabase.co/storage/v1/object/public/gym-images/logo/LogoIG.png";
 
 // Icône TikTok
 const TikTok = (props) => (

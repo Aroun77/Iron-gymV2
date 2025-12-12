@@ -4,7 +4,7 @@ import { Helmet } from 'react-helmet-async';
 const SEO = ({ title, description, keywords, image, url, type = 'website', jsonLd }) => {
     const siteTitle = "Iron Gym - Villenoy";
     const defaultDescription = "Iron Gym, votre salle de sport à Villenoy (77). Power Lifting, Cross Training, Cardio. Ouvert 7j/7. Rejoignez la communauté !";
-    const defaultImage = "https://iron-gym.org/iron-gym-logo.png";
+    const defaultImage = "https://cxhhepesqvcrlwfenhck.supabase.co/storage/v1/object/public/gym-images/logo/LogoIG.png";
     const siteUrl = "https://iron-gym.org";
 
     const metaTitle = title ? `${title} | ${siteTitle}` : siteTitle;

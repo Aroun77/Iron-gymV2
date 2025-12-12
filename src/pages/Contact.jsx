@@ -1,5 +1,5 @@
 import React from "react";
-import { MapPin, Phone, Mail, Clock, Instagram, Facebook } from "lucide-react";
+import { MapPin, Phone, Mail, Clock, Instagram, Facebook, Share2 } from "lucide-react";
 import SEO from "../composants/SEO";
 
 // Icône TikTok
@@ -156,7 +156,7 @@ const Contact = () => {
                     <div className="bg-gradient-to-br from-gray-900 to-black border-2 border-yellow-400/30 rounded-2xl p-6 hover:border-yellow-400 transition-all duration-300 shadow-xl">
                         <div className="flex items-start gap-4">
                             <div className="bg-yellow-400/20 p-3 rounded-full">
-                                <span className="text-2xl">📱</span>
+                                <Share2 className="w-8 h-8 text-yellow-400" />
                             </div>
                             <div className="flex-1">
                                 <h3 className="text-xl font-bold text-yellow-400 mb-3">Réseaux Sociaux</h3>

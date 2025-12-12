@@ -16,7 +16,7 @@ function Home() {
     "@context": "https://schema.org",
     "@type": "ExerciseGym",
     "name": "Iron Gym",
-    "image": "https://iron-gym.org/iron-gym-logo.png",
+    "image": "https://cxhhepesqvcrlwfenhck.supabase.co/storage/v1/object/public/gym-images/logo/LogoIG.png",
     "telephone": "01 75 78 31 28",
     "email": "iron-gym@hotmail.fr",
     "address": {
