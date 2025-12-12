@@ -26,7 +26,7 @@ const machines = [
     id: 4,
     name: "Presse à épaules",
     description: "Cible les deltoïdes pour des épaules solides.",
-    image: "/machine1.jpg",
+    image: "/equipement-musculation-salle-sport.jpg",
   },
   {
     id: 5,

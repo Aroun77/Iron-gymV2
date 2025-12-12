@@ -73,12 +73,12 @@ const SectionCategories = React.memo(function SectionCategories() {
 
         const metaData = {
           WeightLifting: {
-            name: "Body Lifting",
+            name: "Body Building",
             description: "Plateau musculation complet avec charges libres et machines guidées.",
           },
           CardioTraining: {
             name: "Cardio Training",
-            description: "Espace cardio dernière génération pour votre endurance et échauffement.",
+            description: "Espace cardio de dernière génération pour votre endurance et échauffement.",
           },
           PowerLifting: {
             name: "Power Lifting",
@@ -149,7 +149,7 @@ const SectionCategories = React.memo(function SectionCategories() {
             </h2>
             <p className="text-white/90 text-base sm:text-lg md:text-xl leading-relaxed px-2 sm:px-4">
               Des valeurs fortes pour des performances réelles.<br />
-              Chez <span className="text-yellow-400 font-semibold">IRON GYM</span>, chaque entraînement est un pas vers la meilleur  version de soi.
+              Chez <span className="text-yellow-400 font-semibold">IRON GYM</span>, chaque entraînement est un pas vers la meilleure version de soi.
             </p>
           </div>
 

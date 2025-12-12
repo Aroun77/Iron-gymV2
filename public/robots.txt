@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://irongym-villenoy.fr/sitemap.xml
+Sitemap: https://iron-gym.org/sitemap.xml
