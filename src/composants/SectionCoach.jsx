@@ -103,7 +103,7 @@ const SectionCoach = () => {
             title: "Coach Sport-Santé",
             handle: "coach_mehdi",
             status: "Disponible",
-            imageName: "CoachS",
+            imageName: "CoachM",
             phone: "07 60 92 44 92",
             email: "mehdi.tarridec@gmail.com"
           },
