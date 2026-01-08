@@ -136,7 +136,7 @@ const SectionCategories = React.memo(function SectionCategories() {
         style={{
           backgroundImage: backgroundUrl
             ? `url('${backgroundUrl}')`
-            : "url('https://ik.imagekit.io/irongym/backgrounds/dosGill.jpg?tr=f-auto,q-auto,w-1920,c-maintain_ratio')"
+            : "url('https://6960087cffe0774d846458b8.imgix.net/backgrounds/dosGill.jpg?auto=format,compress&w=1920&fit=crop&q=80')"
         }}
       />
       <div className="absolute inset-0 bg-black/70" />

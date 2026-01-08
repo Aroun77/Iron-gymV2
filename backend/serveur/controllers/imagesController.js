@@ -46,20 +46,20 @@ export async function getImagesByFolder(req, res, noSend = false) {
       return [];
     }
 
-    // ⚡ 3) Filtrage + URLs ImageKit
-    // Si IMAGEKIT_URL est défini, on l'utilise. Sinon fallback sur Supabase direct.
-    const imagekitUrl = process.env.IMAGEKIT_URL;
-    console.log('Using ImageKit URL:', imagekitUrl ? imagekitUrl : 'DISABLED (using Supabase)');
+    // ⚡ 3) Filtrage + URLs Imgix
+    // Si IMGIX_URL est défini, on l'utilise. Sinon fallback sur Supabase direct.
+    const imgixUrl = process.env.IMGIX_URL;
+    console.log('Using Imgix URL:', imgixUrl ? imgixUrl : 'DISABLED (using Supabase)');
 
     const files = (data || [])
       .filter(f => f?.name && !isPlaceholderFile(f.name))
       .map(f => {
         let finalUrl;
 
-        if (imagekitUrl) {
-          // Avec ImageKit : https://ik.imagekit.io/irongym/dossier/image.jpg
-          // Transformations: f-auto (format auto WebP/AVIF), q-auto (qualité auto)
-          finalUrl = `${imagekitUrl}/${folder ? folder + '/' : ''}${f.name}?tr=f-auto,q-auto`;
+        if (imgixUrl) {
+          // Avec Imgix : https://mon-domaine.imgix.net/dossier/image.jpg
+          // On réactive auto=format pour avoir WebP/AVIF (beaucoup plus léger)
+          finalUrl = `${imgixUrl}/${folder ? folder + '/' : ''}${f.name}?auto=format,compress`;
         } else {
           // Fallback Supabase direct
           finalUrl = `${process.env.SUPABASE_URL}/storage/v1/object/public/gym-images/${folder ? folder + '/' : ''}${f.name}`;

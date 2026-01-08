@@ -92,7 +92,7 @@ function Abonnement() {
       style={{
         backgroundImage: backgroundUrl
           ? `url('${backgroundUrl}')`
-          : "url('https://ik.imagekit.io/irongym/backgrounds/Background.jpg?tr=f-auto,q-auto,w-1920,c-maintain_ratio')",
+          : "url('https://6960087cffe0774d846458b8.imgix.net/backgrounds/Background.jpg?auto=format,compress&w=1920&fit=crop&q=80')",
         backgroundSize: 'cover',
         backgroundPosition: 'center',
         backgroundAttachment: 'fixed'

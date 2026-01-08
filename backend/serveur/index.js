@@ -15,7 +15,7 @@ export const cache = new NodeCache({ stdTTL: 120, checkperiod: 180 }); // 2 min
 dotenv.config();
 
 console.log('--- BACKEND STARTUP ---');
-console.log('IMAGEKIT_URL:', process.env.IMAGEKIT_URL ? process.env.IMAGEKIT_URL : 'NOT DEFINED');
+console.log('IMGIX_URL:', process.env.IMGIX_URL ? process.env.IMGIX_URL : 'NOT DEFINED');
 console.log('SUPABASE_URL:', process.env.SUPABASE_URL ? 'DEFINED' : 'NOT DEFINED');
 console.log('-----------------------');
 
