@@ -48,8 +48,8 @@ self.addEventListener('fetch', (event) => {
     const { request } = event;
     const url = new URL(request.url);
 
-    // Strategy 1: Cache-first for images (Imgix)
-    if (url.hostname.includes('imgix.net')) {
+    // Strategy 1: Cache-first for images (ImageKit)
+    if (url.hostname.includes('imagekit.io')) {
         event.respondWith(
             caches.open(IMAGE_CACHE).then((cache) => {
                 return cache.match(request).then((cachedResponse) => {

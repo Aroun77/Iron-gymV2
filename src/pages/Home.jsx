@@ -96,7 +96,7 @@ function Home() {
       <section className="relative h-screen w-full overflow-hidden">
         {/* 🎥 Image de fond dynamique */}
         <img
-          src={heroBackground || "https://iron-gym.imgix.net/backgrounds/DevantIron.jpg?auto=format,compress&w=1920&fit=crop&q=85"}
+          src={heroBackground || "https://ik.imagekit.io/irongym/backgrounds/DevantIron.jpg?tr=f-auto,q-auto,w-1920,c-maintain_ratio"}
           srcSet={heroBackground ? `
             ${heroBackground}&w=1280 1280w,
             ${heroBackground}&w=1920 1920w,

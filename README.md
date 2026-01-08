@@ -4,7 +4,7 @@ Bienvenue dans le dépôt officiel du site web **Iron Gym**, une application web
 
 Ce projet a été conçu pour offrir une expérience utilisateur fluide, un design premium ("Gold & Black"), et une optimisation maximale pour le référencement (SEO).
 
-![Logo Iron Gym](https://iron-gym.imgix.net/logo/Logo.png?w=200)
+![Logo Iron Gym](https://ik.imagekit.io/irongym/logo/Logo.png?tr=w-200)
 
 ## 📋 Fonctionnalités Principales
 
@@ -32,7 +32,7 @@ Ce projet a été conçu pour offrir une expérience utilisateur fluide, un desi
     - Données Structurées (JSON-LD) pour le référencement local (LocalBusiness).
     - Sitemap (`sitemap.xml`) et `robots.txt` configurés.
 - **Performance** :
-    - Images optimisées via **Imgix** (CDN).
+    - Images optimisées via **ImageKit** (CDN).
     - Lazy loading des composants lourds.
     - Code splitté et minifié avec Vite.
 - **Accessibilité** : Structure sémantique HTML5, attributs ARIA, et contrastes vérifiés.
@@ -55,7 +55,7 @@ Ce projet utilise les dernières technologies du développement web moderne :
 - **Node.js & Express** : Serveur backend pour API personnalisée (gestion des images, etc.).
 - **Stripe** : Intégration de paiement (prêt pour le futur).
 - **Supabase** : Base de données et authentification (configuration prête).
-- **Imgix** : Optimisation et distribution des images en temps réel.
+- **ImageKit** : Optimisation et distribution des images en temps réel.
 
 ### **Déploiement**
 - **Frontend** : Hébergé sur **Vercel** (CI/CD automatique).

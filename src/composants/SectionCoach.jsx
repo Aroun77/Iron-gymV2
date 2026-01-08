@@ -171,16 +171,14 @@ const SectionCoach = () => {
       intervalRef.current = setInterval(() => {
         if (scrollRef.current) {
           const { current } = scrollRef;
-          const isAtEnd = current.scrollLeft + current.clientWidth >= current.scrollWidth - 50;
-          if (isAtEnd) {
-            // Loop back to start smoothly
+
+          const maxScrollLeft = current.scrollWidth - current.clientWidth;
+
+          if (current.scrollLeft >= maxScrollLeft - 10) {
             current.scrollTo({ left: 0, behavior: 'smooth' });
           } else {
-            // Scroll exactly one card width (approx 350px + gap) or just a chunk
-            // Better: scroll by width of first child + gap
-            const cardWidth = current.children[0]?.offsetWidth || 300;
-            const gap = 32; // gap-8 is 2rem = 32px
-            current.scrollBy({ left: cardWidth + gap, behavior: 'smooth' });
+            const cardWidth = current.children[0]?.offsetWidth || 350;
+            current.scrollBy({ left: cardWidth + 32, behavior: 'smooth' });
           }
         }
       }, 4000);
