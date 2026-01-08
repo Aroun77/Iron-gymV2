@@ -57,11 +57,11 @@ export async function getImagesByFolder(req, res, noSend = false) {
         let finalUrl;
 
         if (imgixUrl) {
-          // Avec Imgix : https://mon-domaine.imgix.net/dossier/image.jpg
-          // On réactive auto=format pour avoir WebP/AVIF (beaucoup plus léger)
-          finalUrl = `${imgixUrl}/${folder ? folder + '/' : ''}${f.name}?auto=format,compress`;
+          // Avec Imgix : https://mon-domaine.imgix.net/image.jpg
+          // IMPORTANT: Images sont à la racine (pas de sous-dossiers)
+          finalUrl = `${imgixUrl}/${f.name}?auto=format,compress`;
         } else {
-          // Fallback Supabase direct
+          // Fallback Supabase direct (garde la structure de dossiers)
           finalUrl = `${process.env.SUPABASE_URL}/storage/v1/object/public/gym-images/${folder ? folder + '/' : ''}${f.name}`;
         }
 
