@@ -25,7 +25,7 @@ function Navbar() {
     { path: "/", label: "Accueil" },
     { path: "/abonnement", label: "Abonnement" },
     { path: "/machines", label: "Machines" },
-    { path: "/tableau", label: "Performances" },
+    { path: "/planning", label: "Planning" },
     { path: "/contact", label: "Contact" },
   ];
 

@@ -6,7 +6,7 @@ const Navbar = lazy(() => import("./composants/Navbar"));
 const Home = lazy(() => import("./pages/Home"));
 const Abonnement = lazy(() => import("./pages/Abonnement"));
 const Machine = lazy(() => import("./pages/Machines"));
-const Tableau = lazy(() => import("./pages/Tableau"));
+const Planning = lazy(() => import("./pages/Planning"));
 const Contact = lazy(() => import("./pages/Contact"));
 
 // Lazy load SpeedInsights (non-critical)
@@ -45,7 +45,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/abonnement" element={<Abonnement />} />
           <Route path="/machines" element={<Machine />} />
-          <Route path="/tableau" element={<Tableau />} />
+          <Route path="/planning" element={<Planning />} />
           <Route path="/contact" element={<Contact />} />
         </Routes>
       </Suspense>
