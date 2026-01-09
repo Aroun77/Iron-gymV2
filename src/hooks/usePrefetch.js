@@ -11,16 +11,16 @@ export const usePrefetch = () => {
             if ('requestIdleCallback' in window) {
                 requestIdleCallback(() => {
                     // Prefetch most visited pages
-                    import('../pages/Products');
                     import('../pages/Abonnement');
                     import('../pages/Machines');
+                    import('../pages/Planning');
                 });
             } else {
                 // Fallback for browsers without requestIdleCallback
                 setTimeout(() => {
-                    import('../pages/Products');
                     import('../pages/Abonnement');
                     import('../pages/Machines');
+                    import('../pages/Planning');
                 }, 2000);
             }
         };
@@ -35,10 +35,11 @@ export const usePrefetch = () => {
  */
 export const prefetchRoute = (route) => {
     const routeMap = {
-        '/products': () => import('../pages/Products'),
+        '/': () => import('../pages/Home'),
         '/abonnement': () => import('../pages/Abonnement'),
         '/machines': () => import('../pages/Machines'),
-        '/tableau': () => import('../pages/Tableau'),
+        '/planning': () => import('../pages/Planning'),
+        '/contact': () => import('../pages/Contact'),
     };
 
     const prefetchFn = routeMap[route];
