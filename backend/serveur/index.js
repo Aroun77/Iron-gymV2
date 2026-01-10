@@ -22,29 +22,19 @@ console.log('-----------------------');
 const app = express();
 const PORT = process.env.PORT || 5000;
 
+// Enable CORS for ALL origins to fix production issue
+app.use(cors({
+  origin: true, // Reflects the request origin, effectively allowing all
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'Accept', 'Origin']
+}));
+
 // Middlewares
-app.use(helmet());
-app.use(
-  cors({
-    origin: [
-      'https://iron-gym.org',
-      'https://www.iron-gym.org',
-      'https://iron-gym-v2.vercel.app',
-      'http://localhost:5173',
-      'http://localhost:5000'
-    ],
-    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-    allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'Accept', 'Origin'],
-    credentials: true,
-    optionsSuccessStatus: 200
-  })
-);
-app.use((req, res, next) => {
-  res.setHeader('Accept', 'image/webp,image/*,*/*');
-  // Headers spécifiques pour iOS Safari
-  res.setHeader('X-Content-Type-Options', 'nosniff');
-  res.setHeader('Cross-Origin-Resource-Policy', 'cross-origin');
-  next();
+app.use(helmet({
+  crossOriginResourcePolicy: { policy: "cross-origin" }
+}));
+next();
 });
 app.use(compression({
   level: 6,
