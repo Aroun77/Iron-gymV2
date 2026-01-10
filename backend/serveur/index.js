@@ -23,17 +23,27 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 
 // Enable CORS for ALL origins to fix production issue
+// Enable CORS for ALL origins (Public API)
 app.use(cors({
-  origin: true, // Reflects the request origin, effectively allowing all
-  credentials: true,
+  origin: '*',
+  credentials: false, // Must be false when origin is *
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'Accept', 'Origin']
+  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'Accept', 'Origin'],
+  optionsSuccessStatus: 200
 }));
 
 // Middlewares
-app.use(helmet({
-  crossOriginResourcePolicy: { policy: "cross-origin" }
-}));
+app.use(helmet());
+app.use(
+  cors({
+    origin: ['https://iron-gym-v2-kwwgldsyr-aroun77s-projects.vercel.app',
+      /\.vercel\.app$/, 'http://localhost:5173', 'http://localhost:5000']
+  })
+);
+app.use((req, res, next) => {
+  res.setHeader('Accept', 'image/webp,image/*,*/*');
+  next();
+});
 app.use(compression({
   level: 6,
   threshold: 0,
