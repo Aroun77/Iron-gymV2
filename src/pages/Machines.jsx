@@ -6,93 +6,38 @@ import SEO from "../composants/SEO";
 const machines = [
   {
     id: 1,
-    name: "Presse à jambes",
-    description: "Travaillez vos quadriceps et fessiers efficacement.",
-    image: "https://source.unsplash.com/400x300/?legpress,gym",
+    name: "Cage de puissance",
+    image: "https://6960087cffe0774d846458b8.imgix.net/Cage%20de%20puissance.jpg?auto=format,compress",
   },
   {
     id: 2,
-    name: "Poulie haute",
-    description: "Idéale pour cibler le dos et les triceps.",
-    image: "https://source.unsplash.com/400x300/?latpulldown,gym",
+    name: "Leg Extension",
+    image: "https://6960087cffe0774d846458b8.imgix.net/Leg%20Extension.jpg?auto=format,compress",
   },
   {
     id: 3,
-    name: "Chest Press",
-    description: "Renforcez vos pectoraux de manière contrôlée.",
-    image: "https://source.unsplash.com/400x300/?chestpress,gym",
+    name: "Leg Press Reverse",
+    image: "https://6960087cffe0774d846458b8.imgix.net/Leg%20Press%20Reverse.jpg?auto=format,compress",
   },
   {
     id: 4,
-    name: "Presse à épaules",
-    description: "Cible les deltoïdes pour des épaules solides.",
-    image: "/equipement-musculation-salle-sport.jpg",
+    name: "Poignet Mag",
+    image: "https://6960087cffe0774d846458b8.imgix.net/Poignet%20Mag.jpg?auto=format,compress",
   },
   {
     id: 5,
-    name: "Leg Curl",
-    description: "Musclez l'arrière des cuisses (ischio-jambiers).",
-    image: "https://source.unsplash.com/400x300/?legcurl,gym",
+    name: "Poignet Prime",
+    image: "https://6960087cffe0774d846458b8.imgix.net/Poignet%20Prime.jpg?auto=format,compress",
   },
   {
     id: 6,
-    name: "Leg Extension",
-    description: "Focalise sur les quadriceps.",
-    image: "https://source.unsplash.com/400x300/?legextension,gym",
+    name: "Pull Over",
+    image: "https://6960087cffe0774d846458b8.imgix.net/Pull%20Over.jpg?auto=format,compress",
   },
   {
     id: 7,
-    name: "Rameur",
-    description: "Travail complet du corps et cardio.",
-    image: "https://source.unsplash.com/400x300/?rower,gym",
-  },
-  {
-    id: 8,
-    name: "Stepper",
-    description: "Idéal pour le bas du corps et l'endurance.",
-    image: "https://source.unsplash.com/400x300/?stepper,gym",
-  },
-  {
-    id: 9,
-    name: "Tapis de course",
-    description: "Parfait pour l'échauffement et le cardio.",
-    image: "https://source.unsplash.com/400x300/?treadmill,gym",
-  },
-  {
-    id: 10,
-    name: "Vélo elliptique",
-    description: "Cardio doux pour les articulations.",
-    image: "https://source.unsplash.com/400x300/?elliptical,gym",
-  },
-  {
-    id: 11,
-    name: "Cage à squat",
-    description: "Polyvalente pour les squats, tractions et plus.",
-    image: "https://source.unsplash.com/400x300/?squatrack,gym",
-  },
-  {
-    id: 12,
-    name: "Machine à abdos",
-    description: "Renforcez vos abdominaux en toute sécurité.",
-    image: "https://source.unsplash.com/400x300/?abmachine,gym",
-  },
-  {
-    id: 13,
-    name: "Curl biceps",
-    description: "Isolez les biceps pour un travail ciblé.",
-    image: "https://source.unsplash.com/400x300/?bicepcurl,gym",
-  },
-  {
-    id: 14,
-    name: "Triceps pushdown",
-    description: "Idéal pour les triceps avec une poulie.",
-    image: "https://source.unsplash.com/400x300/?triceps,gym",
-  },
-  {
-    id: 15,
-    name: "Machine adducteurs",
-    description: "Renforcez l'intérieur des cuisses.",
-    image: "https://source.unsplash.com/400x300/?adductors,gym",
+    name: "Reverse Hyper Extension",
+    image: "https://6960087cffe0774d846458b8.imgix.net/Reverse%20Hyper%20Extension.jpg?auto=format,compress",
   },
 ];
 
@@ -124,7 +69,7 @@ function Machine() {
       />
       <h1 className="text-4xl font-bold text-yellow-400 mb-4">Nos Machines</h1>
       <p className="text-white/80 max-w-xl mx-auto mb-12">
-        Glisse pour découvrir nos machines et leur utilisation.
+        Glisse pour découvrir nos équipements de pointe.
       </p>
 
       <div className="relative max-w-lg mx-auto overflow-hidden">
@@ -141,12 +86,6 @@ function Machine() {
             <h3 className="text-2xl font-semibold text-yellow-400 mb-2">
               {machines[currentIndex].name}
             </h3>
-            <p className="text-white/80 text-sm mb-4">
-              {machines[currentIndex].description}
-            </p>
-            <button className="bg-yellow-400 text-black py-2 px-5 rounded-full text-sm font-semibold hover:bg-yellow-300 transition">
-              Comment l'utiliser
-            </button>
           </div>
         </div>
 
