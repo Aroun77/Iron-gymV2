@@ -34,8 +34,6 @@ app.use(cors({
 app.use(helmet({
   crossOriginResourcePolicy: { policy: "cross-origin" }
 }));
-next();
-});
 app.use(compression({
   level: 6,
   threshold: 0,
