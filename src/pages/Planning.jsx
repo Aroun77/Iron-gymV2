@@ -89,7 +89,7 @@ const Planning = () => {
                         </h1>
                     </div>
                     <p className="text-xl text-white/80 max-w-2xl mx-auto">
-                        Rejoignez nos cours collectifs et progressez avec nos coachs professionnels
+                        Rejoignez nos cours collectifs et progressez avec notre coach Simons
                     </p>
                 </div>
 
@@ -210,7 +210,7 @@ const Planning = () => {
                             <span className="text-yellow-400 font-bold">📍</span>
                             <div>
                                 <p className="font-semibold text-white">Lieu</p>
-                                <p>Iron Gym - 2 Rue Pasteur, 77124 Villenoy</p>
+                                <p>Iron Gym - 71 Rue Aristide Briand, 77124 Villenoy</p>
                             </div>
                         </div>
 
@@ -218,7 +218,7 @@ const Planning = () => {
                             <span className="text-yellow-400 font-bold">👥</span>
                             <div>
                                 <p className="font-semibold text-white">Inscription</p>
-                                <p>Réservation obligatoire auprès de votre coach</p>
+                                <p>Réservation auprès du coach ou en ligne </p>
                             </div>
                         </div>
 
