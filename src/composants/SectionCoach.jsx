@@ -113,7 +113,7 @@ const SectionCoach = () => {
           const image = coachImages.find(img => img.name === coach.imageName);
           return {
             ...coach,
-            avatarUrl: image ? `${image.url}&w=800&h=800&fit=crop&q=85` : `/Coach${coach.imageName.slice(-1)}.jpg`
+            avatarUrl: image ? `${image.url}?auto=format,compress` : `/Coach${coach.imageName.slice(-1)}.jpg`
           };
         });
 

@@ -19,7 +19,7 @@ function Abonnement() {
       description: "Soit 456€/1 an",
       features: [
         "Power Lifting",
-        "Cross Training (Non Inclus)",
+        "Cross Training (En option d'abonnement)",
         "Weight Lifting",
         "Cardio Training",
       ],
@@ -32,7 +32,7 @@ function Abonnement() {
       description: "Soit 408€/1 an",
       features: [
         "Power Lifting",
-        "Cross Training (Non Inclus)",
+        "Cross Training (En option d'abonnement)",
         "Weight Lifting",
         "Cardio Training",
       ],
@@ -45,7 +45,7 @@ function Abonnement() {
       description: "Soit 384€/1 an",
       features: [
         "Power Lifting",
-        "Cross Training (Non Inclus)",
+        "Cross Training (En option d'abonnement)",
         "Weight Lifting",
         "Cardio Training",
       ],
@@ -135,17 +135,17 @@ function Abonnement() {
             <div className="w-full bg-white/5 rounded-2xl p-6 mb-8 border border-white/5">
               <ul className="space-y-4 text-left">
                 {plans[currentIndex].features.map((feature, index) => {
-                  const isExcluded = feature.includes("(Non Inclus)");
+                  const isOption = feature.includes("(En option d'abonnement)");
                   return (
-                    <li key={index} className={`flex items-center gap-3 ${isExcluded ? "text-white/50" : "text-white/90"}`}>
-                      {isExcluded ? (
-                        <XCircle className="w-5 h-5 text-red-500/70 flex-shrink-0" />
+                    <li key={index} className={`flex items-center gap-3 ${isOption ? "text-white/70" : "text-white/90"}`}>
+                      {isOption ? (
+                        <CheckCircle2 className="w-5 h-5 text-yellow-500/50 flex-shrink-0" />
                       ) : (
                         <CheckCircle2 className="w-5 h-5 text-yellow-400 flex-shrink-0" />
                       )}
                       <span className="font-medium">
-                        {feature.replace(" (Non Inclus)", "")}
-                        {isExcluded && <span className="text-red-400 ml-1 text-sm">(Non Inclus)</span>}
+                        {feature.replace(" (En option d'abonnement)", "")}
+                        {isOption && <span className="text-yellow-500/80 ml-1 text-sm italic">(En option)</span>}
                       </span>
                     </li>
                   );
@@ -154,7 +154,7 @@ function Abonnement() {
             </div>
 
             <button
-              onClick={() => setSelectedPlan(plans[currentIndex])}
+              onClick={() => window.open(plans[currentIndex].link, "_blank")}
               className="w-full bg-gradient-to-r from-yellow-400 to-yellow-500 text-black py-4 px-6 rounded-xl font-bold uppercase tracking-wider shadow-lg hover:shadow-yellow-400/20 hover:scale-105 transition-all duration-300"
             >
               Je m'inscris
@@ -176,41 +176,6 @@ function Abonnement() {
           <ChevronRight size={22} />
         </button>
       </div>
-
-      {/* Pop-up Confirmation */}
-      {selectedPlan && (
-        <div className="fixed inset-0 z-50 bg-black/60 flex items-center justify-center">
-          <div className="bg-white rounded-2xl shadow-2xl p-8 max-w-md w-full text-center relative animate-fade-in">
-            <button
-              onClick={() => setSelectedPlan(null)}
-              className="absolute top-3 right-3 text-black hover:text-red-600 text-2xl"
-            >
-              &times;
-            </button>
-
-            <h2 className="text-2xl font-bold mb-2 text-yellow-500">
-              {selectedPlan.name}
-            </h2>
-            <p className="text-gray-700 mb-4">{selectedPlan.description}</p>
-            <p className="text-3xl font-extrabold mb-4 text-black">
-              {selectedPlan.price}
-              <span className="text-base font-medium">
-                {selectedPlan.per}
-              </span>
-            </p>
-
-            <button
-              onClick={() => {
-                window.open(selectedPlan.link, "_blank");
-                setSelectedPlan(null);
-              }}
-              className="bg-yellow-400 text-black px-6 py-3 rounded-xl font-semibold hover:bg-yellow-300 transition"
-            >
-              Confirmer
-            </button>
-          </div>
-        </div>
-      )}
     </div>
   );
 }

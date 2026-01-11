@@ -28,7 +28,7 @@ const CoachFlipCard = ({ name, title, handle, status, avatarUrl, phone, email, o
                         <img
                             src={avatarUrl}
                             alt={name}
-                            className="w-full h-full object-cover"
+                            className="absolute inset-0 w-full h-full object-cover"
                         />
                         <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-6">
                             <h3 className="text-2xl font-bold text-yellow-400">{name}</h3>

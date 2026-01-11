@@ -60,8 +60,39 @@ function Machine() {
     setCurrentIndex((prev) => (prev + 1) % machines.length);
   };
 
+  // --- SWIPE LOGIC ---
+  const [touchStart, setTouchStart] = useState(null);
+  const [touchEnd, setTouchEnd] = useState(null);
+
+  // Minimum swipe distance (in px)
+  const minSwipeDistance = 50;
+
+  const onTouchStart = (e) => {
+    setTouchEnd(null); // Reset
+    setTouchStart(e.targetTouches[0].clientX);
+  };
+
+  const onTouchMove = (e) => {
+    setTouchEnd(e.targetTouches[0].clientX);
+  };
+
+  const onTouchEnd = () => {
+    if (!touchStart || !touchEnd) return;
+    const distance = touchStart - touchEnd;
+    const isLeftSwipe = distance > minSwipeDistance;
+    const isRightSwipe = distance < -minSwipeDistance;
+
+    if (isLeftSwipe) {
+      handleNext();
+    }
+    if (isRightSwipe) {
+      handlePrev();
+    }
+  };
+  // -------------------
+
   return (
-    <div className="min-h-screen py-12 px-4 sm:px-6 lg:px-8 text-center">
+    <div className="min-h-screen pt-32 pb-12 px-4 sm:px-6 lg:px-8 text-center">
       <SEO
         title="Nos Machines & Équipements"
         description="Explorez notre parc machine complet : charges libres, machines guidées, cardio. TechnoGym, Hammer Strength. Tout pour votre progression."
@@ -75,13 +106,16 @@ function Machine() {
       <div className="relative max-w-lg mx-auto overflow-hidden">
         <div className="carousel-container">
           <div
-            className="carousel-card bg-white/20 backdrop-blur-md border border-white/30 rounded-2xl p-5 shadow-lg flex flex-col items-center"
+            className="carousel-card bg-white/20 backdrop-blur-md border border-white/30 rounded-2xl p-5 shadow-lg flex flex-col items-center touch-pan-y"
             key={currentIndex}
+            onTouchStart={onTouchStart}
+            onTouchMove={onTouchMove}
+            onTouchEnd={onTouchEnd}
           >
             <img
               src={machines[currentIndex].image}
               alt={machines[currentIndex].name}
-              className="rounded-xl mb-4 w-full h-82 object-contain bg-white"
+              className="rounded-xl mb-4 w-full h-[28rem] object-cover drop-shadow-2xl"
             />
             <h3 className="text-2xl font-semibold text-yellow-400 mb-2">
               {machines[currentIndex].name}
